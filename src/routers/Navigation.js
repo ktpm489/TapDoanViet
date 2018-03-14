@@ -118,24 +118,25 @@ const Menu = DrawerNavigator({
     }
 );
 const Stack = StackNavigator ({
-    Tab: {
-        screen: Menu,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Launcher: {
-        screen: Launcher  ,
-        navigationOptions: {
-            header : null
-        }
-    },
     Login: {
         screen: Login,
         navigationOptions: {
             header: null
         }
     },
+    Tab: {
+        screen: Menu,
+        navigationOptions: {
+            header: null
+        }
+    },
+    // Launcher: {
+    //     screen: Launcher  ,
+    //     navigationOptions: {
+    //         header : null
+    //     }
+    // },
+
 
     Chat:{
         screen:Chat,
