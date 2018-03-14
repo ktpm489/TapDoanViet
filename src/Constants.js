@@ -1,0 +1,19 @@
+
+export const BASE_URL = 'http://backend.thinhnv.net';
+// export const BASE_URL = 'http://192.168.1.68:6888';
+export const PATH_LOGIN = '/api/auth/access-token';
+export const PATH_FIREBASE_TOKEN = '/api/user/firebase-device-token';
+export const PAHT_GET_CHAT = '/api/chat/messages/';
+export const PAHT_GET_MESSAGE= '/api/chat/clients';
+export const LOGIN = "/api/auth/access-token";
+export const SLIDER = "/api/slider/home-slider";
+export const UPLOAD_IMAGE = "/api/media/upload-image";
+export const CREATE_NEW = "/api/post/create-new";
+export const GET_INFO = "/api/user/info";
+export const GET_POST = "/api/post/";
+export const GET_CMT = "/api/post/";
+export const CREATE_CMT = "/api/comment/create-new";
+export const GET_SERVICE = "/api/service/";
+
+
+export const COLOR_APP_GREEN = '#23b34c';

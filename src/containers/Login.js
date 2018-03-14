@@ -1,0 +1,147 @@
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+    Alert,
+    AsyncStorage,
+    ImageBackground,
+    Image,
+    TextInput
+} from 'react-native';
+import Dimensions from 'Dimensions';
+import UserInput from "../components/Login/UserInput";
+import { addTodo, callApiLogin } from "../actions/LoginActions";
+import images from "../components/images";
+
+
+class Login extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            SoDienThoai: '',
+            MatKhau: '',
+            showPass: true,
+            press: false,
+        }
+        this.showPass = this.showPass.bind(this);
+    }
+
+    componentDidMount() {
+    }
+
+    showPass() {
+        this.state.press === false ? this.setState({showPass: false, press: true}) : this.setState({
+            showPass: true,
+            press: false
+        });
+    }
+    Login(){
+
+        const { callApiLogin } = this.props;
+        callApiLogin(this.state.SoDienThoai, this.state.MatKhau).then(data => {
+            console.log('data', data.token);
+            if(data.errorCode === 0){
+                AsyncStorage.setItem('token', data.token);
+                this.props.navigation.navigate('LoadData')
+
+
+            }
+            else {
+                this.setState({
+                    loading: false,
+                    error: true
+                })
+                Alert.alert(
+                    'Error',
+                    'Đăng nhập thất bại',
+                    [
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                )
+            }
+        }).catch(exception=>{
+            console.log("exception",exception);
+        });
+    }
+    render(){
+        return (
+            <ImageBackground style = {styles.picture}
+                source = {require('../images/wallpaper.png')}
+           >
+                <View style = {{flex:2, alignItems:'center',justifyContent: 'center'}}>
+                    <Image source = {images.logo}/>
+                </View>
+                <View style = {{flex:5, alignItems: 'center', marginTop:40}}>
+                    <UserInput nameIcon = "user-circle"
+                               // keyboardType={'numeric'}
+                               placeholder={'Nhập số điện thoại'}
+                               autoCapitalize={'none'}
+                               returnKeyType={'done'}
+                               autoCorrect={false}
+                               style = {{marginTop: 20}}
+                               onChangeText ={(SoDienThoai) => this.setState({SoDienThoai})}
+                    />
+                    <UserInput nameIcon = "lock"
+                               secureTextEntry={this.state.showPass}
+                               placeholder='Nhập mật khẩu'
+                               returnKeyType={'done'}
+                               autoCapitalize={'none'}
+                               autoCorrect={false}
+                               style = {{marginTop : 20}}
+                               onChangeText ={(MatKhau) => {
+                                   this.setState({MatKhau})
+                               }}
+                    />
+                    <TouchableOpacity onPress={this.showPass}
+                                      style = {{marginTop:10}}>
+                        <Text style = {{color: '#23b34c'}}>Hiển thị mật khẩu</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress = {() => this.Login()}>
+                        <View style = {{backgroundColor:'#23b34c',borderWidth:1,borderColor:'#23b34c',width: DEVICE_WIDTH - 40,  marginHorizontal: 20, marginTop:30, minHeight:40,alignItems:'center', justifyContent: 'center'}}>
+                            <Text style = {{color: 'white', fontWeight:'bold'}}>ĐĂNG NHẬP</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style = {{marginTop:10, color:'#23b34c'}}>Quên mật khẩu?</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
+        );
+    }
+}
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const styles = StyleSheet.create({
+    textinput : {
+        borderWidth: 1,
+
+    },
+    picture: {
+        flex: 1,
+        width: null,
+        height: null,
+
+    },
+})
+
+const mapStateToProps = (state) => {
+    return {
+        LoginReducers: state.LoginReducers
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // addTodo: bindActionCreators(addTodo, dispatch),
+        callApiLogin: bindActionCreators(callApiLogin, dispatch)
+    }
+};
+
+Login = connect(mapStateToProps, mapDispatchToProps)(Login);
+
+export default Login
