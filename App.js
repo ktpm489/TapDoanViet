@@ -4,76 +4,194 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+    View,
+    Text,
+    AsyncStorage,
+    TouchableOpacity,
+    Platform
 } from 'react-native';
-import SocketIOClient from 'socket.io-client';
-import Icon from 'react-native-vector-icons/Ionicons'
+import {Provider} from 'react-redux'
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import store from './src/store'
+import RootStack from './src/routers/Navigation'
+import FCM, {
+    FCMEvent,
+    RemoteNotificationResult,
+    WillPresentNotificationResult,
+    NotificationType
+} from 'react-native-fcm';
 
-type Props = {};
-export default class App extends Component<Props> {
-    constructor(props){
-        super(props)
-        this.socket = SocketIOClient("http://222.252.16.186:9061/");
-        console.log('socket', this.socket)
-        // this.socket = SocketIOClient("http://192.168.1.68:6888" ,
-        //     {query: 'token=eyJhbGciOiJIUzI1NiJ9.NWE5ZWIyZjA1ZTM1ODcxYjE1ZmRiZTJm.hXLTc3OtgBD5QilkTeh_Olr_tgfE72QmxuQ8hF82tog'}
-        // );
-        // console.log('socket', this.socket)
-        this.socket = SocketIOClient("http://backend.thinhnv.net?token=eyJhbGciOiJIUzI1NiJ9.NWE5YmQ3N2E1ODc3YjY0YzE1MjgxNTFm.HIWMzAJXmauqu1tPH6px24Mr93hDHNCCkTGXIdCUAO4" ,
-            // {
-            //     jsonp: false,
-            //     transports: ['websocket']
-            // }
-        );
-        console.log('socket', this.socket)
+import PhiDichVu from './src/containers/PhiDichVu'
+import DichVu from './src/containers/DichVu'
+import DichVuDetail from './src/containers/DichVuDetail'
+import * as Consts from './src/Constants';
+import {Tab} from './src/routers/Navigation'
+import ThongTinCaNhan from "./src/containers/ThongTinCaNhan";
+
+
+export default class App extends Component<{}> {
+
+    constructor(props) {
+        super(props);
+        this.os = '';
 
     }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-          <Icon name="ios-person" size={30} color="#4F8EF7" />
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
 
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
-  }
+    render() {
+        return (
+
+
+            <Provider store={store}>
+                <RootStack/>
+            </Provider>
+
+        );
+    }
+
+
+    // pushDeviceToken = (token_APP, device_token) => {
+    //     console.log("os", Platform.OS);
+    //     console.log("version", Platform.Version);
+    //
+    //     fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + token_APP,
+    //             'Content-Type': 'application/json'
+    //         }, body: JSON.stringify({
+    //             token: device_token,
+    //             os: Platform.OS,
+    //             version: Platform.Version ,
+    //             deviceName: ''
+    //         })
+    //     }).then(data => data.json()).then(data => {
+    //         console.log("data push device token", data)
+    //
+    //     }).catch(err => {
+    //         alert("call api token firebase erro: " + err);
+    //     })
+    // }
+
+
+    // componentDidMount() {
+    //     // iOS: show permission prompt for the first call. later just check permission in user settings
+    //     // Android: check permission in user settings
+    //     FCM.requestPermissions().then(() => console.log('granted')).catch(() => console.log('notification permission rejected'));
+    //
+    //     FCM.getFCMToken().then(token => {
+    //         console.log(token)
+    //         AsyncStorage.getItem("token").then(token_APP => {
+    //             this.pushDeviceToken(token_APP, token);
+    //         })
+    //         // store fcm token in your server
+    //     });
+    //
+    //     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
+    //
+    //         console.log("receive noti listent", notif);
+    //         // optional, do some component related stuff
+    //         if (notif && notif.opened_from_tray && notif.opened_from_tray == 1) {
+    //             return;
+    //         }
+    //         if (notif.fcm) {
+    //             console.log(("abcd",notif.fcm));
+    //             FCM.presentLocalNotification({
+    //                 vibrate: 500,
+    //                 title: notif.fcm.title,
+    //                 body: notif.fcm.body,
+    //                 priority: "high",
+    //                 sound: "default",
+    //                 icon: "ic_launcher",
+    //                 wake_screen: true,
+    //                 show_in_foreground: true,
+    //                 // click_action: notif.fcm.action,
+    //
+    //             });
+    //         }
+    //
+    //
+    //     });
+    //
+    //     // initial notification contains the notification that launchs the app. If user launchs app by clicking banner, the banner notification info will be here rather than through FCM.on event
+    //     // sometimes Android kills activity when app goes to background, and when resume it broadcasts notification before JS is run. You can use FCM.getInitialNotification() to capture those missed events.
+    //     // initial notification will be triggered all the time even when open app by icon so send some action identifier when you send notification
+    //     FCM.getInitialNotification().then(notif => {
+    //         console.log("click noti:", notif)
+    //     });
+    // }
+
+    pushDeviceToken = (token_APP, device_token) => {
+        console.log("os", Platform.OS);
+        console.log("version", Platform.Version);
+
+        fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token_APP,
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({
+                token: device_token,
+                os: Platform.OS,
+                version: Platform.Version,
+                deviceName: ''
+            })
+        }).then(data => data.json()).then(data => {
+            console.log("data push device token", data)
+
+        }).catch(err => {
+            alert("call api token firebase erro: " + err);
+        })
+    }
+
+
+    componentDidMount() {
+        // iOS: show permission prompt for the first call. later just check permission in user settings
+        // Android: check permission in user settings
+        FCM.requestPermissions().then(() => console.log('granted')).catch(() => console.log('notification permission rejected'));
+
+        FCM.getFCMToken().then(token => {
+            console.log(token)
+            AsyncStorage.getItem("token").then(token_APP => {
+                this.pushDeviceToken(token_APP, token);
+            })
+            // store fcm token in your server
+        });
+
+        this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
+
+            console.log("receive noti listent", notif);
+            // optional, do some component related stuff
+            if (notif && notif.opened_from_tray && notif.opened_from_tray == 1) {
+                return;
+            }
+            if (notif.fcm) {
+                console.log(("abcd", notif.fcm));
+                FCM.presentLocalNotification({
+                    vibrate: 500,
+                    title: notif.fcm.title,
+                    body: notif.fcm.body,
+                    priority: "high",
+                    sound: "default",
+                    icon: "ic_launcher",
+                    wake_screen: true,
+                    show_in_foreground: true,
+                    // click_action: notif.fcm.action,
+
+                });
+            }
+
+
+        });
+
+        // initial notification contains the notification that launchs the app. If user launchs app by clicking banner, the banner notification info will be here rather than through FCM.on event
+        // sometimes Android kills activity when app goes to background, and when resume it broadcasts notification before JS is run. You can use FCM.getInitialNotification() to capture those missed events.
+        // initial notification will be triggered all the time even when open app by icon so send some action identifier when you send notification
+        FCM.getInitialNotification().then(notif => {
+            console.log("click noti:", notif)
+        });
+    }
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
