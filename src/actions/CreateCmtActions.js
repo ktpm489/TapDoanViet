@@ -16,7 +16,7 @@ export const callApiCreateCmt = (postId, comment) => {
                     },
                     body: JSON.stringify({
                         postId: postId,
-                        comment: comment
+                        content: comment
 
 
                     })
@@ -24,14 +24,14 @@ export const callApiCreateCmt = (postId, comment) => {
                 }).then((response) => {
                     return response.json();
                 }).then(data => {
-                    console.log('data response', data1);
+                    console.log('data response', data);
                     dispatch({
                         type: 'CREATE_CMT',
                         payload: data
                     })
                     resolve(data);
                 }).catch(e => {
-                    console.log('exception')
+                    console.log('exception', e)
                 })
             });
         })

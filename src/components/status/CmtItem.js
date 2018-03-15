@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import moment from 'moment';
 import Dimensions from 'Dimensions';
 
 class CmtItem extends Component {
@@ -18,17 +19,17 @@ class CmtItem extends Component {
                     <Image style={styles.image_circle}
 
                            source={{
-                               uri: item.avt
+                               uri: "https://znews-photo-td.zadn.vn/w1024/Uploaded/unvjuas/2018_01_14/NGUYEN_BA_NGOC2349_ZING.jpg"
                            }}
                            resizeMode="cover"
                     >
                     </Image>
-                    <Text style = {styles.textName}>{item.fullName}</Text>
+                    <Text style = {styles.textName}>{item.createdBy.userName}</Text>
                 </View>
                 <View style = {styles.viewCmt}>
-                    <Text style = {styles.textCmt}>{item.cmt}</Text>
+                    <Text style = {styles.textCmt}>{item.content}</Text>
                     <View style = {{flexDirection:'row'}}>
-                        <Text>1 giờ</Text>
+                        <Text>{moment(item.createdAt).startOf("hour").fromNow()}</Text>
                         <Text style = {{marginLeft:15, color:'black'}}>Like</Text>
                         <Text style = {{marginLeft:15, color: 'black'}}>Reply</Text>
                     </View>
