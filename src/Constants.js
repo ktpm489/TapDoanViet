@@ -14,6 +14,7 @@ export const GET_POST = "/api/post/";
 export const GET_CMT = "/api/post/";
 export const CREATE_CMT = "/api/comment/create-new";
 export const GET_SERVICE = "/api/service/";
+export const CREATE_REQUEST = "/api/service/create-request";
 
 
 export const COLOR_APP_GREEN = '#23b34c';
