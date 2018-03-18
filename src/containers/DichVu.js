@@ -16,6 +16,7 @@ import * as URL from '../Constants'
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import DichVuItem from '../components/DichVuItem'
 
+
 class DichVu extends Component {
     static navigationOptions = ({navigation}) => {
         const {state} = navigation;
@@ -200,6 +201,7 @@ class DichVu extends Component {
 
     componentWillMount() {
         console.log("call dich vu");
+        this.getListDichVu();
         const {callApiDichVu} = this.props;
         callApiDichVu().then(dataDichVu => {
 
@@ -208,6 +210,32 @@ class DichVu extends Component {
             interval: setInterval(() => {
                 this.setState({position: this.state.position === 2 ? 0 : this.state.position + 1});
             }, 4000)
+        });
+    }
+
+    getListDichVu =  ()=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(URL.BASE_URL + URL.GET_SERVICE, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('get dichvu response', data);
+                if(data && data.errorCode == 0){
+                    
+                }
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
         });
     }
 
