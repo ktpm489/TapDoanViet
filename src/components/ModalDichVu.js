@@ -29,6 +29,14 @@ export default class ModalDichVu extends Component {
 
 
         }
+
+        this.name = '';
+        this.phone = '';
+        this.address = '';
+        this.description = '';
+        this.image1 = null;
+        this.image2 = null;
+        this.image3 = null;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -147,6 +155,7 @@ export default class ModalDichVu extends Component {
                             <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
+                                onChangeText={(text)=>this.name = text}
                             />
 
                         </View>
@@ -169,6 +178,7 @@ export default class ModalDichVu extends Component {
                             <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
+                                onChangeText={(text)=>this.phone = text}
                             />
 
                         </View>
@@ -192,6 +202,7 @@ export default class ModalDichVu extends Component {
                             <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Địa chỉ"}
+                                onChangeText={(text)=>this.address = text}
                             />
 
                         </View>
@@ -219,11 +230,67 @@ export default class ModalDichVu extends Component {
                                 placeholder={"Thêm thông tin mô tả rõ hơn yêu cầu của bạn..."}
 
                             />
+                            <Text style={{marginLeft:10,fontSize:16,fontWeight:'600'}}>Thêm ảnh mô tả</Text>
+                            <View style={{marginTop:10,flexDirection:'row'}}>
+                                <TouchableOpacity
+                                    style={{
+                                        marginLeft:10,
+                                        borderColor:'grey',borderRadius:4,borderWidth:2,
+                                    }}
+                                
+                                >
+                                    <Image
+                                    source={require('../images/camera.png')}
+                                    ref="image1"
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3,  }}
+
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                         style={{
+                                            marginLeft:10,
+                                            borderColor:'grey',borderRadius:4,borderWidth:2,
+                                        }}
+                                >
+                                    <Image
+                                    source={require('../images/camera.png')}
+                                    ref="image2"
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3 }}
+
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                     style={{
+                                        marginLeft:10,marginRight:10,
+                                        borderColor:'grey',borderRadius:4,borderWidth:2,
+                                    }}
+                                    onPress={()=>{
+                                        
+                                        console.log("refer image",this.refs.image3)
+                                        this.refs.image3.setNativeProps({
+                                            source: require('../images/giasu.png')
+                                          })
+                                    }}
+
+                                >
+                                    <Image
+                                    source={require('../images/camera.png')}
+                                    ref={"image3"}
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3, }}
+
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         </ScrollView>
                     </View>
-                    <View style={{ flex: 1, backgroundColor:'#cccccc' }} >
-                        <Text>buoc3</Text>
-                    </View>
+                    <ScrollView style={{ flex: 1, backgroundColor:'#cccccc' }} >
+                        <Text style={{ alignSelf: 'center', color: 'red', margin: 10, fontSize: 20, fontWeight: '600' }}>Đặt lịch</Text>
+                        <View style={{height:1,backgroundColor:'white'}}/>
+                        <View>
+
+                        </View>
+
+                    </ScrollView>
                 </Pages>
                 <TouchableOpacity
                     style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

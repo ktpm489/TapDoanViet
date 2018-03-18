@@ -164,34 +164,35 @@ class DichVu extends Component {
             'Setting a timer'
         ];
 
-        this.socket = SocketIOClient("http://222.252.16.186:9061/");
-        console.log('socket', this.socket)
+        // this.socket = SocketIOClient("http://222.252.16.186:9061/");
+        // console.log('socket', this.socket)
         // this.socket = SocketIOClient("http://192.168.1.68:6888" ,
         //     {query: 'token=eyJhbGciOiJIUzI1NiJ9.NWE5ZWIyZjA1ZTM1ODcxYjE1ZmRiZTJm.hXLTc3OtgBD5QilkTeh_Olr_tgfE72QmxuQ8hF82tog'}
         // );
         // console.log('socket', this.socket)
-        this.socket = SocketIOClient("http://backend.thinhnv.net?token=eyJhbGciOiJIUzI1NiJ9.NWE5YmQ3N2E1ODc3YjY0YzE1MjgxNTFm.HIWMzAJXmauqu1tPH6px24Mr93hDHNCCkTGXIdCUAO4" ,
+        // this.socket = SocketIOClient("http://backend.thinhnv.net?token=eyJhbGciOiJIUzI1NiJ9.NWE5YmQ3N2E1ODc3YjY0YzE1MjgxNTFm.HIWMzAJXmauqu1tPH6px24Mr93hDHNCCkTGXIdCUAO4" ,
             // {
             //     jsonp: false,
             //     transports: ['websocket']
             // }
-        );
-        console.log('socket', this.socket)
-        // this.token = AsyncStorage.getItem('token').then((data) => {
-        //
-        //     this.socket = SocketIOClient(URL.BASE_URL, {query: 'token=' + data});
-        //     const {callConnectSocket, callJoinToChat, listenDisconnectSocket} = this.props;
-        //     console.log("call connect socket");
-        //     callConnectSocket(this.socket).then(() => {
-        //         if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected) {
-        //             console.log("call join to chat");
-        //             callJoinToChat(this.props.SocketRef.socket);
-        //         }
-        //         //listen disconnect
-        //         listenDisconnectSocket(this.socket);
-        //
-        //     });
-        // });
+        // );
+        // console.log('socket', this.socket)
+        this.token = AsyncStorage.getItem('token').then((data) => {
+            console.log("token",data);
+        
+            this.socket = SocketIOClient(URL.BASE_URL, {query: 'token=' + data});
+            const {callConnectSocket, callJoinToChat, listenDisconnectSocket} = this.props;
+            console.log("call connect socket");
+            callConnectSocket(this.socket).then(() => {
+                if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected) {
+                    console.log("call join to chat");
+                    callJoinToChat(this.props.SocketRef.socket);
+                }
+                //listen disconnect
+                listenDisconnectSocket(this.socket);
+        
+            });
+        });
 
 
     }
