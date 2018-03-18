@@ -152,7 +152,7 @@ export default class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
+                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
                                 onChangeText={(text)=>this.name = text}
@@ -175,7 +175,7 @@ export default class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
+                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
                                 onChangeText={(text)=>this.phone = text}
@@ -199,7 +199,7 @@ export default class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
+                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Địa chỉ"}
                                 onChangeText={(text)=>this.address = text}
@@ -222,7 +222,9 @@ export default class ModalDichVu extends Component {
                                     backgroundColor: 'white',
                                     shadowOffset: { width: 0, height: 2 },
                                     shadowOpacity: 0.8,
-                                    padding:5
+                                    padding:5,
+                                    minHeight:100,
+                                    alignSelf:'stretch'
                                 }}
 
                                 multiline={true}
