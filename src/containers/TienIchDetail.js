@@ -23,19 +23,11 @@ class TienIchDetail extends Component {
     render() {
         const { item } = this.props.navigation.state.params;
         return (
-            <ScrollView style = {{flex:1}}>
-                <View  style = {{flex:1}}>
-                    <Image style={{height: 180, width: "100%", alignSelf: 'stretch', }}
-                           resizeMode="cover"
-                           source={{ uri: item.imageUrl }}
-                    />
-                </View>
                 <View style = {{flex:1}}>
                     <WebView
                         source={{uri: 'https://github.com/facebook/react-native'}}
                     />
                 </View>
-            </ScrollView>
 
         )
 
