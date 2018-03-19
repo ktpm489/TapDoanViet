@@ -19,6 +19,8 @@ export default class HoursItem extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        console.log('nextState',nextState.dataItem)
+        console.log('props',this.props.dataItem)
 
         if (JSON.stringify(nextProps.dataItem.select) === JSON.stringify(this.props.dataItem.select)) {
             return false;

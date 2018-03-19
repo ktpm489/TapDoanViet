@@ -38,14 +38,14 @@ export default class SelectDate extends Component {
 
         this.listDate = [];
         this.hourSelect = '';
-        this.positionHourSelect = '';
+        this.positionHourSelect = "";
     }
 
     onHourSelect =(positionHourSelect)=>{
         console.log("slect poscu",this.positionHourSelect);
         console.log("slect posmoi",positionHourSelect);
             var tempList = this.state.listHours;
-            if(this.positionHourSelect != ''){
+            if(this.positionHourSelect !== ""){
                 console.log('aaaa',this.positionHourSelect);
                 
                 tempList[this.positionHourSelect].select = false;
