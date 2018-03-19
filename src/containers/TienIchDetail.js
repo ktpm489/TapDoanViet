@@ -30,9 +30,11 @@ class TienIchDetail extends Component {
                            source={{ uri: item.imageUrl }}
                     />
                 </View>
+                <Text style={{color:'black',fontWeight:'bold',fontSize:20,marginLeft:5}}>{item.utilityName}</Text>
                 <View style = {{flex:1}}>
                     <WebView
-                        source={{uri: 'https://github.com/facebook/react-native'}}
+                        source={{ html: item.content }}
+                        style = {{flex:1,height:500}}
                     />
                 </View>
             </ScrollView>

@@ -7,7 +7,7 @@ import {
     TextInput,
     Image,TouchableOpacity
 } from 'react-native'
-import {BASE_URL, GET_SERVICE} from "../Constants";
+import {BASE_URL, GET_UTILITY} from "../Constants";
 
 class TienIch extends Component {
 
@@ -15,14 +15,14 @@ class TienIch extends Component {
         super(props);
 
         this.state = {
-            listTienIch:[{a:"1"},{a:"2"},{a:"3"}]
+            listTienIch:[]
         }
     }
 
 
     componentWillMount(){
         AsyncStorage.getItem('token').then((value)=> {
-            fetch(BASE_URL + GET_SERVICE, {
+            fetch(BASE_URL + GET_UTILITY, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ class TienIch extends Component {
             }).then((response) => {
                 return response.json();
             }).then(data => {
-                console.log('data response service', data);
+                console.log('data response utility', data);
                 if(data && data.errorCode == 0){
                     this.setState({listTienIch:data.data})
                     console.log('statte',this.state.listTienIch)
@@ -56,7 +56,7 @@ class TienIch extends Component {
                            source={{uri: item.imageUrl}}/>
 
                 <View style={{flex:1,height:50, backgroundColor:"rgba(0,0,0,0.5)",zIndex:1,marginTop:-50,justifyContent:'center',alignItems:'flex-start'}}>
-                    <Text style={{color:'white',fontWeight:'bold',fontSize:20,marginLeft:5}}>{item.serviceName}</Text>
+                    <Text style={{color:'white',fontWeight:'bold',fontSize:20,marginLeft:5}}>{item.utilityName}</Text>
                 </View>
             </TouchableOpacity>
         )

@@ -332,6 +332,7 @@ export default class ModalDichVu extends Component {
                            console.log("4: ",this.description);
                            console.log("state",this.state);
                            this.callApiRegister();
+                           this.props.closeModal();
                         }
 
                     }}
@@ -416,7 +417,7 @@ export default class ModalDichVu extends Component {
                         address: this.address,
                         images: this.urlUpload,
                         description: this.description,
-                        serviceId: "1",
+                        serviceId: this.props.id_dichvu,
                         orderAt: '2018-03-22 08:00'
                         
                 })
@@ -427,10 +428,10 @@ export default class ModalDichVu extends Component {
                 console.log('create service response', data);
                 if(data && data.errorCode == 0){
                     alert("Gửi yêu cầu thành công")
+                }else{
+                    alert(data.message);
                 }
 
-
-               
             }).catch(e => {
                 console.log('exception',e)
             })

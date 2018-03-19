@@ -20,7 +20,7 @@ export const callApiDichVu = () => {
                 }).then((response) => {
                     return response.json();
                 }).then(data => {
-                    // console.log('data response', data);
+                     console.log('slide response', data);
                     dispatch({
                         type: 'DICH_VU',
                         payload: data.data
