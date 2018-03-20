@@ -2,8 +2,9 @@ const ProfileReducers = (state = [], action) => {
     switch (action.type) {
         case 'GET_POST':
             return [
+                ...state,
                 {
-                    payload : action.payload,
+                  userInfo:action.payload
                 }
             ]
         default:

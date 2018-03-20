@@ -17,7 +17,11 @@ import { Pages } from 'react-native-pages';
 import PickerImage from "../components/PickerImage"
 import SelectDate from'../components/SelectDate';
 import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
-export default class ModalDichVu extends Component {
+
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+
+class ModalDichVu extends Component {
 
 
 
@@ -48,6 +52,7 @@ export default class ModalDichVu extends Component {
         this.phone = '';
         this.address = '';
         this.description = '';
+        this.fullDate = '';
         this.countImageUpload = 0;
         this.countImageUploadDone = 0;
         this.urlUpload = [];
@@ -127,6 +132,9 @@ export default class ModalDichVu extends Component {
 
     render() {
         const { navigation } = this.props;
+        if(this.props.userInfo && this.props.userInfo.length > 0){
+            const userInfo = this.props.userInfo[0].userInfo;
+        }
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ height: 50, flexDirection: 'row' }} >
@@ -243,6 +251,8 @@ export default class ModalDichVu extends Component {
                     
                     <View style={{ flex: 1, backgroundColor:'#cccccc' }} >
                     <SelectDate
+
+                        ref="SelectDate"
                         
                         />
                          
@@ -325,17 +335,41 @@ export default class ModalDichVu extends Component {
                     style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPress={() => {
                         // console.log("page",this.refs.pages)
+                        console.log("ref",this.refs.SelectDate)
                         if (this.refs.pages.progress < 2) {
                         
                             this.refs.pages.scrollToPage(this.refs.pages.progress + 1, true);
                         } else if (this.refs.pages.progress == 2) {
-                           console.log("1: ",this.name);
-                           console.log("2: ",this.phone);
-                           console.log("3: ",this.address);
-                           console.log("4: ",this.description);
+                            if(this.refs.SelectDate.dateSelect && this.refs.SelectDate.dateSelect !=="" && this.refs.SelectDate.hourSelect &&  this.refs.SelectDate.hourSelect !== "" ){
+                                
+                                var objDate = this.refs.SelectDate.dateSelect;
+                                var objHour = this.refs.SelectDate.hourSelect;
+                                this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
+                            }else{
+                                alert("Bạn chưa chọn thời gian đặt lịch");
+                                return 0;
+                            }
+
+                            if(this.name === "" || this.phone === "" || this.address == "" ){
+                                alert("Bạn phải nhập đầy đủ thông tin");
+                                return 0;
+                            }
+
+                            if(this.description === ""){
+                                alert("Bạn phải nhập mô tả");
+                                return 0;
+                            }
+
+                           console.log("name ",this.name);
+                           console.log("phone ",this.phone);
+                           console.log("address ",this.address);
+                           console.log("description ",this.description);
+                           console.log("fullDate ",this.fullDate);
                            console.log("state",this.state);
-                           this.callApiRegister();
-                           this.props.closeModal();
+
+                           console.log("ref",this.refs.SelectDate)
+                        //    this.callApiRegister();
+                        //    this.props.closeModal();
                         }
 
                     }}
@@ -441,8 +475,29 @@ export default class ModalDichVu extends Component {
         });
 
 
+       
+
+
     }
 
 };
+const mapStateToProps = (state) => {
+    console.log("state redux:",state);
+    return {
+        userInfo: state.ProfileReducers,
+        
+    }
+};
 
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+       
+
+    }
+};
+
+ModalDichVu = connect(mapStateToProps, mapDispatchToProps)(ModalDichVu);
+
+export default ModalDichVu
 
