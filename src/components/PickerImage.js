@@ -15,8 +15,28 @@ var options = {
     }
 };
 
-let PickerImage = (cb) => {
-    ImagePicker.showImagePicker(options, (response) => {
+var options2 = {
+    title: 'Select Options',
+    
+    // title: 'Chọn ảnh',
+    quality: 0.5,
+    maxWidth: 768,
+    maxHeight: 768,
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
+
+
+let PickerImage = (cb,type) => {
+   
+    var ops = options;
+    if(type)
+        ops = options2
+    else
+        ops = options
+    ImagePicker.showImagePicker(ops, (response) => {
         if (response.didCancel) {
             console.log('User cancelled image picker');
         }

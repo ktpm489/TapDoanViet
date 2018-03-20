@@ -118,18 +118,19 @@ const Menu = DrawerNavigator({
     }
 );
 const Stack = StackNavigator ({
-    Login: {
-        screen: Login,
-        navigationOptions: {
-            header: null
-        }
-    },
     Tab: {
         screen: Menu,
         navigationOptions: {
             header: null
         }
     },
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
+    
     // Launcher: {
     //     screen: Launcher  ,
     //     navigationOptions: {
@@ -169,12 +170,12 @@ const Stack = StackNavigator ({
             title: 'Tiện ích'
         }
     },
-    TienIchDetail:{
-        screen: TienIchDetail,
-        navigationOptions: {
-            title: 'Chi tiết'
-        }
-    },
+    // TienIchDetail:{
+    //     screen: TienIchDetail,
+    //     navigationOptions: {
+    //         title: 'Chi tiết'
+    //     }
+    // },
     BaoCaoKhanCap: {
         screen: BaoCaoKhanCap,
         navigationOptions: {

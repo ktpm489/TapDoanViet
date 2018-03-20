@@ -123,8 +123,8 @@ export default class App extends Component<{}> {
     // }
 
     pushDeviceToken = (token_APP, device_token) => {
-        console.log("os", Platform.OS);
-        console.log("version", Platform.Version);
+        // console.log("os", Platform.OS);
+        // console.log("version", Platform.Version);
 
         fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
             method: 'POST',
@@ -189,7 +189,7 @@ export default class App extends Component<{}> {
         // sometimes Android kills activity when app goes to background, and when resume it broadcasts notification before JS is run. You can use FCM.getInitialNotification() to capture those missed events.
         // initial notification will be triggered all the time even when open app by icon so send some action identifier when you send notification
         FCM.getInitialNotification().then(notif => {
-            console.log("click noti:", notif)
+            //console.log("click noti:", notif)
         });
     }
 

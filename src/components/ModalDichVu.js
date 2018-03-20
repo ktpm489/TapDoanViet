@@ -6,12 +6,15 @@ import {
     Image,
     ScrollView,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
 import { Pages } from 'react-native-pages';
+import PickerImage from "../components/PickerImage"
+import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
 export default class ModalDichVu extends Component {
 
 
@@ -22,13 +25,31 @@ export default class ModalDichVu extends Component {
     constructor(props) {
         super(props);
 
+        var i1 = require('../images/camera.png');
         this.state = {
             page1_sellect: true,
             page2_sellect: false,
             page3_sellect: false,
-
+            image1:i1,
+            dataImage1:null,
+            image2:i1,
+            dataImage2:null,
+            image3:i1,
+            dataImage3:null,
+            
+            
 
         }
+
+        this.name = '';
+        this.phone = '';
+        this.address = '';
+        this.description = '';
+        this.countImageUpload = 0;
+        this.countImageUploadDone = 0;
+        this.urlUpload = [];
+       
+        
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -84,6 +105,21 @@ export default class ModalDichVu extends Component {
 
             })
         }
+    }
+
+    showPicker = (type)=>{
+        //console.log("click button type",type);
+        PickerImage((source, data) => {
+            if(type == 1){
+                this.setState({image1: source, dataImage1: data})
+                }   
+            else if(type == 2){
+                this.setState({image2: source, dataImage2: data})
+            }else{
+                this.setState({image3: source, dataImage3: data})
+            }
+        },true)
+        
     }
 
     render() {
@@ -144,9 +180,10 @@ export default class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
+                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
+                                onChangeText={(text)=>this.name = text}
                             />
 
                         </View>
@@ -166,9 +203,10 @@ export default class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
+                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
+                                onChangeText={(text)=>this.phone = text}
                             />
 
                         </View>
@@ -189,9 +227,10 @@ export default class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10 }}
+                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Địa chỉ"}
+                                onChangeText={(text)=>this.address = text}
                             />
 
                         </View>
@@ -211,28 +250,89 @@ export default class ModalDichVu extends Component {
                                     backgroundColor: 'white',
                                     shadowOffset: { width: 0, height: 2 },
                                     shadowOpacity: 0.8,
-                                    padding:5
+                                    padding:5,
+                                    minHeight:100,
+                                    alignSelf:'stretch'
                                 }}
-
+                                onChangeText={(text)=>this.description = text}
                                 multiline={true}
                                 numberOfLines={5}
                                 placeholder={"Thêm thông tin mô tả rõ hơn yêu cầu của bạn..."}
 
                             />
+                            <Text style={{marginLeft:10,fontSize:16,fontWeight:'600'}}>Thêm ảnh mô tả</Text>
+                            <View style={{marginTop:10,flexDirection:'row'}}>
+                                <TouchableOpacity
+                                    style={{
+                                        marginLeft:10,
+                                        borderColor:'grey',borderRadius:4,borderWidth:2,
+                                    }}
+                                
+                                    onPress={()=>this.showPicker(1)}
+                                >
+                                    <Image
+                                    source={this.state.image1}
+                                    ref="image1"
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3,  }}
+
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                         style={{
+                                            marginLeft:10,
+                                            borderColor:'grey',borderRadius:4,borderWidth:2,
+                                        }}
+                                        onPress={()=>this.showPicker(2)}
+                                >
+                                    <Image
+                                    source={this.state.image2}
+                                    ref="image2"
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3 }}
+
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                     style={{
+                                        marginLeft:10,marginRight:10,
+                                        borderColor:'grey',borderRadius:4,borderWidth:2,
+                                    }}
+                                    onPress={()=>this.showPicker(3)}
+
+                                >
+                                    <Image
+                                    source={this.state.image3}
+                                    ref={"image3"}
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3, }}
+
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         </ScrollView>
                     </View>
-                    <View style={{ flex: 1, backgroundColor:'#cccccc' }} >
-                        <Text>buoc3</Text>
-                    </View>
+                    <ScrollView style={{ flex: 1, backgroundColor:'#cccccc' }} >
+                        <Text style={{ alignSelf: 'center', color: 'red', margin: 10, fontSize: 20, fontWeight: '600' }}>Đặt lịch</Text>
+                        <View style={{height:1,backgroundColor:'white'}}/>
+                        <View>
+
+                        </View>
+
+                    </ScrollView>
                 </Pages>
                 <TouchableOpacity
                     style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPress={() => {
                         // console.log("page",this.refs.pages)
-                        if (this.refs.pages.progress <= 2) {
+                        if (this.refs.pages.progress < 2) {
+                        
                             this.refs.pages.scrollToPage(this.refs.pages.progress + 1, true);
-                        } else if (this.refs.pages.progress == 3) {
-                            this.refs.pages.scrollToPage(this.refs.pages.progress + 1, true);
+                        } else if (this.refs.pages.progress == 2) {
+                           console.log("1: ",this.name);
+                           console.log("2: ",this.phone);
+                           console.log("3: ",this.address);
+                           console.log("4: ",this.description);
+                           console.log("state",this.state);
+                           this.callApiRegister();
+                           this.props.closeModal();
                         }
 
                     }}
@@ -245,6 +345,101 @@ export default class ModalDichVu extends Component {
 
         )
     }
+
+
+
+    uploadImage = (imgdata)=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(BASE_URL + UPLOAD_IMAGE, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                body: JSON.stringify({
+                    imageData: imgdata,
+                    imageType: 'post',
+                })
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('upload image response', data);
+                if(data && data.errorCode == 0){
+                    this.countImageUploadDone++;
+                    this.urlUpload.push(data.data.imageUrl);
+                    if(this.countImageUploadDone == this.countImageUpload){
+                        this.sendInfoToServer();
+                    }
+                }
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+    }
+
+    callApiRegister = ()=>{
+        if(this.state.dataImage1 != null){
+            this.uploadImage(this.state.dataImage1);
+            this.countImageUpload++;
+        }
+        if(this.state.dataImage2 != null){
+            this.uploadImage(this.state.dataImage2);
+            this.countImageUpload++;
+        }
+        if(this.state.dataImage3 != null){
+            this.uploadImage(this.state.dataImage3);
+            this.countImageUpload++;
+        }
+
+    }
+
+    sendInfoToServer=()=>{
+        // console.log("1: ",this.name);
+        // console.log("2: ",this.phone);
+        // console.log("3: ",this.address);
+        // console.log("4: ",this.description);
+        // console.log("image",this.urlUpload);
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(BASE_URL + CREATE_REQUEST, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                body: JSON.stringify({
+                    
+                        fullName: this.name,
+                        phoneNumber: this.phone,
+                        address: this.address,
+                        images: this.urlUpload,
+                        description: this.description,
+                        serviceId: this.props.id_dichvu,
+                        orderAt: '2018-03-22 08:00'
+                        
+                })
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('create service response', data);
+                if(data && data.errorCode == 0){
+                    alert("Gửi yêu cầu thành công")
+                }else{
+                    alert(data.message);
+                }
+
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+
+
+    }
+
 };
 
 

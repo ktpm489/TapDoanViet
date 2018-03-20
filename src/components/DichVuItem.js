@@ -27,6 +27,7 @@ export default class DichVuItem extends Component {
     render() {
         const {navigation} = this.props;
         const {item} = this.props.dataItem;
+       
         return (
 
             <TouchableOpacity
@@ -46,14 +47,12 @@ export default class DichVuItem extends Component {
                           backgroundColor:Const.COLOR_APP_GREEN,
                           flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                     <Image
-                         // source={{
-                         //     uri: ''
-                         // }}
-                         source={item.icon2}
+                        
+                         source={{uri:item.iconUrl}}
                          resizeMode="cover"
                          style={{width:50,height:50}}
                     />
-                    <Text style={{textAlign:'center',color:'white',fontWeight:'bold'}}>{item.name}</Text>
+                    <Text style={{textAlign:'center',color:'white',fontWeight:'bold'}}>{item.serviceName}</Text>
                 </View>
 
             </TouchableOpacity>)
