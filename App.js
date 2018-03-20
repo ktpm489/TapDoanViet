@@ -152,8 +152,9 @@ export default class App extends Component<{}> {
         FCM.requestPermissions().then(() => console.log('granted')).catch(() => console.log('notification permission rejected'));
 
         FCM.getFCMToken().then(token => {
-            console.log(token)
+            console.log("firebase_token",token);
             AsyncStorage.getItem("token").then(token_APP => {
+
                 this.pushDeviceToken(token_APP, token);
             })
             // store fcm token in your server
@@ -163,11 +164,11 @@ export default class App extends Component<{}> {
 
             console.log("receive noti listent", notif);
             // optional, do some component related stuff
-            if (notif && notif.opened_from_tray && notif.opened_from_tray == 1) {
+            if (notif && notif.opened_from_tray && notif.opened_from_tray === 1) {
+                
                 return;
             }
-            if (notif.fcm) {
-                console.log(("abcd", notif.fcm));
+            
                 FCM.presentLocalNotification({
                     vibrate: 500,
                     title: notif.fcm.title,
@@ -180,7 +181,7 @@ export default class App extends Component<{}> {
                     // click_action: notif.fcm.action,
 
                 });
-            }
+            
 
 
         });

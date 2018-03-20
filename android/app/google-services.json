@@ -1,27 +1,26 @@
 {
   "project_info": {
-    "project_number": "92638128884",
-    "firebase_url": "https://tapdoanviet-25064.firebaseio.com",
-    "project_id": "tapdoanviet-25064",
-    "storage_bucket": "tapdoanviet-25064.appspot.com"
+    "project_number": "591513716691",
+    "firebase_url": "https://demod-c9c50.firebaseio.com",
+    "project_id": "demod-c9c50"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:92638128884:android:ffcb4dc82c4dd880",
+        "mobilesdk_app_id": "1:591513716691:android:ffcb4dc82c4dd880",
         "android_client_info": {
           "package_name": "com.tapdoanviet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "92638128884-pocvsjt3tomraemqa9vr0mgev05ep42d.apps.googleusercontent.com",
+          "client_id": "591513716691-poonec6poul5k1ctkc11tmjji708fh09.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCjkdFD9n5spNMBas9tRgR-P7KSpf2kE5o"
+          "current_key": "AIzaSyAhCVyh_Qd3svySqsUCSb59l9qVKrtQLaU"
         }
       ],
       "services": {
