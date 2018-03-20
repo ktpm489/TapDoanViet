@@ -7,13 +7,15 @@ import {
     ScrollView,
     TextInput,
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+    FlatList
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
 import { Pages } from 'react-native-pages';
 import PickerImage from "../components/PickerImage"
+import SelectDate from'../components/SelectDate';
 import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
 export default class ModalDichVu extends Component {
 
@@ -36,6 +38,7 @@ export default class ModalDichVu extends Component {
             dataImage2:null,
             image3:i1,
             dataImage3:null,
+            
             
             
 
@@ -237,6 +240,14 @@ export default class ModalDichVu extends Component {
 
 
                     </ScrollView>
+                    
+                    <View style={{ flex: 1, backgroundColor:'#cccccc' }} >
+                    <SelectDate
+                        
+                        />
+                         
+
+                    </View>
                     <View style={{ flex: 1, backgroundColor:'#cccccc'}} >
                         <ScrollView >
                             <TextInput 
@@ -309,14 +320,6 @@ export default class ModalDichVu extends Component {
                             </View>
                         </ScrollView>
                     </View>
-                    <ScrollView style={{ flex: 1, backgroundColor:'#cccccc' }} >
-                        <Text style={{ alignSelf: 'center', color: 'red', margin: 10, fontSize: 20, fontWeight: '600' }}>Đặt lịch</Text>
-                        <View style={{height:1,backgroundColor:'white'}}/>
-                        <View>
-
-                        </View>
-
-                    </ScrollView>
                 </Pages>
                 <TouchableOpacity
                     style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -384,15 +387,15 @@ export default class ModalDichVu extends Component {
     callApiRegister = ()=>{
         if(this.state.dataImage1 != null){
             this.uploadImage(this.state.dataImage1);
-            this.countImageUpload++;
+            this.countImageUpload = this.countImageUpload+1;
         }
         if(this.state.dataImage2 != null){
             this.uploadImage(this.state.dataImage2);
-            this.countImageUpload++;
+            this.countImageUpload = this.countImageUpload+1;
         }
         if(this.state.dataImage3 != null){
             this.uploadImage(this.state.dataImage3);
-            this.countImageUpload++;
+            this.countImageUpload = this.countImageUpload+1;
         }
 
     }
