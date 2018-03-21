@@ -50,7 +50,7 @@ export default class SelectDate extends Component {
     this.listDate = [];
     this.hourSelect = "";
     this.positionHourSelect = "";
-    this.dateSelect = "";
+    this.date = "";
   }
 
   onHourSelect = positionHourSelect => {
@@ -66,11 +66,12 @@ export default class SelectDate extends Component {
     });
     this.positionHourSelect = positionHourSelect;
     this.hourSelect = this.state.listHours[positionHourSelect];
-    
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    
+    // if (JSON.stringify(nextProps.dataItem) === JSON.stringify(this.props.dataItem)) {
+    //   return false;
+    // } else 
     return true;
   }
 
@@ -110,17 +111,18 @@ export default class SelectDate extends Component {
       };
       this.listDate.push(objDate);
       currentDate.setDate(date + 1);
-      this.setState({
-        currentPost: 0
-      });
-      
-        this.dateSelect = this.listDate[this.state.currentPost];
+      // this.setState({
+      //   currentPost: 0
+      // });
+      console.log("component willmount select date",this.state.currentPost);
+      this.date = this.listDate[this.state.currentPost];
     }
   }
   render() {
     // const { navigation } = this.props;
     // const { item } = this.props.dataItem;
     var dateSelect = this.listDate[this.state.currentPost];
+    this.date = this.listDate[this.state.currentPost];
     var titleDate =
       dateSelect.nameDate + " " + dateSelect.date + "/" + dateSelect.month;
 
@@ -151,12 +153,12 @@ export default class SelectDate extends Component {
                 this.setState({
                   next: true,
                   prev: false,
-                  currentPost: this.state.currentPost - 1,
+                  currentPost: this.state.currentPost - 1
                 });
 
-                this.date = this.listDate[this.state.currentPost];
+               
               } else if (this.state.currentPost == 0) {
-                this.date = this.listDate[this.state.currentPost];
+               
                 return 0;
               } else {
                 this.setState({
@@ -164,7 +166,7 @@ export default class SelectDate extends Component {
                   next: true,
                   prev: true
                 });
-                this.date = this.listDate[this.state.currentPost];
+               
               }
             }}
           >
@@ -192,12 +194,12 @@ export default class SelectDate extends Component {
               if (this.state.currentPost == 5) {
                 this.setState({
                   next: false,
-                  prev: true, 
-                  currentPost: this.state.currentPost + 1,
+                  prev: true,
+                  currentPost: this.state.currentPost + 1
                 });
-                this.date = this.listDate[this.state.currentPost];
+                
               } else if (this.state.currentPost == 6) {
-                this.date = this.listDate[this.state.currentPost];
+               
                 return 0;
               } else {
                 this.setState({
@@ -205,7 +207,7 @@ export default class SelectDate extends Component {
                   next: true,
                   prev: true
                 });
-                this.date = this.listDate[this.state.currentPost];
+                
               }
             }}
           >

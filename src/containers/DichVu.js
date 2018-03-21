@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {callApiDichVu} from "../actions/DichvuActions";
 import {connectToSocket, disConnectToSocket, joinToChat} from '../actions/SocketActions';
+import {callApiProfile} from "../actions/ProfileActions";
 import SocketIOClient from 'socket.io-client';
 import * as URL from '../Constants'
 import Icon from 'react-native-vector-icons/dist/Entypo'
@@ -78,6 +79,10 @@ class DichVu extends Component {
                 this.setState({imageSlider:data.data});
                 console.log("state11111",this.state);
         });
+        const { callApiProfile } = this.props;
+        callApiProfile().then(dataRes=> {
+            
+        })
         
     }
 
@@ -159,7 +164,8 @@ const mapDispatchToProps = (dispatch) => {
         callApiDichVu: bindActionCreators(callApiDichVu, dispatch),
         callConnectSocket: bindActionCreators(connectToSocket, dispatch),
         callJoinToChat: bindActionCreators(joinToChat, dispatch),
-        listenDisconnectSocket: bindActionCreators(disConnectToSocket, dispatch)
+        listenDisconnectSocket: bindActionCreators(disConnectToSocket, dispatch),
+        callApiProfile : bindActionCreators(callApiProfile, dispatch),
 
     }
 };

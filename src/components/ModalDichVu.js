@@ -55,13 +55,13 @@ class ModalDichVu extends Component {
         this.fullDate = '';
         this.countImageUpload = 0;
         this.countImageUploadDone = 0;
-        this.urlUpload = [];
+        this.urlUpload = "";
        
         
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return true;
+        return true
     }
 
 
@@ -132,8 +132,10 @@ class ModalDichVu extends Component {
 
     render() {
         const { navigation } = this.props;
-        if(this.props.userInfo && this.props.userInfo.length > 0){
-            const userInfo = this.props.userInfo[0].userInfo;
+        if(this.props.userInfo && this.props.userInfo.userInfo){
+            const userInfo = this.props.userInfo.userInfo;
+            this.name = userInfo.firstName;
+            console.log("userInfo",userInfo);
         }
         return (
             <View style={{ flex: 1 }}>
@@ -194,6 +196,7 @@ class ModalDichVu extends Component {
                             <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
+                                value={this.name}
                                 onChangeText={(text)=>this.name = text}
                             />
 
@@ -217,6 +220,7 @@ class ModalDichVu extends Component {
                             <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
+                                keyboardType='numeric'
                                 onChangeText={(text)=>this.phone = text}
                             />
 
@@ -335,14 +339,14 @@ class ModalDichVu extends Component {
                     style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPress={() => {
                         // console.log("page",this.refs.pages)
-                        console.log("ref",this.refs.SelectDate)
+                        // console.log("ref",this.refs.SelectDate)
                         if (this.refs.pages.progress < 2) {
                         
                             this.refs.pages.scrollToPage(this.refs.pages.progress + 1, true);
                         } else if (this.refs.pages.progress == 2) {
-                            if(this.refs.SelectDate.dateSelect && this.refs.SelectDate.dateSelect !=="" && this.refs.SelectDate.hourSelect &&  this.refs.SelectDate.hourSelect !== "" ){
+                            if(this.refs.SelectDate.date && this.refs.SelectDate.date !=="" && this.refs.SelectDate.hourSelect &&  this.refs.SelectDate.hourSelect !== "" ){
                                 
-                                var objDate = this.refs.SelectDate.dateSelect;
+                                var objDate = this.refs.SelectDate.date;
                                 var objHour = this.refs.SelectDate.hourSelect;
                                 this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
                             }else{
@@ -360,16 +364,13 @@ class ModalDichVu extends Component {
                                 return 0;
                             }
 
-                           console.log("name ",this.name);
-                           console.log("phone ",this.phone);
-                           console.log("address ",this.address);
-                           console.log("description ",this.description);
-                           console.log("fullDate ",this.fullDate);
-                           console.log("state",this.state);
-
-                           console.log("ref",this.refs.SelectDate)
-                        //    this.callApiRegister();
-                        //    this.props.closeModal();
+                        //    console.log("name ",this.name);
+                        //    console.log("phone ",this.phone);
+                        //    console.log("address ",this.address);
+                        //    console.log("description ",this.description);
+                        //    console.log("fullDate ",this.fullDate);
+                           this.callApiRegister();
+                           this.props.closeModal();
                         }
 
                     }}
@@ -404,7 +405,10 @@ class ModalDichVu extends Component {
                 console.log('upload image response', data);
                 if(data && data.errorCode == 0){
                     this.countImageUploadDone++;
-                    this.urlUpload.push(data.data.imageUrl);
+                    if(this.urlUpload === "")
+                        this.urlUpload = data.data.imageUrl;
+                    else
+                        this.urlUpload = this.urlUpload +","+data.data.imageUrl;
                     if(this.countImageUploadDone == this.countImageUpload){
                         this.sendInfoToServer();
                     }
@@ -435,11 +439,9 @@ class ModalDichVu extends Component {
     }
 
     sendInfoToServer=()=>{
-        // console.log("1: ",this.name);
-        // console.log("2: ",this.phone);
-        // console.log("3: ",this.address);
-        // console.log("4: ",this.description);
-        // console.log("image",this.urlUpload);
+
+        console.log("url_image",this.urlUpload);
+        
         AsyncStorage.getItem('token').then((value)=> {
             fetch(BASE_URL + CREATE_REQUEST, {
                 method: "POST",
