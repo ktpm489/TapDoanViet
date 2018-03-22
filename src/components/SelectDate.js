@@ -240,7 +240,7 @@ export default class SelectDate extends Component {
               );
             }}
             numColumns={3}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
             snapToAlignment={"center"}
           />
         </View>

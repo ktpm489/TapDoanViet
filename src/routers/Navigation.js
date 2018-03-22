@@ -19,6 +19,9 @@ import LoadData from "../containers/LoadData";
 import BinhLuan from "../containers/BinhLuan";
 import PhiDichVu from "../containers/PhiDichVu"
 import TienIchDetail from "../containers/TienIchDetail"
+import SearchUser from "../containers/SearchUser"
+import ServiceHistory from "../containers/ServiceHistory"
+ServiceHistory
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
 
@@ -199,6 +202,13 @@ const Stack = StackNavigator ({
     },
     PhiDichVu:{
         screen:PhiDichVu
+    },
+    SearchUser:{
+        screen:SearchUser,
+        
+    },
+    ServiceHistory:{
+        screen:ServiceHistory
     }
 
 

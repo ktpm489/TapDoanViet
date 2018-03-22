@@ -73,7 +73,7 @@ export default class ThongBao extends Component {
                         />
                     )
                 }}
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={this.renderSeparator}
             />
             </View>

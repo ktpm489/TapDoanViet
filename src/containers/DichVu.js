@@ -142,7 +142,7 @@ class DichVu extends Component {
                             )
                         }}
                         numColumns={3}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => index.toString()}
                         style={{marginBottom: 100, marginLeft: 10, marginRight: 10, marginTop: 10}}
                     />
             </ScrollView>
