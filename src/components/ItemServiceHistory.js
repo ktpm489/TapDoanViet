@@ -24,6 +24,9 @@ export default class ItemServiceHistory extends Component {
         else
             return true;
     }
+
+  
+
     render() {
         const {navigation} = this.props;
         const item = this.props.dataItem;
@@ -36,6 +39,8 @@ export default class ItemServiceHistory extends Component {
        var imgRender = [];
         for(var i = 0; i < arrImages.length;i++){
             imgRender.push(<TouchableOpacity
+
+                key={i}
                 style={{
                     marginLeft:10,
                     borderColor:'grey',borderRadius:4,borderWidth:2,
@@ -57,13 +62,13 @@ export default class ItemServiceHistory extends Component {
         return (
 
             <TouchableOpacity
-               
+                    key={item.index}
                 onPress={() => {
                     //navigation.navigate('DichVuDetail', {dataItem: item});
                 }}
             >
                 <View 
-                    key={item.index}
+                   
                       >
                     <Text>Họ tên: {item.fullName}</Text>
                     <Text>Số điện thoại: {item.phoneNumber}</Text>

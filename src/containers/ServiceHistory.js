@@ -75,7 +75,7 @@ export default class ServiceHistory extends Component {
                     height: 1,
                     width: "100%",
                     backgroundColor: "#CED0CE",
-                    marginLeft: Dimention.DEVICE_WIDTH / 5
+                    marginLeft: 0
                 }}
             />
         );
