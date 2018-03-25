@@ -172,27 +172,20 @@ const Stack = StackNavigator ({
     },
     TienIch: {
         screen: TienIch,
+    },
+    TienIchDetail:{
+        screen: TienIchDetail,
         navigationOptions: {
-            title: 'Tiện ích'
+            title: 'Chi tiết'
         }
     },
-    // TienIchDetail:{
-    //     screen: TienIchDetail,
-    //     navigationOptions: {
-    //         title: 'Chi tiết'
-    //     }
-    // },
     BaoCaoKhanCap: {
         screen: BaoCaoKhanCap,
-        navigationOptions: {
-            title: 'Báo cáo khẩn cấp'
-        }
+
     },
     GopYPhanHoi: {
         screen: GopYPhanHoi,
-        navigationOptions: {
-            title: 'Góp ý phản hồi'
-        }
+
     },
     DichVuDetail:{
         screen:DichVuDetail
