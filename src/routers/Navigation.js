@@ -21,7 +21,6 @@ import PhiDichVu from "../containers/PhiDichVu"
 import TienIchDetail from "../containers/TienIchDetail"
 import SearchUser from "../containers/SearchUser"
 import ServiceHistory from "../containers/ServiceHistory"
-ServiceHistory
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
 
@@ -124,15 +123,17 @@ const Stack = StackNavigator ({
     Login: {
         screen: Login,
         navigationOptions: {
-            header: null
+            header : null
         }
     },
+   
     Tab: {
         screen: Menu,
         navigationOptions: {
             header: null
         }
     },
+
     
     
     // Launcher: {
@@ -174,12 +175,12 @@ const Stack = StackNavigator ({
             title: 'Tiện ích'
         }
     },
-    TienIchDetail:{
-        screen: TienIchDetail,
-        navigationOptions: {
-            title: 'Chi tiết'
-        }
-    },
+    // TienIchDetail:{
+    //     screen: TienIchDetail,
+    //     navigationOptions: {
+    //         title: 'Chi tiết'
+    //     }
+    // },
     BaoCaoKhanCap: {
         screen: BaoCaoKhanCap,
         navigationOptions: {
@@ -206,10 +207,16 @@ const Stack = StackNavigator ({
     },
     SearchUser:{
         screen:SearchUser,
+        navigationOptions: {
+            title: 'Tìm kiếm'
+        }
         
     },
     ServiceHistory:{
-        screen:ServiceHistory
+        screen:ServiceHistory,
+        navigationOptions: {
+            title: 'Lịch sử dịch vụ'
+        }
     }
 
 

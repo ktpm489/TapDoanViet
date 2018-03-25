@@ -18,19 +18,6 @@ import Modal from 'react-native-modalbox';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class ServiceHistory extends Component {
-    static navigationOptions = ({ navigation}) => {
-        const {state} = navigation;
-        return {
-            headerLeft: <TouchableOpacity onPress={() => {
-                    navigation.navigate('DrawerOpen')
-                }}>
-                    <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
-                </TouchableOpacity>,
-            headerStyle: { backgroundColor: '#23b34c' },
-            headerTitleStyle:{ color: 'white'},
-        }
-
-    }
     constructor(props) {
         super(props)
         this.token = '';

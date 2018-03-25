@@ -73,9 +73,11 @@ class TaoBaiViet extends Component {
     }
     show(){
         PickerImage((source, data) => {
-            this.setState({avatarSource: source, dataImage: data},
-            // this.upload()
-            )});
+            this.setState({avatarSource: source, dataImage: data}, () => {
+                    this.upload();
+                }
+            )
+        });
     }
     upload (){
         // console.log('base64', this.state.dataImage)
