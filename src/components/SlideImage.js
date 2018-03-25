@@ -45,9 +45,15 @@ export default class SildeImage extends Component {
    
     
     render() {
-
-
         const {imageSlider} = this.props;
+        var imgs = [];
+        for(var i = 0;i < imageSlider.length;i++){
+            imgs.push(imageSlider[i].thumbnail);
+        }
+        console.log("anh:",imgs);
+
+
+        
         if (imageSlider.length <= 0) {
             return null;
         }else{
@@ -55,11 +61,7 @@ export default class SildeImage extends Component {
                <View
                style={{height:150}}
                >
-                    <ImageSlider images={[
-                    imageSlider[0].thumbnail,
-                    imageSlider[1].thumbnail,
-                    imageSlider[2].thumbnail,
-                    ]}
+                    <ImageSlider images={imgs}
                     position={this.state.position}
                     onPositionChanged={position => this.setState({position})}
                     
