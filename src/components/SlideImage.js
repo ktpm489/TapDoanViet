@@ -50,7 +50,7 @@ export default class SildeImage extends Component {
         for(var i = 0;i < imageSlider.length;i++){
             imgs.push(imageSlider[i].thumbnail);
         }
-        console.log("anh:",imgs);
+        
 
 
         

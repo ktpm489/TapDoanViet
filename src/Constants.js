@@ -1,6 +1,6 @@
 
-// export const BASE_URL = 'http://backend.thinhnv.net';
-export const BASE_URL = 'http://192.168.1.68:6888';
+export const BASE_URL = 'http://backend.thinhnv.net';
+// export const BASE_URL = 'http://192.168.1.68:6888';
 export const PATH_LOGIN = '/api/auth/access-token';
 export const PATH_FIREBASE_TOKEN = '/api/user/firebase-device-token';
 export const PAHT_GET_CHAT = '/api/chat/messages/';
@@ -17,6 +17,7 @@ export const GET_SERVICE = "/api/service/";
 export const GET_UTILITY = "/api/utility";
 export const CREATE_REQUEST = "/api/service/create-request";
 export const GET_REQUEST = "/api/service/history-transaction";
+export const SEARCH_USER = "/api/user/search?keyword=";
 
 
 export const COLOR_APP_GREEN = '#23b34c';

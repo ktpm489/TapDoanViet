@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     Image,
-    FlatList
+    FlatList,
+    Picker
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -80,22 +81,57 @@ export default class PhiDichVu extends Component {
                         }
                     ]
                 }
-            ]
+            ],
+            listDepartment:["CT0","CT1","CT2"],
+            listYear:["2017","2018","2019"],
+            departmebtSelect:'Chọn căn hộ',
+            yearSelect:'Chọn năm'
         }
+        
     }
 
 
     shouldComponentUpdate(nextProps, nextState) {
+        return true;
 
     }
 
 
-
+    renderPickerItemSource = (listData)=>{
+        let sourceItems = listData.map( (s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        });
+        return sourceItems;
+    }
 
     render() {
         return (
             <View style={{flex: 1}}>
-                <Text style={{alignSelf:'center',color:'black',fontWeight:'bold'}}>Căn hộ CT1-A503</Text>
+            <View style={{backgroundColor:"green",flexDirection:'row',margin:10,justifyContent:'center',alignItems:'center',maxHeight:40}}>
+                <Text style={{color:'white',fontWeight:'bold',marginRight:10,marginLeft:10, fontSize:16,width:60}}>Căn hộ: </Text>
+                <Picker
+                    style={{backgroundColor:"#ffffff",flex:1}}
+                    selectedValue={this.state.departmebtSelect}
+                    onValueChange={(itemValue, itemIndex) => this.setState({departmebtSelect: itemValue})}>
+                    {this.renderPickerItemSource(this.state.listDepartment)}
+                </Picker>
+                
+                
+            </View>
+
+            <View style={{backgroundColor:"green",flexDirection:'row',marginLeft:10,marginRight:10,justifyContent:'center',alignItems:'center',maxHeight:40}}>
+                
+                <Text style={{color:'white',fontWeight:'bold',marginLeft:10,marginRight:10,fontSize:16,width:60}}>Năm: </Text>
+                
+                <Picker
+                    style={{backgroundColor:"#ffffff",flex:1}}
+                    selectedValue={this.state.yearSelect}
+                    onValueChange={(itemValue, itemIndex) => this.setState({yearSelect: itemValue})}>
+                    {this.renderPickerItemSource(this.state.listYear)}
+                </Picker>
+                
+            </View>
+                
                 <FlatList
                     data={this.state.listPhiThanhToan}
                     extraData={this.state.listPhiThanhToan}
