@@ -120,6 +120,14 @@ const Menu = DrawerNavigator({
     }
 );
 const Stack = StackNavigator ({
+    Launcher: {
+        screen: Launcher  ,
+        navigationOptions: {
+            header : null
+        }
+    },
+
+
     Login: {
         screen: Login,
         navigationOptions: {
@@ -136,13 +144,6 @@ const Stack = StackNavigator ({
 
     
     
-    // Launcher: {
-    //     screen: Launcher  ,
-    //     navigationOptions: {
-    //         header : null
-    //     }
-    // },
-
 
     Chat:{
         screen:Chat,
