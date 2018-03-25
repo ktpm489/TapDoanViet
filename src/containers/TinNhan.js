@@ -61,7 +61,7 @@ export default class TinNhan extends Component {
 
             console.log('value', this.token)
             this.getListMessage();
-            this.getServiceHistory();
+            
         })
 
     }
