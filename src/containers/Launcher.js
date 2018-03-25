@@ -15,15 +15,12 @@ export default class Launcher extends Component{
         }
     }
     componentWillMount(){
-        // setTimeout(()=> {
-        //     this.setState({
-        //         isTime: true
-        //     })
-
-        //     this.pushScreen();
-        // },800)
-        this.pushScreen();
-        // this.props.navigation.navigate('Tab')
+        setTimeout(()=> {
+            this.setState({
+                isTime: true
+            })
+            this.pushScreen();
+        },500)
     }
     pushScreen(){
         AsyncStorage.getItem('token').then((value)=>{

@@ -152,7 +152,7 @@ class Chat extends Component {
                             />
                         )
                     }}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
                     onEndReachedThreshold={100}
                     showsVerticalScrollIndicator={false}
                     ref={ref => this.flatList = ref}

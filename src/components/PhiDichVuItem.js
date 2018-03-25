@@ -69,7 +69,7 @@ export default class PhiDichVuItem extends Component {
                                         />
                                     )
                                 }}
-                                keyExtractor={(item, index) => index}
+                                keyExtractor={(item, index) => index.toString()}
                                 style={{
                                     
                                     padding:10,

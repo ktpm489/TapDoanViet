@@ -75,7 +75,7 @@ class TienIch extends Component {
                     renderItem={
                         this.itemTienIch
                     }
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
                 />
             
         )

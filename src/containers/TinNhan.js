@@ -6,12 +6,16 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
+    Picker,
     AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import TinNhanItem from '../components/TinNhanItem';
 import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
+import Modal from 'react-native-modalbox';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class TinNhan extends Component {
     static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
@@ -49,15 +53,20 @@ export default class TinNhan extends Component {
             }
     }
 
+    
+
     componentWillMount(){
         AsyncStorage.getItem('token').then((value)=> {
             this.token = value;
 
             console.log('value', this.token)
             this.getListMessage();
+            this.getServiceHistory();
         })
 
     }
+
+
 
     shouldComponentUpdate() {
         return true;
@@ -80,19 +89,77 @@ export default class TinNhan extends Component {
     render() {
         const {navigation} = this.props;
         return (
-            <FlatList
-                data={this.state.dataMSG}
-                renderItem={(item) => {
-                    return (
-                        <TinNhanItem
-                            dataItem={item}
-                            navigation={navigation}
-                        />
-                    )
-                }}
-                keyExtractor={(item, index) => index}
-                ItemSeparatorComponent={this.renderSeparator}
-            />
+            <View style={{flex:1,flexDirection:'column'}}>
+                    <FlatList
+                        data={this.state.dataMSG}
+                        renderItem={(item) => {
+                            return (
+                                <TinNhanItem
+                                    dataItem={item}
+                                    navigation={navigation}
+                                />
+                            )
+                        }}
+                        keyExtractor={(item, index) => index.toString()}
+                        ItemSeparatorComponent={this.renderSeparator}
+                    />
+                    <TouchableOpacity
+                        style={{
+                            borderWidth:1,
+                            borderColor:'#01a699',
+                            alignItems:'center',
+                            justifyContent:'center',
+                            width:70,
+                            position: 'absolute',                                          
+                            bottom: 10,                                                    
+                            right: 10,
+                            height:70,
+                            backgroundColor:'#fff',
+                            borderRadius:100,
+                            }}
+
+                            onPress={()=>this.refs.modal.open()}
+
+                        >
+                        <Icon name="plus"  size={30} color="#01a699" />
+                        </TouchableOpacity>
+
+
+                        <Modal  style={{
+                            height: 100,
+                            width: Dimention.DEVICE_WIDTH-50,
+                        }}
+                            swipeArea={20}
+                            position={"center"} ref={"modal"} isDisabled={false}
+                            
+                        >
+                            <TouchableOpacity
+                                style ={{flex:1,justifyContent:'center',alignItems:'center'}}
+
+                                onPress={()=>{
+                                    navigation.navigate("SearchUser");
+                                    this.refs.modal.close()
+                                }}
+                            
+                            >
+                                <Text style ={{color:'black'}}>Tin nhắn mới</Text>
+                            </TouchableOpacity>
+                            <View style ={{height:1,backgroundColor:'gray'}}></View>
+                            <TouchableOpacity
+                                style ={{flex:1,justifyContent:'center',alignItems:'center'}}
+                                onPress={()=>{
+                                    navigation.navigate("SearchUser");
+                                    this.refs.modal.close()
+                                }}
+
+                                >
+                                <Text style ={{color:'black'}}>Nhóm mới</Text>
+                            </TouchableOpacity>
+                        </Modal>
+
+
+
+                </View>
         );
     }
 

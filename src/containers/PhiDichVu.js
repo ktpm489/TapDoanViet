@@ -109,7 +109,7 @@ export default class PhiDichVu extends Component {
                             />
                         )
                     }}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
 
                 />
             </View>
