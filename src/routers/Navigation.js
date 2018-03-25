@@ -21,6 +21,7 @@ import PhiDichVu from "../containers/PhiDichVu"
 import TienIchDetail from "../containers/TienIchDetail"
 import SearchUser from "../containers/SearchUser"
 import ServiceHistory from "../containers/ServiceHistory"
+import ThongBaoDetail from "../containers/ThongBaoDetail";
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
 
@@ -210,6 +211,12 @@ const Stack = StackNavigator ({
         screen:ServiceHistory,
         navigationOptions: {
             title: 'Lịch sử dịch vụ'
+        }
+    },
+    ThongBaoDetail:{
+        screen:ThongBaoDetail,
+        navigationOptions: {
+            title: 'Chi tiết thông báo'
         }
     }
 

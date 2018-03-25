@@ -37,6 +37,7 @@ export default class TienIchDetail extends Component {
                     <WebView
                         source={{ html: item.content }}
                         style = {{height: 500, width: "100%"}}
+                        // scrollEnabled={false}
                     />
                 </View>
             </ScrollView>

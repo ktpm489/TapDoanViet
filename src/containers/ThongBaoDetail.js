@@ -9,7 +9,7 @@ import {
 
 import * as Dimention from '../configs/Dimention'
 import moment from 'moment';
-export default class ThongBaoItem extends Component {
+export default class ThongBaoDetail extends Component {
 
     constructor(props) {
         super(props);
@@ -27,33 +27,24 @@ export default class ThongBaoItem extends Component {
 
    
     render() {
-        const {navigation} = this.props;
-        const {item} = this.props.dataItem;
+        const item = this.props.navigation.state.params.dataItem;
         var convertTime =  moment(item.createdAt).format("DD-MM-YYYY HH:MM");
-
         return (
 
-            <TouchableOpacity
-                onPress={() => {
-                   navigation.navigate('ThongBaoDetail', {dataItem: item});
-                }}
-            >
-                <View key={item.index}
-                      style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',backgroundColor:item.isSeen?'white':'#b2ebf2'}}>
+        
+                <View 
+                      style={{flex: 1, flexDirection: 'column',margin:10 , alignItems: 'center'}}>
                     <Image style={myStyle.image_circle}
                         source={require('../../src/images/logo.png')}
                            resizeMode="cover"
                     >
                     </Image>
-                    <View style={{flex: 4, flexDirection: 'column', marginLeft: 10, marginTop: 10, marginBottom: 10}}>
-                    <Text style={{flex: 2}} numberOfLines={1}
-                                  ellipsizeMode={'tail'}>{item.title}</Text>
-                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{item.content}</Text>
-                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{convertTime}</Text>
-                    </View>
-                </View>
-
-            </TouchableOpacity>)
+                   
+                    <Text style={{fontWeight: '600',fontSize:16}} >{item.title}</Text>
+                        <Text>{item.content}</Text>
+                        <Text>{convertTime}</Text>
+                   
+                </View>)
     }
 };
 const myStyle = StyleSheet.create({

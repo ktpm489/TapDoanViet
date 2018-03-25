@@ -18,6 +18,7 @@ export const GET_UTILITY = "/api/utility";
 export const CREATE_REQUEST = "/api/service/create-request";
 export const GET_REQUEST = "/api/service/history-transaction";
 export const SEARCH_USER = "/api/user/search?keyword=";
+export const GET_NOTI = "/api/notification/list";
 
 
 export const COLOR_APP_GREEN = '#23b34c';
