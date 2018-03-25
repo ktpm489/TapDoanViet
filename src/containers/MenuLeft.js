@@ -43,11 +43,6 @@ class MenuLeft extends Component {
                                   source = {images.tienich}
                                   onPress = {() => this.props.navigation.navigate('PhiDichVu')}
                     />
-
-                    <ItemLeftMenu title ="Dịch vụ"
-                                  source = {images.info}
-                                  onPress = {()=>this.props.navigation.navigate('DichVu')}
-                    />
                     <ItemLeftMenu title ="Lịch sử yêu cầu dịch vụ"
                                   source = {images.info}
                                   onPress = {()=>this.props.navigation.navigate('ServiceHistory')}
@@ -62,7 +57,7 @@ class MenuLeft extends Component {
                                   onPress = {()=> this.props.navigation.navigate('BaoCaoKhanCap')}
                     />
 
-                    <ItemLeftMenu title ="Góp ý phản hồi"
+                    <ItemLeftMenu title ="Báo cáo sai phạm"
                                   source = {images.gopy}
                                   onPress = {()=> this.props.navigation.navigate('GopYPhanHoi')}
                     />

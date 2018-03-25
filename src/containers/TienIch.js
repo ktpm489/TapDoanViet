@@ -10,7 +10,17 @@ import {
 import {BASE_URL, GET_UTILITY} from "../Constants";
 
 class TienIch extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
 
+        return {
+            title:'Tiện ích',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
     constructor(props){
         super(props);
 
