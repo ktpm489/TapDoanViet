@@ -21,6 +21,7 @@ import PhiDichVu from "../containers/PhiDichVu"
 import TienIchDetail from "../containers/TienIchDetail"
 import SearchUser from "../containers/SearchUser"
 import ServiceHistory from "../containers/ServiceHistory"
+import DangKi from "../containers/DangKi";
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
 
@@ -211,6 +212,9 @@ const Stack = StackNavigator ({
         navigationOptions: {
             title: 'Lịch sử dịch vụ'
         }
+    },
+    DangKi: {
+        screen: DangKi,
     }
 
 

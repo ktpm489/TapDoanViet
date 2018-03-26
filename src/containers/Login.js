@@ -106,9 +106,15 @@ class Login extends Component {
                             <Text style = {{color: 'white', fontWeight:'bold'}}>ĐĂNG NHẬP</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style = {{marginTop:10, color:'#23b34c'}}>Quên mật khẩu?</Text>
-                    </TouchableOpacity>
+                    <View style = {{marginTop:15,flexDirection: 'row', marginHorizontal: 20}}>
+                        <TouchableOpacity style = {{flex:1}}>
+                            <Text style = {{color:'#23b34c', textDecorationLine: 'underline', textAlign:'left',}}>Quên mật khẩu?</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity  style = {{flex:1}}
+                                            onPress = {() => this.props.navigation.navigate('DangKi')}>
+                            <Text style = {{color:'#23b34c', textDecorationLine: 'underline', textAlign:'right'}}>Đăng kí</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </ImageBackground>
         );

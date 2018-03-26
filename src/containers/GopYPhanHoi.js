@@ -5,9 +5,12 @@ import {
     TextInput,
     StyleSheet,
     Image,
+    TouchableOpacity,
 } from 'react-native'
 import Dimensions from 'Dimensions';
 import * as Dimention from "../configs/Dimention";
+import DeviceInfo from 'react-native-device-info';
+import PickerImage from "../components/PickerImage";
 
 class GopYPhanHoi extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -26,17 +29,39 @@ class GopYPhanHoi extends Component {
         this.state = {
             MoTa: '',
         }
-}
+
+    }
+    show(){
+        PickerImage((source, data) => {
+            this.setState({avatarSource: source, dataImage: data}, () => {
+                    this.upload();
+                }
+            )
+        });
+    }
+    upload (){
+        // console.log('base64', this.state.dataImage)
+        // dataImg = this.state.dataImage;
+
+        const { callApiUploadImg } = this.props;
+        callApiUploadImg(this.state.dataImage).then(dataPost => {
+            console.log('datapost1', dataPost)
+
+            // console.log('datapost1', dataPost.message)
+        })
+    }
+
     render (){
         return (
             <View>
-
                 <View style = {styles.viewImage}>
-                    <Image
-                        source={require('../../src/images/camera.png')}
-                        style={styles.imagePost}
+                    <TouchableOpacity onPress={this.show.bind(this)}>
+                        <Image
+                            source={require('../../src/images/camera.png')}
+                            style={styles.imagePost}
 
-                    />
+                        />
+                    </TouchableOpacity>
                     <Text style = {{color: 'black', fontWeight:'bold'}}>Bạn cần đăng 1 hình</Text>
                 </View>
                 <View style = {styles.viewWrap}>
@@ -79,8 +104,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         marginHorizontal: 10,
-        borderColor: "#0288D1",
-        backgroundColor:'#B3E5FC',
+        borderColor: "#23b34c",
+        backgroundColor:'#23b34c',
         height: DEVICE_HEIGHT/12,
         justifyContent:'center',
         alignItems:'center'
@@ -91,10 +116,11 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginHorizontal: 10,
         height: DEVICE_HEIGHT/5,
-        backgroundColor:'#B3E5FC',
+        backgroundColor:'#AED581',
         justifyContent:'center',
         alignItems:'center',
-        borderRadius: 5
+        borderRadius: 5,
+        borderColor:'#23b34c'
     },
     imagePost: {
         width: 60,
