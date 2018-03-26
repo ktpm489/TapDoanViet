@@ -396,7 +396,7 @@ class ModalDichVu extends Component {
                 },
                 body: JSON.stringify({
                     imageData: imgdata,
-                    imageType: 'post',
+                    imageType: 'service',
                 })
 
             }).then((response) => {

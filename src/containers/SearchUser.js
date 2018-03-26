@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Image,
     Picker,
-    AsyncStorage
+    AsyncStorage,
+    ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import TinNhanItem from '../components/TinNhanItem';
@@ -23,6 +24,7 @@ export default class SearchUser extends Component {
         this.token = '';
         this.state = {
             resultSearch: [],
+            isLoading:false
         };
         this.timeout = 0;
     }
@@ -73,7 +75,43 @@ export default class SearchUser extends Component {
         this.timeout = setTimeout(executeFunction, wait);
     }
 
+    callApi = (textSearch)=>{
+        this.setState({isLoading:true})
+        if(textSearch === ""){
+            this.setState({resultSearch:[],isLoading:false})
+            return;
+        }
+
+        console.log('text',textSearch);
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(URL.BASE_URL + URL.SEARCH_USER+textSearch, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('search user data: ', data);
+                if(data && data.errorCode == 0){
+                    this.setState({resultSearch:data.data,isLoading:false})
+                }
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+    }
+
     render() {
+
+
+        
         const {navigation} = this.props;
         return (
             <View style={{flex:1,flexDirection:'column',margin:10}}>
@@ -87,12 +125,14 @@ export default class SearchUser extends Component {
                                 
                             }}
                             onChangeText={(text)=>this.debounce(function(e){
-                                   console.log('text');
-                            }, 1000)}
+                                   
+                                   this.callApi(text);
+                            }.bind(this), 1000)}
                             underlineColorAndroid='transparent'
                             placeholder="Nhập tên"
             
             />
+            
                     <Text style={{height:20,textAlign:'center'}}>{this.state.resultSearch.length == 0?"Dữ liệu rỗng":""}</Text>
                     <FlatList
                         data={this.state.resultSearch}
@@ -107,6 +147,13 @@ export default class SearchUser extends Component {
                         keyExtractor={(item, index) => index.toString()}
                         ItemSeparatorComponent={this.renderSeparator}
                     />
+                    {this.state.isLoading?
+                        <View style={{top:50,bottom:0,left:0,right:0, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1}}>
+                            <ActivityIndicator size="large" color="green"/>
+                        </View>:null
+                    }
+
+                   
                     
                 </View>
         );

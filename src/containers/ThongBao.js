@@ -3,7 +3,8 @@ import {
     View,
     Text,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    AsyncStorage 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import ThongBaoItem from '../components/ThongBaoItem';
@@ -31,33 +32,41 @@ export default class ThongBao extends Component {
         super(props)
 
         this.state = {
-            listNoti:[
-                {
-                    img:'',
-                    title:'title1',
-                    body:'body1',
-                    content:'abcd',
-                    isSeen:false,
-                    time:'2017-03-01 8:00'
-                },
-                {
-                    img:'',
-                    title:'title1',
-                    body:'body1',
-                    content:'abcd',
-                    isSeen:true,
-                    time:'2017-03-01 8:00'
-                },{
-                    img:'',
-                    title:'title1',
-                    body:'body1',
-                    content:'abcd',
-                    isSeen:false,
-                    time:'2017-03-01 8:00'
-                }
-            ]
+            listNoti:[]
         }
 
+    }
+
+    callApi = (page,pageSize)=>{
+         
+
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(URL.BASE_URL + URL.GET_NOTI, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('get list noti ', data);
+                if(data && data.errorCode == 0){
+                    this.setState({listNoti:data.data})
+                }
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+    }
+
+    componentWillMount(){
+        this.callApi();
     }
     render (){
         const {navigation} = this.props;

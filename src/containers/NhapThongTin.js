@@ -5,58 +5,92 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
-
+    Picker
 } from 'react-native';
 import Dimensions from 'Dimensions';
 class NhapThongTin extends Component {
-    constructor(props) {
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
+
+        return {
+            title:'Nhập thông tin',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
+    constructor(props){
         super(props)
         this.state = {
-            SoDienThoai: '',
-            MatKhau: '',
+            GioiTinh: '',
+            Ho: '',
+            Ten: '',
+            Email: '',
+
         }
     }
 
     render() {
         return (
-            <View style={{alignItems: 'center'}}>
-                <Text style={{fontWeight: 'bold', color: 'black', marginTop: 10, fontSize: 16}}>Nhập số điện
-                    thoại</Text>
-                {/*<View style={{justifyContent: 'center', alignItems: 'center'}}>*/}
-                    {/*<Text style={{marginTop: 8, fontSize: 13}}>Số điện thoại này được sử dụng để đăng nhập và*/}
-                        {/*đặt </Text>*/}
-                    {/*<Text style={{fontSize: 13}}>lại mật khẩu khi cần. </Text>*/}
-                {/*</View>*/}
-                <View style={{flexDirection: 'row', backgroundColor: 'white',marginTop: 15, minHeight: 30, alignItems: 'center'}}>
-                    <Text style={{fontSize: 18, color: "#23b34c", marginLeft: 10, flex: 1}}>VN</Text>
-                    <TextInput placeholder='Nhập số điện thoại'
-                               underlineColorAndroid="transparent"
-                               onChangeText={(SoDienThoai) => this.setState({SoDienThoai})}
-                               placeholderTextSize="20"
-                               style={{flex: 10}}/>
+            <View style = {{backgroundColor:'white', flex:1}}>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15, marginTop: 10}}>Họ</Text>
+                <TextInput
+                    style = {{marginLeft: 10}}
+                    placeholder = 'Nhập họ'
+                    underlineColorAndroid="transparent"
+                    onChangeText = {(Ho) => this.setState({Ho})}/>
+                <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tên</Text>
+                <TextInput
+                    style = {{marginLeft: 10}}
+                    placeholder = 'Nhập tên'
+                    underlineColorAndroid="transparent"
+                    onChangeText = {(Ten) => this.setState({Ten})}/>
+                <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Email</Text>
+                <TextInput
+                    style = {{marginLeft: 10}}
+                    placeholder = 'Tên'
+                    underlineColorAndroid="transparent"
+                    onChangeText = {(Email) => this.setState({Email})}/>
+                <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính</Text>
+                <Picker
+                    style = {{ width: 100, marginLeft: 3}}
+                    selectedValue={this.state.GioiTinh}
+                    onValueChange={(value) => this.setState({GioiTinh: value})}>
+                    <Picker.Item label = {'Nam'} value ={'0'}/>
+                    <Picker.Item label = {'Nữ'} value ={'1'}/>
+                    <Picker.Item label = {'Khác'} value ={'2'}/>
+                </Picker>
+                <View style = {styles.viewGui}>
+                    <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>
+                        TIẾP TỤC
+                    </Text>
+
+
                 </View>
-                <Text style={{fontWeight: 'bold', color: 'black', marginTop: 10, fontSize: 16}}>Nhập mật khẩu</Text>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{marginTop: 8, fontSize: 13}}>Tạo mật khẩu cho tài khoản của bạn</Text>
-                </View>
-                <View style={{flexDirection: 'row', backgroundColor: 'white',marginTop: 15, minHeight: 30, alignItems: 'center'}}>
-                    <Text style={{fontSize: 18, color: "#23b34c", marginLeft: 10, flex: 1}}>VN</Text>
-                    <TextInput placeholder='Nhập mật khẩu'
-                               underlineColorAndroid="transparent"
-                               onChangeText={(SoDienThoai) => this.setState({SoDienThoai})}
-                               placeholderTextSize="20"
-                               style={{flex: 10}}/>
-                </View>
-                <TouchableOpacity>
-                    <View style = {{backgroundColor:'#23b34c',borderWidth:1,borderColor:'#23b34c',width: DEVICE_WIDTH - 40,  marginHorizontal: 20, marginTop:30, minHeight:40,alignItems:'center', justifyContent: 'center'}}>
-                        <Text style = {{color: 'white', fontWeight:'bold'}}>Tiếp tục</Text>
-                    </View>
-                </TouchableOpacity>
+
             </View>
         )
     }
 }
 
 export default NhapThongTin
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const styles = StyleSheet.create({})
+const DEVICE_HEIGHT = Dimensions.get('window').height;
+const styles = StyleSheet.create({
+    viewGui: {
+        marginTop: 20,
+        borderWidth: 1,
+        borderRadius: 5,
+        marginHorizontal: 10,
+        borderColor: "#23b34c",
+        backgroundColor:'#23b34c',
+        height: DEVICE_HEIGHT/12,
+        justifyContent:'center',
+        alignItems:'center'
+
+
+    },
+})

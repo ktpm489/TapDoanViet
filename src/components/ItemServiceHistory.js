@@ -9,7 +9,7 @@ import {
 
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
-
+import moment from 'moment';
 export default class ItemServiceHistory extends Component {
 
     constructor(props) {
@@ -30,7 +30,10 @@ export default class ItemServiceHistory extends Component {
     render() {
         const {navigation} = this.props;
         const item = this.props.dataItem;
-        console.log("key:",item.key);
+        var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:MM");
+        var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:MM");
+
+
         var arrImages = [];
         if(item.images !== ""){
             arrImages = item.images.split(",");
@@ -46,7 +49,7 @@ export default class ItemServiceHistory extends Component {
                     borderColor:'grey',borderRadius:4,borderWidth:2,
                 }}
             
-                onPress={()=>alert(1)}
+               // onPress={()=>alert(1)}
             >
                 <Image
                 source={{uri:arrImages[i]}}
@@ -56,6 +59,7 @@ export default class ItemServiceHistory extends Component {
                 />
             </TouchableOpacity>)
         }
+        console.log("img",arrImages);
         
 
        
@@ -70,12 +74,30 @@ export default class ItemServiceHistory extends Component {
                 <View 
                    
                       >
-                    <Text>Họ tên: {item.fullName}</Text>
-                    <Text>Số điện thoại: {item.phoneNumber}</Text>
-                    <Text>Address: {item.address}</Text>
-                    <Text>Đặt lịch: {item.orderAt}</Text>
-                    <Text>Yêu cầu lúc: {item.createdAt}</Text>
-                    <Text>Dịch vụ đăng ký: {item.service.serviceName}</Text>
+                    <Text >
+                        <Text style={{fontWeight: "bold"}}>Họ tên: </Text>
+                        <Text>{item.fullName}</Text>
+                    </Text>
+                    <Text>
+                        <Text style={{fontWeight: "bold"}}>Số điện thoại: </Text>
+                        <Text>{item.phoneNumber}</Text>
+                    </Text>
+                    <Text>
+                        <Text style={{fontWeight: "bold"}}>Address: </Text>
+                        <Text>{item.address}</Text>
+                    </Text>
+                    <Text>
+                        <Text style={{fontWeight: "bold"}}>Đặt lịch: </Text>
+                        <Text>{orderAt}</Text>
+                    </Text>
+                    <Text>
+                        <Text style={{fontWeight: "bold"}}>Yêu cầu lúc: </Text>
+                        <Text>{createdAt}</Text>
+                    </Text>
+                    <Text>
+                        <Text style={{fontWeight: "bold"}}>Dịch vụ đăng ký: </Text>
+                        <Text>{item.service.serviceName}</Text>
+                    </Text>
 
                     <View style={{marginTop:10,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                                {imgRender}

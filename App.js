@@ -53,7 +53,7 @@ export default class App extends Component<{}> {
 
     pushDeviceToken = (token_APP, device_token) => {
         console.log("os", Platform);
-        console.log("version",  DeviceInfo);
+        // console.log("version",  DeviceInfo);
 
         fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
             method: 'POST',

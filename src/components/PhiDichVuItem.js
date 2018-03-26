@@ -83,6 +83,23 @@ export default class PhiDichVuItem extends Component {
 
                 </View>
 
+                <TouchableOpacity
+                    style={{backgroundColor:'#FF9800',alignSelf:'center',padding:10,
+                    borderRadius:5,
+                    borderColor:'#FF9800',
+                    shadowColor: '#FF9800',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.8,
+                }}
+
+                onPress={()=>{
+                    alert("Vui lòng thanh toán bằng tiền mặt")
+                }}
+                >
+                    <Text>Thanh toán</Text>
+                </TouchableOpacity>
+                <View style={{height:1,backgroundColor:'gray',margin:10}}></View>
+
             </TouchableOpacity>)
     }
 };
