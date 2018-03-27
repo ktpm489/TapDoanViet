@@ -57,10 +57,10 @@ class MenuLeft extends Component {
                                   onPress = {()=> this.props.navigation.navigate('BaoCaoKhanCap')}
                     />
 
-                    <ItemLeftMenu title ="Báo cáo sai phạm"
+                    {/* <ItemLeftMenu title ="Báo cáo sai phạm"
                                   source = {images.gopy}
                                   onPress = {()=> this.props.navigation.navigate('GopYPhanHoi')}
-                    />
+                    /> */}
                     <TouchableOpacity
                         onPress = {this.Logout.bind(this)}
                         style={{flexDirection: 'row',marginTop:20, marginBottom:20}}>

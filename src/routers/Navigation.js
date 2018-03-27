@@ -187,10 +187,10 @@ const Stack = StackNavigator ({
         screen: BaoCaoKhanCap,
 
     },
-    GopYPhanHoi: {
-        screen: GopYPhanHoi,
+    // GopYPhanHoi: {
+    //     screen: GopYPhanHoi,
 
-    },
+    // },
     DichVuDetail:{
         screen:DichVuDetail
     },
