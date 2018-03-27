@@ -25,21 +25,30 @@ export default class TinNhanItem extends Component {
     }
     render() {
         const {navigation} = this.props;
-        const {item} = this.props.dataItem;
+        const {item,index} = this.props.dataItem;
+        console.log("index",item)
+       
+        const{fromSearch} = this.props;
+        
         return (
 
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('Chat', {dataUser: item});
+                    if(fromSearch){
+                        
+                        this.props.sendDataClick(item,index);
+                    }else
+                        navigation.navigate('Chat', {dataUser: item});
                 }}
             >
-                <View key={item.index}
+                <View key={index}
                       style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                     <Image style={myStyle.image_circle}
-
-                           source={{
-                               uri: 'https://znews-photo-td.zadn.vn/w820/Uploaded/kcwvouvs/2017_04_18/15624155_1264609093595675_8005514290339512320_n.jpg'
+                        
+                           source={item.avatar.length == 0?require("../images/logo.png"):{
+                               uri:item.avatarUrl
                            }}
+                          
                            resizeMode="cover"
                     >
                     </Image>

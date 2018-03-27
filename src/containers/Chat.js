@@ -27,7 +27,8 @@ class Chat extends Component {
     constructor(props) {
         super(props);
         this.dataUser2 = this.props.navigation.state.params.dataUser;
-        console.log("data pass", this.dataUser2);
+        // console.log("user",this.dataUser2);
+        // console.log("data pass", this.dataUser2);
         console.ignoredYellowBox = [
             'Setting a timer'
         ];
@@ -114,15 +115,15 @@ class Chat extends Component {
         if (this.input_msg === "")
             return;
         this.textInput.clear();
-        console.log("msg:", this.input_msg);
-        console.log("user:", this.dataUser2._id);
+        // console.log("msg:", this.input_msg);
+        // console.log("user:", this.dataUser2._id);
 
         var sendTo = {
             room: this.dataUser2._id,
             userName: this.dataUser2.userName
 
         };
-        console.log("room", this.props.SocketRef.userSocket.room);
+        // console.log("room", this.props.SocketRef.userSocket.room);
         let dataSend = {
             sender: this.props.SocketRef.userSocket,
             to: sendTo,

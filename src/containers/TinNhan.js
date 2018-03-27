@@ -148,7 +148,7 @@ export default class TinNhan extends Component {
                             <TouchableOpacity
                                 style ={{flex:1,justifyContent:'center',alignItems:'center'}}
                                 onPress={()=>{
-                                    navigation.navigate("SearchUser");
+                                    navigation.navigate("CreateGroup");
                                     this.refs.modal.close()
                                 }}
 

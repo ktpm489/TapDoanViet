@@ -134,7 +134,8 @@ class ModalDichVu extends Component {
         const { navigation } = this.props;
         if(this.props.userInfo && this.props.userInfo.userInfo){
             const userInfo = this.props.userInfo.userInfo;
-            this.name = userInfo.firstName;
+            this.name = userInfo.firstName +" "+ userInfo.lastName;
+            this.phone = userInfo.phoneNumber;
             console.log("userInfo",userInfo);
         }
         return (
@@ -221,6 +222,7 @@ class ModalDichVu extends Component {
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
                                 keyboardType='numeric'
+                                value={this.phone}
                                 onChangeText={(text)=>this.phone = text}
                             />
 
