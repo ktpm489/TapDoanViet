@@ -83,7 +83,7 @@ export default class ItemServiceHistory extends Component {
                         <Text>{item.phoneNumber}</Text>
                     </Text>
                     <Text>
-                        <Text style={{fontWeight: "bold"}}>Address: </Text>
+                        <Text style={{fontWeight: "bold"}}>Địa chỉ: </Text>
                         <Text>{item.address}</Text>
                     </Text>
                     <Text>

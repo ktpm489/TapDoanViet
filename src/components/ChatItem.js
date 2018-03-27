@@ -67,8 +67,8 @@ export default class ChatItem extends Component {
 
                         <Image style={myStyle.image_circle}
 
-                               source={{
-                                   uri: 'https://znews-photo-td.zadn.vn/w820/Uploaded/kcwvouvs/2017_04_18/15624155_1264609093595675_8005514290339512320_n.jpg'
+                               source={this.props.dataItem.sender.avatar.length==0?require("../images/logo.png"):{
+                                   uri: this.props.dataItem.sender.avatarUrl
                                }}
                                resizeMode="cover"
                         >
