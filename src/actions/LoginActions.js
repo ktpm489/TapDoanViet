@@ -35,7 +35,7 @@ export const callApiLogin = (sdt, mk) => {
                 })
                 resolve(data);
             }).catch(e => {
-                console.log('exception')
+                console.log('exception',e)
             })
         })
     }

@@ -117,7 +117,7 @@ export default class SearchUser extends Component {
             <View style={{flex:1,flexDirection:'column',margin:10}}>
             <TextInput style={{
                                 borderWidth:1,
-                                borderRadius:1,
+                                borderRadius:4,
                                 borderColor:'#000',
                                 shadowColor: '#000',
                                 paddingLeft:5,

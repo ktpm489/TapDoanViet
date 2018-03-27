@@ -24,6 +24,7 @@ import ServiceHistory from "../containers/ServiceHistory"
 import DangKi from "../containers/DangKi";
 import ThongBaoDetail from "../containers/ThongBaoDetail";
 import NhapThongTin from "../containers/NhapThongTin";
+import CreateGroup from "../containers/CreateGroup"
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
 
@@ -208,6 +209,12 @@ const Stack = StackNavigator ({
             title: 'Tìm kiếm'
         }
 
+    },
+    CreateGroup:{
+        screen:CreateGroup,
+        navigationOptions:{
+            title:'Tạo nhóm'
+        }
     },
     ServiceHistory:{
         screen:ServiceHistory,

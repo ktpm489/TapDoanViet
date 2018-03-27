@@ -25,15 +25,23 @@ export default class TinNhanItem extends Component {
     }
     render() {
         const {navigation} = this.props;
-        const {item} = this.props.dataItem;
+        const {item,index} = this.props.dataItem;
+       
+       
+        const{fromSearch} = this.props;
+        
         return (
 
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('Chat', {dataUser: item});
+                    if(fromSearch){
+                        console.log("index",index)
+                        this.props.sendDataClick(item,index);
+                    }else
+                        navigation.navigate('Chat', {dataUser: item});
                 }}
             >
-                <View key={item.index}
+                <View key={index}
                       style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                     <Image style={myStyle.image_circle}
 
