@@ -26,7 +26,16 @@ export default class Launcher extends Component{
         AsyncStorage.getItem('token').then((value)=>{
             console.log("token",value);
             if(value){ // co van de
-                this.props.navigation.navigate('Tab')
+                // this.props.navigation.navigate('Tab')
+                const resetAction = NavigationActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({
+                            routeName: 'Tab',
+                        }),
+                    ]
+                });
+                this.props.navigation.dispatch(resetAction)
             }
             else {
                 const resetAction = NavigationActions.reset({
@@ -44,7 +53,9 @@ export default class Launcher extends Component{
     render (){
         return (
             <View style = {{ flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
-                <Text>Logo</Text>
+                <Image
+                    source={require('../../src/images/logo.png')}
+                />
             </View>
         )
 

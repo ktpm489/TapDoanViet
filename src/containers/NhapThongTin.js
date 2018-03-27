@@ -5,9 +5,14 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
-    Picker
+    Picker,
+    Alert,
 } from 'react-native';
 import Dimensions from 'Dimensions';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {callApiDangKy} from "../actions/DangKyActions";
+import { NavigationActions } from 'react-navigation';
 class NhapThongTin extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
@@ -23,14 +28,54 @@ class NhapThongTin extends Component {
     constructor(props){
         super(props)
         this.state = {
-            GioiTinh: '',
+            GioiTinh: 1,
             Ho: '',
             Ten: '',
             Email: '',
 
         }
     }
+    DangKyTaiKhoan=  ()=> {
+        const { params } = this.props.navigation.state
+        console.log('params', params)
+        const { callApiDangKy } = this.props
+        callApiDangKy(this.state.Ten, this.state.Ho, this.state.Email, params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh).then(dataRes => {
+            if(dataRes.errorCode===0) {
+                Alert.alert(
+                    'Alert',
+                    "Đăng kí tài khoản thành công",
+                    [
+                        {text: 'OK', onPress: () => {
+                                const resetAction = NavigationActions.reset({
+                                    index: 0,
+                                    actions: [
+                                        NavigationActions.navigate({
+                                            routeName: 'Login',
+                                        }),
+                                    ]
+                                });
+                                this.props.navigation.dispatch(resetAction)
+                            }},
+                    ],
+                    { cancelable: false }
+                )
+            }
+            else {
+                Alert.alert(
+                    'Alert',
+                    "Đăng kí không thành công",
+                    [
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                )
+            }
 
+
+
+        })
+
+    }
     render() {
         return (
             <View style = {{backgroundColor:'white', flex:1}}>
@@ -60,23 +105,37 @@ class NhapThongTin extends Component {
                     style = {{ width: 100, marginLeft: 3}}
                     selectedValue={this.state.GioiTinh}
                     onValueChange={(value) => this.setState({GioiTinh: value})}>
-                    <Picker.Item label = {'Nam'} value ={'0'}/>
-                    <Picker.Item label = {'Nữ'} value ={'1'}/>
-                    <Picker.Item label = {'Khác'} value ={'2'}/>
+                    <Picker.Item label = {'Nam'} value ={'1'}/>
+                    <Picker.Item label = {'Nữ'} value ={'2'}/>
+                    <Picker.Item label = {'Khác'} value ={'3'}/>
                 </Picker>
-                <View style = {styles.viewGui}>
-                    <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>
-                        TIẾP TỤC
-                    </Text>
+                <TouchableOpacity onPress = {this.DangKyTaiKhoan}>
+                    <View style = {styles.viewGui}>
+                        <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>
+                            TIẾP TỤC
+                        </Text>
 
 
-                </View>
+                    </View>
+                </TouchableOpacity>
 
             </View>
         )
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        callApiDangKy: bindActionCreators(callApiDangKy, dispatch)
+    }
+};
+
+NhapThongTin = connect(mapStateToProps, mapDispatchToProps)(NhapThongTin);
 export default NhapThongTin
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({

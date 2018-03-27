@@ -26,12 +26,13 @@ class DangKi extends Component {
         this.state = {
             SoDienThoai: '',
             MatKhau: '',
+            MatKhauConfirm: '',
         }
     }
     render (){
         return (
             <View>
-                <View style = {{marginTop: 10, height:DEVICE_HEIGHT/5, marginHorizontal:10, backgroundColor:"white", borderColor: '#9E9E9E', borderWidth:1}}>
+                <View style = {{marginTop: 10, height:DEVICE_HEIGHT/4, marginHorizontal:10, backgroundColor:"white", borderColor: '#9E9E9E', borderWidth:1}}>
                     <View style = {{flex:1,justifyContent:'center'}}>
                         <TextInput
                             style = {{marginLeft: 10}}
@@ -47,8 +48,21 @@ class DangKi extends Component {
                             underlineColorAndroid="transparent"
                             onChangeText = {(MatKhau) => this.setState({MatKhau})}/>
                     </View>
+                    <View style = {{height:1, backgroundColor: '#9E9E9E'}}/>
+                    <View style = {{flex:1, justifyContent:'center'}}>
+                        <TextInput
+                            style = {{marginLeft: 10}}
+                            placeholder = 'Xác nhận mật khẩu'
+                            underlineColorAndroid="transparent"
+                            onChangeText = {(MatKhauConfirm) => this.setState({MatKhauConfirm})}/>
+                    </View>
                 </View>
-                <TouchableOpacity onPress = {()=> this.props.navigation.navigate('NhapThongTin')}>
+                <TouchableOpacity onPress = {()=> this.props.navigation.navigate('NhapThongTin',
+                    {
+                        SDT: this.state.SoDienThoai,
+                        MK: this.state.MatKhau,
+                        MKConfirm: this.state.MatKhauConfirm
+                                })}>
                     <View style = {styles.viewGui}>
                         <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>
                             TIẾP TỤC

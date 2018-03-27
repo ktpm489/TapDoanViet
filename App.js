@@ -13,7 +13,7 @@ import {
     Platform
 } from 'react-native';
 import {Provider} from 'react-redux'
-
+import DeviceInfo from 'react-native-device-info';
 import store from './src/store'
 import RootStack from './src/routers/Navigation'
 import FCM, {
@@ -64,7 +64,7 @@ export default class App extends Component<{}> {
                 token: device_token,
                 os: Platform.OS,
                 version: Platform.Version,
-                deviceName:  DeviceInfo.getUniqueID()
+                deviceName:  DeviceInfo.getBrand()
             })
         }).then(data => data.json()).then(data => {
             console.log("data push device token", data)

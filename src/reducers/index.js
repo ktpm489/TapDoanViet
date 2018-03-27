@@ -9,6 +9,7 @@ import MessageReducers from './MessageReducers'
 import ProfileReducers from './ProfileReducers'
 import GetPostReducers from './GetPostReducers'
 import CreateCmtReducers from './CreateCmtReducers'
+import DangKyReducers from "./DangKyReducers";
 
 const appStore = combineReducers({
     LoginReducers,
@@ -20,7 +21,7 @@ const appStore = combineReducers({
     MessageReducers,
     ProfileReducers,
     GetPostReducers,
-    CreateCmtReducers
-
+    CreateCmtReducers,
+    DangKyReducers
 });
 export default appStore
