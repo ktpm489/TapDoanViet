@@ -26,7 +26,7 @@ class StatusItems extends Component {
                         >
                         </Image>
                         <View style = {{marginLeft: 10}}>
-                            <Text style = {{color: 'black', fontWeight:'bold'}}>{item.createdBy.userName}</Text>
+                            <Text style = {{color: 'black', fontWeight:'bold'}}>{item.createdBy.lastName} {item.createdBy.firstName}</Text>
                             <Text>{moment(item.createdAt).startOf("hour").fromNow()}</Text>
                         </View>
                     </View>

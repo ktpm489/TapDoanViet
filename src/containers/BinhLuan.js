@@ -33,9 +33,9 @@ class BinhLuan extends Component {
                 // this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
                 this.props.SocketRef.socket.on('comment', (dataCmt) => {
                     console.log("receiev msg", dataCmt);
-                    // let newCmt = this.state.dataCmt;
-                    // newCmt.push(dataCmt);
-                    // this.setState({dataCmt: newCmt});
+                    let newCmt = this.state.dataCmt;
+                    newCmt.push(dataCmt);
+                    this.setState({dataCmt: newCmt});
                 });
                 
 
