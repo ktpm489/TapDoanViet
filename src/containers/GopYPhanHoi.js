@@ -20,6 +20,7 @@ class GopYPhanHoi extends Component {
             isCheck:true,
             dataImage: null,
             avatarSource: null,
+            Mota: ''
 
         }
 
@@ -35,54 +36,46 @@ class GopYPhanHoi extends Component {
 
         }
     }
-    constructor(props){
-        super(props)
-        this.state = {
-            MoTa: '',
-        }
 
-    }
     show(){
         PickerImage((source, data) => {
             this.setState({avatarSource: source, dataImage: data,isCheck: false}, () => {
-                    // this.upload();
+                    this.upload();
                 }
             )
         });
     }
-    // upload (){
-    //     // console.log('base64', this.state.dataImage)
-    //     // dataImg = this.state.dataImage;
-    //
-    //     const { callApiUploadImg } = this.props;
-    //     callApiUploadImg(this.state.dataImage).then(dataPost => {
-    //         console.log('datapost1', dataPost)
-    //
-    //         // console.log('datapost1', dataPost.message)
-    //     })
-    // }
+    upload (){
+        // console.log('base64', this.state.dataImage)
+        // dataImg = this.state.dataImage;
 
+        const { callApiUploadImg } = this.props;
+        callApiUploadImg(this.state.dataImage).then(dataPost => {
+            console.log('datapost1', dataPost)
+
+            // console.log('datapost1', dataPost.message)
+        })
+    }
     render (){
-        let img = this.state.avatarSource == null ? null :
+        let img = this.state.avatarSource == null? null:
             <Image
                 source={this.state.avatarSource}
                 style={styles.viewImage}
-
             />
         return (
             <View>
                 {
                     this.state.isCheck ?
-                        <View style={styles.viewImage}>
-                            <TouchableOpacity onPress={this.show.bind(this)}>
-                                <Image
-                                    source={require('../../../images/camera.png')}
-                                    style={styles.imagePost}
+                    <View style={styles.viewImage}>
+                        <TouchableOpacity onPress={this.show.bind(this)}>
+                            <Image
+                                source={require('../images/camera.png')}
+                                style={styles.imagePost}
 
-                                />
-                            </TouchableOpacity>
-                            <Text style={{color: 'black', fontWeight: 'bold'}}>Bạn cần đăng 1 hình</Text>
-                        </View> : img
+                            />
+                        </TouchableOpacity>
+                        <Text style={{color: 'black', fontWeight: 'bold'}}>Bạn cần đăng 1 hình</Text>
+                    </View> : img
                 }
                 <View style = {styles.viewWrap}>
                     <TextInput
@@ -114,7 +107,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        callApiUploadImg: bindActionCreators(callApiUploadImg, dispatch),
+        callApiUploadImg : bindActionCreators(callApiUploadImg, dispatch),
     };
 }
 

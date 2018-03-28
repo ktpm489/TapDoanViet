@@ -52,10 +52,10 @@ class MenuLeft extends Component {
                                   onPress = {()=>this.props.navigation.navigate('TienIch')}
                     />
 
-                    <ItemLeftMenu title ="Báo cáo khẩn cấp"
-                                  source = {images.baocao}
-                                  onPress = {()=> this.props.navigation.navigate('BaoCaoKhanCap')}
-                    />
+                    {/*<ItemLeftMenu title ="Báo cáo khẩn cấp"*/}
+                                  {/*source = {images.baocao}*/}
+                                  {/*onPress = {()=> this.props.navigation.navigate('BaoCaoKhanCap')}*/}
+                    {/*/>*/}
 
                     <ItemLeftMenu title ="Báo cáo sai phạm"
                                   source = {images.gopy}
