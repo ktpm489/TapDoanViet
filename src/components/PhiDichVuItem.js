@@ -90,6 +90,7 @@ export default class PhiDichVuItem extends Component {
                     shadowColor: '#FF9800',
                     shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: 0.8,
+                    
                 }}
 
                 onPress={()=>{

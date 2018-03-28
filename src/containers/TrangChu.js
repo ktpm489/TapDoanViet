@@ -58,7 +58,7 @@ class TrangChu extends Component {
     render (){
         if (this.state.isLoading) {
             return (
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#718792'}}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
                     <ActivityIndicator size="large" color="white"/>
                 </View>
             );

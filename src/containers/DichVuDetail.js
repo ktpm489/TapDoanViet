@@ -6,7 +6,8 @@ import {
     Image,
     ScrollView,
     TouchableOpacity,
-    WebView
+    WebView,
+    ActivityIndicator
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -33,7 +34,8 @@ export default class DichVuDetail extends Component {
         super(props);
 
         this.state = {
-            isDisabled:false
+            isDisabled:false,
+            isLoading:false
         }
     }
 
@@ -46,6 +48,11 @@ export default class DichVuDetail extends Component {
 
     childCloseModal = ()=>{
         this.refs.modal.close();
+        this.setState({isLoading:true});
+    }
+
+    onCallApiDone = ()=>{
+        this.setState({isLoading:false});
     }
 
     render() {
@@ -68,6 +75,7 @@ export default class DichVuDetail extends Component {
                    <ModalDichVu
                         id_dichvu={item.id}
                         closeModal = {this.childCloseModal}
+                        onCallApiDone = {this.onCallApiDone}
                    />
                 </Modal>
 
@@ -117,6 +125,12 @@ export default class DichVuDetail extends Component {
                     
                        
                 </ScrollView>
+
+                {this.state.isLoading?
+                    <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View>:null
+                }
                 
                 
 

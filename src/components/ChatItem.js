@@ -75,6 +75,9 @@ export default class ChatItem extends Component {
                         </Image>
                         <View>
                             <View style={{marginRight: Dimention.DEVICE_WIDTH / 3}}>
+                            {this.props.fromGroupChat?
+                                <Text style ={{marginLeft:2}}>{this.props.dataItem.sender.userName}</Text>:null
+                            }
                                 <Text style={{
                                     borderRadius: 10,
                                     backgroundColor: '#FAFAFA',

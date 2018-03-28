@@ -26,14 +26,17 @@ export default class TinNhanItem extends Component {
     render() {
         const {navigation} = this.props;
         const {item,index} = this.props.dataItem;
-        console.log("index",item)
+        // console.log("item",item)
        
         const{fromSearch} = this.props;
+        const{fromDachSach} = this.props;
         
         return (
 
             <TouchableOpacity
                 onPress={() => {
+                    if(fromDachSach)
+                        return;
                     if(fromSearch){
                         
                         this.props.sendDataClick(item,index);
@@ -45,9 +48,12 @@ export default class TinNhanItem extends Component {
                       style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                     <Image style={myStyle.image_circle}
                         
-                           source={item.avatar.length == 0?require("../images/logo.png"):{
-                               uri:item.avatarUrl
-                           }}
+                        //    source={!item.avatar || item.avatar.length == 0?require("../images/logo.png"):{
+                        //        uri:item.avatarUrl
+                        //    }}
+                        source={!item.avatarUrl || item.avatarUrl.length == 0?require("../images/logo.png"):{
+                                   uri:item.avatarUrl
+                               }}
                           
                            resizeMode="cover"
                     >
