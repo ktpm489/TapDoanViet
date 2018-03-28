@@ -25,6 +25,11 @@ import DangKi from "../containers/DangKi";
 import ThongBaoDetail from "../containers/ThongBaoDetail";
 import NhapThongTin from "../containers/NhapThongTin";
 import CreateGroup from "../containers/CreateGroup"
+import AboutUs from "../containers/AboutUs"
+import DieuKhoan from "../containers/DieuKhoan"
+import ChatGroup from "../containers/ChatGroup"
+import DanhSachNhom from "../containers/DanhSachNhom";
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
 
@@ -212,9 +217,9 @@ const Stack = StackNavigator ({
     },
     CreateGroup:{
         screen:CreateGroup,
-        navigationOptions:{
-            title:'Tạo nhóm'
-        }
+        // navigationOptions:{
+        //     title:'Tạo nhóm'
+        // }
     },
     ServiceHistory:{
         screen:ServiceHistory,
@@ -233,6 +238,28 @@ const Stack = StackNavigator ({
         screen:ThongBaoDetail,
         navigationOptions: {
             title: 'Chi tiết thông báo'
+        }
+    },
+    DieuKhoan:{
+        screen:DieuKhoan,
+        navigationOptions: {
+            title: 'Điều khoản'
+        }
+    },
+    AboutUs:{
+        screen:AboutUs,
+        navigationOptions: {
+            title: 'Về chúng tôi'
+        }
+    },
+    ChatGroup:{
+        screen:ChatGroup,
+        
+    },
+    DanhSachNhom:{
+        screen:DanhSachNhom,
+        navigationOptions: {
+            title: 'Thành viên'
         }
     }
 

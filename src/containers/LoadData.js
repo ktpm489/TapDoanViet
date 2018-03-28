@@ -33,7 +33,7 @@ class LoadData extends Component {
 
     render (){
         return (
-            <View style={{flex: 1,justifyContent:'center', alignItems: 'center'}}>
+            <View style={{flex: 1,justifyContent:'center', alignItems: 'center',backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
                 <ActivityIndicator size="large"/>
             </View>
         );

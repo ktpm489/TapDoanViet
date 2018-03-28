@@ -4,7 +4,8 @@ import {
     Text,
     AsyncStorage,
     TouchableOpacity,
-    FlatList,ScrollView
+    FlatList,ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -39,7 +40,8 @@ class DichVu extends Component {
         this.state = {
           
             listDichVu: [],
-            imageSlider:[]
+            imageSlider:[],
+            isLoading:false
 
         };
 
@@ -73,10 +75,11 @@ class DichVu extends Component {
         console.log("call dich vu");
         this.getListDichVu();
         const {callApiDichVu} = this.props;
+        this.setState({isLoading:true})
         callApiDichVu().then(data => {
 
             console.log("aaa",data);
-                this.setState({imageSlider:data.data});
+                this.setState({imageSlider:data.data,isLoading:false});
                 console.log("state11111",this.state);
         });
         const { callApiProfile } = this.props;
@@ -88,6 +91,7 @@ class DichVu extends Component {
 
     getListDichVu =  ()=>{
         AsyncStorage.getItem('token').then((value)=> {
+            this.setState({isLoading:true})
             fetch(URL.BASE_URL + URL.GET_SERVICE, {
                 method: "GET",
                 headers: {
@@ -101,7 +105,7 @@ class DichVu extends Component {
             }).then(data => {
                 console.log('get dichvu response', data);
                 if(data && data.errorCode == 0){
-                    this.setState({listDichVu:data.data})
+                    this.setState({listDichVu:data.data,isLoading:false})
                 }
                
             }).catch(e => {
@@ -145,6 +149,11 @@ class DichVu extends Component {
                         keyExtractor={(item, index) => index.toString()}
                         style={{marginBottom: 100, marginLeft: 10, marginRight: 10, marginTop: 10}}
                     />
+                    {this.state.isLoading?
+                        <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                            <ActivityIndicator size="large" color="green"/>
+                        </View>:null
+                    }
             </ScrollView>
 
         );

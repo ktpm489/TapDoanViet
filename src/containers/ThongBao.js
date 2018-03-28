@@ -4,7 +4,8 @@ import {
     Text,
     TouchableOpacity,
     FlatList,
-    AsyncStorage 
+    AsyncStorage,
+    ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import ThongBaoItem from '../components/ThongBaoItem';
@@ -32,7 +33,8 @@ export default class ThongBao extends Component {
         super(props)
 
         this.state = {
-            listNoti:[]
+            listNoti:[],
+            isLoading:false
         }
 
     }
@@ -41,6 +43,7 @@ export default class ThongBao extends Component {
          
 
         AsyncStorage.getItem('token').then((value)=> {
+            this.setState({isLoading:true})
             fetch(URL.BASE_URL + URL.GET_NOTI, {
                 method: "GET",
                 headers: {
@@ -54,8 +57,9 @@ export default class ThongBao extends Component {
             }).then(data => {
                 console.log('get list noti ', data);
                 if(data && data.errorCode == 0){
-                    this.setState({listNoti:data.data})
-                }
+                    this.setState({listNoti:data.data,isLoading:false})
+                }else
+                    this.setState({isLoading:false});
 
 
                
@@ -85,6 +89,12 @@ export default class ThongBao extends Component {
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={this.renderSeparator}
             />
+
+            {this.state.isLoading?
+                <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                    <ActivityIndicator size="large" color="green"/>
+                </View>:null
+            }
             </View>
         );
     }

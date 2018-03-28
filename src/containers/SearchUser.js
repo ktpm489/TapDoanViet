@@ -148,7 +148,7 @@ export default class SearchUser extends Component {
                         ItemSeparatorComponent={this.renderSeparator}
                     />
                     {this.state.isLoading?
-                        <View style={{top:50,bottom:0,left:0,right:0, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1}}>
+                        <View style={{top:50,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
                             <ActivityIndicator size="large" color="green"/>
                         </View>:null
                     }

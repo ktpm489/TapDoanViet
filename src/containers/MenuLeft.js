@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     StyleSheet,
-    Image
+    Image,
+    
 } from 'react-native';
 import ItemLeftMenu from "../components/ItemLeftMenu";
 import { NavigationActions } from 'react-navigation';
@@ -29,6 +30,7 @@ class MenuLeft extends Component {
     }
     render (){
         return(
+            <ScrollView style ={{backgroundColor:'#eaa33f'}}>
             <View style = {{flexDirection:'column', backgroundColor:'white', flex:1}}>
                 <View style = {{alignItems:'center', justifyContent:'center', minHeight:130, flex:1}}>
                     <Icon name="user-circle" size={70} color="#424242" />
@@ -61,6 +63,20 @@ class MenuLeft extends Component {
                                   source = {images.gopy}
                                   onPress = {()=> this.props.navigation.navigate('GopYPhanHoi')}
                     /> */}
+
+
+                    <ItemLeftMenu title ="Điều khoản"
+                                  source = {images.baocao}
+                                  onPress = {()=> this.props.navigation.navigate('DieuKhoan')}
+                    />
+                    <ItemLeftMenu title ="Về chúng tôi"
+                                  source = {images.baocao}
+                                  onPress = {()=> this.props.navigation.navigate('AboutUs')}
+                    />
+                    <ItemLeftMenu title ="Chia sẻ"
+                                  source = {images.baocao}
+                                  onPress = {()=> alert("click chia sẻ")}
+                    />
                     <TouchableOpacity
                         onPress = {this.Logout.bind(this)}
                         style={{flexDirection: 'row',marginTop:20, marginBottom:20}}>
@@ -74,6 +90,7 @@ class MenuLeft extends Component {
                 </View>
 
             </View>
+            </ScrollView>
         );
     }
 }

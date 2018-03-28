@@ -4,32 +4,126 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert,
+    AsyncStorage
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
 import moment from 'moment';
+import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
+import PickerImage from "../components/PickerImage"
 export default class ItemServiceHistory extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
+        var i1 = require('../images/camera.png');
+        this.state = {
+            image1:i1,
+            dataImage1:null,
+            image2:i1,
+            dataImage2:null,
+            image3:i1,
+            dataImage3:null,
+        }
+
+        this.countImageUpload = 0;
+        this.countImageUploadDone = 0;
+        this.urlUpload = "";
+
+       
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (JSON.stringify(nextProps.dataItem) === JSON.stringify(this.props.dataItem)) {
-            return false;
-        }
-
-        else
+       
             return true;
     }
 
+
+    showPicker = (type)=>{
+        //console.log("click button type",type);
+        PickerImage((source, data) => {
+            if(type == 1){
+                this.setState({image1: source, dataImage1: data})
+                }   
+            else if(type == 2){
+                this.setState({image2: source, dataImage2: data})
+            }else{
+                this.setState({image3: source, dataImage3: data})
+            }
+
+            
+        },true)
+        
+    }
+
+    uploadImage = (imgdata)=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(BASE_URL + UPLOAD_IMAGE, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                body: JSON.stringify({
+                    imageData: imgdata,
+                    imageType: 'service',
+                })
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('upload image response', data);
+                if(data && data.errorCode == 0){
+                    this.countImageUploadDone++;
+                    if(this.urlUpload === "")
+                        this.urlUpload = data.data.imageUrl;
+                    else
+                        this.urlUpload = this.urlUpload +","+data.data.imageUrl;
+                    if(this.countImageUploadDone == this.countImageUpload){
+                        this.props.updateStateLoading(false);
+                        alert("da upload xong");
+                    }
+                }
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+    }
+
+    callApiUpdate = ()=>{
+        if(this.state.dataImage1 == null && this.state.dataImage1 == null && this.state.dataImage1 == null){
+            Alert.alert("","Bạn phải chụp ít nhất một ảnh hóa đơn");
+        }else{
+            this.props.updateStateLoading(true);
+            if(this.state.dataImage1 != null){
+                this.countImageUpload = this.countImageUpload+1;
+                this.uploadImage(this.state.dataImage1);
+                
+            }
+            if(this.state.dataImage2 != null){
+                this.countImageUpload = this.countImageUpload+1;
+                this.uploadImage(this.state.dataImage2);
+                
+            }
+            if(this.state.dataImage3 != null){
+                this.countImageUpload = this.countImageUpload+1;
+                this.uploadImage(this.state.dataImage3);
+                
+            }
+        }
+    }
   
 
     render() {
+        
         const {navigation} = this.props;
         const item = this.props.dataItem;
+        const status = false;
         var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:MM");
         var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:MM");
 
@@ -53,13 +147,11 @@ export default class ItemServiceHistory extends Component {
             >
                 <Image
                 source={{uri:arrImages[i]}}
-                ref="image1"
                 style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3,  }}
 
                 />
             </TouchableOpacity>)
         }
-        console.log("img",arrImages);
         
 
        
@@ -98,18 +190,81 @@ export default class ItemServiceHistory extends Component {
                         <Text style={{fontWeight: "bold"}}>Dịch vụ đăng ký: </Text>
                         <Text>{item.service.serviceName}</Text>
                     </Text>
+                    <Text>
+                        <Text style={{fontWeight: "bold"}}>Trạng thái: </Text>
+                        <Text style={{color:'red'}}>{status?"Đã thanh toán":"Chưa thanh toán"}</Text>
+                    </Text>
+                
+                        <Text style={{flex:1,textAlign:'center',fontWeight: "bold",marginTop:10,color:'blue'}}>{status?"Ảnh hóa đơn":"Chụp ảnh hóa đơn để thanh toán"}</Text>
+                    
 
                     <View style={{marginTop:10,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                               {imgRender}
-                    </View>
+                        <TouchableOpacity
+                                    style={{
+                                        marginLeft:10,
+                                        borderColor:'grey',borderRadius:4,borderWidth:2,
+                                    }}
+                                
+                                    onPress={()=>this.showPicker(1)}
+                                >
+                                    <Image
+                                    source={this.state.image1}
+                                    ref="image1"
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3,  }}
 
-                    <Image
-                        
-                         source={{uri:item.iconUrl}}
-                         resizeMode="cover"
-                         style={{width:50,height:50}}
-                    />
-                    <Text style={{textAlign:'center',color:'white',fontWeight:'bold'}}>{item.serviceName}</Text>
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                         style={{
+                                            marginLeft:10,
+                                            borderColor:'grey',borderRadius:4,borderWidth:2,
+                                        }}
+                                        onPress={()=>this.showPicker(2)}
+                                >
+                                    <Image
+                                    source={this.state.image2}
+                                    ref="image2"
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3 }}
+
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                     style={{
+                                        marginLeft:10,marginRight:10,
+                                        borderColor:'grey',borderRadius:4,borderWidth:2,
+                                    }}
+                                    onPress={()=>this.showPicker(3)}
+
+                                >
+                                    <Image
+                                    source={this.state.image3}
+                                    ref={"image3"}
+                                    style={{ width: (Dimention.DEVICE_WIDTH-100)/3, height: (Dimention.DEVICE_WIDTH-100)/3, }}
+
+                                    />
+                            </TouchableOpacity>
+                    </View>
+                    {status?null:
+                    <TouchableOpacity
+                            style={{backgroundColor:'#FF9800',alignSelf:'center',padding:10,
+                            borderRadius:5,
+                            borderColor:'#FF9800',
+                            shadowColor: '#FF9800',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.8,
+                            marginTop:10
+                        }}
+
+                        onPress={()=>{
+                            this.callApiUpdate();
+                        }}
+                        >
+                            <Text>Cập nhật thanh toán</Text>
+                        </TouchableOpacity>
+                    }
+                    <View style={{height:1,backgroundColor:'gray',margin:10}}></View>
+
+                    
                 </View>
 
              </TouchableOpacity>)

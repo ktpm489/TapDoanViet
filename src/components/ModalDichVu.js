@@ -426,16 +426,19 @@ class ModalDichVu extends Component {
 
     callApiRegister = ()=>{
         if(this.state.dataImage1 != null){
-            this.uploadImage(this.state.dataImage1);
             this.countImageUpload = this.countImageUpload+1;
+            this.uploadImage(this.state.dataImage1);
+            
         }
         if(this.state.dataImage2 != null){
-            this.uploadImage(this.state.dataImage2);
             this.countImageUpload = this.countImageUpload+1;
+            this.uploadImage(this.state.dataImage2);
+            
         }
         if(this.state.dataImage3 != null){
-            this.uploadImage(this.state.dataImage3);
             this.countImageUpload = this.countImageUpload+1;
+            this.uploadImage(this.state.dataImage3);
+            
         }
 
     }
@@ -467,11 +470,13 @@ class ModalDichVu extends Component {
                 return response.json();
             }).then(data => {
                 console.log('create service response', data);
+                this.props.onCallApiDone();
                 if(data && data.errorCode == 0){
                     alert("Gửi yêu cầu thành công")
                 }else{
                     alert(data.message);
                 }
+               
 
             }).catch(e => {
                 console.log('exception',e)

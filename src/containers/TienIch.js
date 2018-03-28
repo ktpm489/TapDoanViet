@@ -5,7 +5,8 @@ import {
     AsyncStorage,
     FlatList,
     TextInput,
-    Image,TouchableOpacity
+    Image,TouchableOpacity,
+    ActivityIndicator
 } from 'react-native'
 import {BASE_URL, GET_UTILITY} from "../Constants";
 
@@ -25,13 +26,15 @@ class TienIch extends Component {
         super(props);
 
         this.state = {
-            listTienIch:[]
+            listTienIch:[],
+            isLoading:false
         }
     }
 
 
     componentWillMount(){
         AsyncStorage.getItem('token').then((value)=> {
+            this.setState({isLoading:true})
             fetch(BASE_URL + GET_UTILITY, {
                 method: "GET",
                 headers: {
@@ -44,11 +47,14 @@ class TienIch extends Component {
             }).then(data => {
                 console.log('data response utility', data);
                 if(data && data.errorCode == 0){
-                    this.setState({listTienIch:data.data})
+                    this.setState({listTienIch:data.data,isLoading:false})
                     console.log('statte',this.state.listTienIch)
+                }else{
+                    this.setState({isLoading:false})
                 }
                 
             }).catch(e => {
+                this.setState({isLoading:false})
                 console.log('exception', e)
             })
         });
@@ -79,7 +85,7 @@ class TienIch extends Component {
         return (
             
             
-           
+           <View>
                 <FlatList 
                     data={this.state.listTienIch}
                     renderItem={
@@ -87,6 +93,13 @@ class TienIch extends Component {
                     }
                     keyExtractor={(item, index) => index.toString()}
                 />
+                {this.state.isLoading?
+                    <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View>:null
+                }
+
+            </View>
             
         )
 

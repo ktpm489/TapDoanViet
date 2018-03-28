@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Image,
     Picker,
-    AsyncStorage
+    AsyncStorage,
+    ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import ItemServiceHistory from '../components/ItemServiceHistory';
@@ -34,11 +35,13 @@ export default class ServiceHistory extends Component {
         this.token = '';
         this.state = {
             listHistory: [],
+            isLoading:false
         };
        
     }
 
     getServiceHistory = async()=>{
+        this.setState({isLoading:true})
         var data = await fetch(URL.BASE_URL + URL.GET_REQUEST, {
             headers: {
                 'Authorization': 'Bearer '+this.token,
@@ -47,8 +50,9 @@ export default class ServiceHistory extends Component {
         }).then((data) => data.json());
              console.log("list history services",data);
         if(data.errorCode === 0){
-            this.setState({listHistory:data.data});
-        }
+            this.setState({listHistory:data.data,isLoading:false});
+        }else
+            this.setState({isLoading:false})
         
     }
 
@@ -79,6 +83,10 @@ export default class ServiceHistory extends Component {
         );
     }
 
+    updateStateLoading = (state)=>{
+        this.setState({isLoading:state})
+    }
+
     render() {
         const {navigation} = this.props;
         return (
@@ -91,12 +99,20 @@ export default class ServiceHistory extends Component {
                                 <ItemServiceHistory
                                     dataItem={item}
                                     navigation={navigation}
+                                    updateStateLoading={this.updateStateLoading}
+
                                 />
                             )
                         }}
                         keyExtractor={(item, index) => index.toString()}
                         ItemSeparatorComponent={this.renderSeparator}
                     />
+
+                    {this.state.isLoading?
+                        <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                            <ActivityIndicator size="large" color="green"/>
+                        </View>:null
+                    }
                     
                 </View>
         );

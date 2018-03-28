@@ -9,15 +9,34 @@ import {
   FlatList,
   AsyncStorage,
   ActivityIndicator,
-  ScrollView
+  ScrollView,Alert
 } from "react-native";
 
 import * as Dimention from "../configs/Dimention";
 import * as URL from '../Constants'
 import TinNhanItem from '../components/TinNhanItem';
 export default class CreateGroup extends Component {
+
+
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+
+    return {
+        headerRight: <TouchableOpacity style = {{marginRight:10}}
+                                       onPress={() => params.actionCreate()}>
+            <Text style = {{color: "#1565C0",fontWeight:'600'}}>Xong</Text>
+        </TouchableOpacity>,
+        title:params.title,
+        headerStyle: {backgroundColor: '#23b34c'},
+        headerTitleStyle: {color: 'white'},
+        headerTintColor: 'white',
+    }
+}
+
   constructor(props) {
     super(props);
+
+    
 
     this.state = {
       resultSearch: [],
@@ -26,15 +45,54 @@ export default class CreateGroup extends Component {
     };
 
     this.timeout = 0;
+    this.groupname = "";
+    this.fromEdit = false;
+    this.groupnameOld = "";
+
+    
+    
+
   }
 
   componentWillMount() {
+    console.log("params",this.props.navigation.state.params);
+    if(this.props.navigation.state.params && this.props.navigation.state.params.userGroup && this.props.navigation.state.params.groupname){
+      this.groupnameOld = this.props.navigation.state.params.groupname;
+      this.setState({userGroup:this.props.navigation.state.params.userGroup});
+      this.fromEdit = true;
+      this.props.navigation.setParams({title:"Thêm thành viên"});
+      
+    }else{
+      this.props.navigation.setParams({title:"Tạo nhóm"})
+    }
     AsyncStorage.getItem("token").then(value => {
       this.token = value;
 
       //console.log("value", this.token);
       // this.getListMessage();
     });
+
+
+    this.props.navigation.setParams({ actionCreate: this.actionCreate});
+  }
+
+  actionCreate = ()=>{
+    if(this.fromEdit){
+      Alert.alert("Thông báo","Chỉnh sửa click");
+      return;
+    }
+
+    if(this.groupname === ""){
+        Alert.alert("Thông báo","Tên nhóm không được để trống");
+        return;
+    }
+    if(this.state.userGroup.length < 2){
+      Alert.alert("Thông báo","Nhóm phải có ít nhất 3 thành viên");
+      return;
+    }
+    this.props.navigation.navigate("ChatGroup",{userGroup:this.state.userGroup,groupname:this.groupname})
+    Alert.alert("Thông báo","Tạo nhóm thành công");
+
   }
 
   shouldComponentUpdate() {
@@ -92,7 +150,20 @@ export default class CreateGroup extends Component {
         .then(data => {
           console.log("search user data: ", data);
           if (data && data.errorCode == 0) {
-            this.setState({ resultSearch: data.data, isLoading: false });
+           
+          //   Array.prototype.diff = function(a) {
+          //     return this.filter(function(i){ return JSON.stringfy(a).indexof(JSON.stringfy(i)) < 0;});
+          // };
+
+          Array.prototype.diff = function(a) {
+            return this.filter(function(i) {return a.map(function(e) { return JSON.stringify(e); }).indexOf(JSON.stringify(i)) < 0;});
+        };
+          var fillter = data.data;
+            if(this.state.userGroup.length > 0)
+              fillter = data.data.diff(this.state.userGroup);
+
+              console.log("fillter",fillter);
+            this.setState({ resultSearch: fillter, isLoading: false });
           }
         })
         .catch(e => {
@@ -100,6 +171,8 @@ export default class CreateGroup extends Component {
         });
     });
   };
+
+  
 
   clickItemSearch = (userSelect,index)=>{
       //console.log("user select",userSelect);
@@ -132,6 +205,9 @@ export default class CreateGroup extends Component {
             marginBottom: 10
           }}
           placeholder="Nhập tên nhóm"
+          underlineColorAndroid="transparent"
+          onChangeText = {(text)=>{this.groupname = text}}
+          defaultValue={this.groupnameOld}
         />
         <TextInput
           style={{
@@ -199,32 +275,37 @@ export default class CreateGroup extends Component {
           keyExtractor={(item, index) => index.toString()}
           
         />
-        <FlatList
-          data={this.state.resultSearch}
-          renderItem={(item) => {
+        <View style={{flex:1}}>
+            <FlatList
+              data={this.state.resultSearch}
+              renderItem={(item) => {
 
-           
-            return <TinNhanItem dataItem={item} navigation={navigation} fromSearch={true} sendDataClick={this.clickItemSearch} index={item.index} />;
-          }}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={this.renderSeparator}
-        />
-        {this.state.isLoading ? (
-          <View
-            style={{
-              top: 50,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              position: "absolute",
-              zIndex: 1
-            }}
-          >
-            <ActivityIndicator size="large" color="green" />
-          </View>
-        ) : null}
+              
+                return <TinNhanItem dataItem={item} navigation={navigation} fromSearch={true} sendDataClick={this.clickItemSearch} index={item.index} />;
+              }}
+              keyExtractor={(item, index) => index.toString()}
+              ItemSeparatorComponent={this.renderSeparator}
+            />
+              {this.state.isLoading ? (
+                <View
+                  style={{
+                    top: 100,
+                    bottom: -10,
+                    left: -10,
+                    right: -10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "absolute",
+                    zIndex: 1,
+                    backgroundColor: 'rgba(52, 52, 52, 0.3)'
+                  }}
+                >
+                  <ActivityIndicator size="large" color="green" />
+                </View>
+              ) : null}
+
+        </View>
+        
       </ScrollView>
     );
   }

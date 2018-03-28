@@ -7,7 +7,7 @@ import {
     StyleSheet,
     Image,
     Picker,
-    AsyncStorage
+    AsyncStorage,ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import TinNhanItem from '../components/TinNhanItem';
@@ -34,12 +34,14 @@ export default class TinNhan extends Component {
         super(props)
         this.token = '';
         this.state = {
-            dataMSG: []
+            dataMSG: [],
+            isLoading:false
 
         }
     }
 
     getListMessage = async () => {
+        this.setState({isLoading:true})
 
             var data = await fetch(URL.BASE_URL + URL.PAHT_GET_MESSAGE, {
                 headers: {
@@ -49,7 +51,9 @@ export default class TinNhan extends Component {
             }).then((data) => data.json());
             // console.log("list message",data);
             if(data.errorCode === 0){
-                this.setState({dataMSG:data.data});
+                this.setState({dataMSG:data.data,isLoading:false});
+            }else{
+                this.setState({isLoading:false})
             }
     }
 
@@ -156,6 +160,11 @@ export default class TinNhan extends Component {
                                 <Text style ={{color:'black'}}>Nhóm mới</Text>
                             </TouchableOpacity>
                         </Modal>
+                        {this.state.isLoading?
+                        <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                            <ActivityIndicator size="large" color="green"/>
+                        </View>:null
+                        }
 
 
 
