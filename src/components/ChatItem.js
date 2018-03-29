@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text,
@@ -37,24 +37,35 @@ export default class ChatItem extends Component {
                         marginLeft: Dimention.DEVICE_WIDTH / 3,
                         // minHeight: 50,
                         justifyContent: 'flex-end',
-                        marginTop: 10
-                    }}>
+                        marginTop: 10,
 
-                        <Text style={{
+
+                    }}>
+                        <View style={{
                             borderRadius: 10,
-                            alignSelf: 'flex-end',
+                            marginRight: 10,
+                            borderWidth: 1,
                             backgroundColor: '#64B5F6',
-                            justifyContent: 'flex-end',
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            paddingTop: 10,
-                            paddingBottom: 10,
-                            marginRight: 10
-                        }}>{this.props.dataItem.messageContent}</Text>
+                            borderColor: '#64B5F6',
+                            alignSelf: 'flex-end',
+
+                        }}>
+                            <Text style={{
+                                alignSelf: 'flex-end',
+                                borderColor: '#FAFAFA',
+                                justifyContent: 'flex-end',
+                                paddingLeft: 10,
+                                paddingRight: 10,
+                                paddingTop: 10,
+                                paddingBottom: 10,
+
+
+                            }}>{this.props.dataItem.messageContent}</Text>
+                        </View>
                         {/*<Text style={{*/}
-                            {/*justifyContent: 'center',*/}
-                            {/*alignSelf: 'flex-end',*/}
-                            {/*marginRight: 10*/}
+                        {/*justifyContent: 'center',*/}
+                        {/*alignSelf: 'flex-end',*/}
+                        {/*marginRight: 10*/}
                         {/*}}>{this.props.dataItem.createdAt}</Text>*/}
 
                     </View>
@@ -63,31 +74,40 @@ export default class ChatItem extends Component {
             } else {
                 return (
 
-                    <View style={{flex: 1, flexDirection: 'row', marginTop: 10}}>
+                    <View style={{ flex: 1, flexDirection: 'row', marginTop: 10 }}>
 
                         <Image style={myStyle.image_circle}
 
-                               source={this.props.dataItem.sender.avatar.length==0?require("../images/logo.png"):{
-                                   uri: this.props.dataItem.sender.avatarUrl
-                               }}
-                               resizeMode="cover"
+                            source={this.props.dataItem.sender.avatar.length == 0 ? require("../images/logo.png") : {
+                                uri: this.props.dataItem.sender.avatarUrl
+                            }}
+                            resizeMode="cover"
                         >
                         </Image>
                         <View>
-                            <View style={{marginRight: Dimention.DEVICE_WIDTH / 3}}>
-                            {this.props.fromGroupChat?
-                                <Text style ={{marginLeft:2}}>{this.props.dataItem.sender.userName}</Text>:null
-                            }
-                                <Text style={{
+                            <View style={{ marginRight: Dimention.DEVICE_WIDTH / 3 }}>
+                                {this.props.fromGroupChat ?
+                                    <Text style={{ marginLeft: 2 }}>{this.props.dataItem.sender.userName}</Text> : null
+                                }
+                                <View style={{
                                     borderRadius: 10,
+                                    marginRight: 10,
+                                    borderWidth: 1,
                                     backgroundColor: '#FAFAFA',
-                                    justifyContent: 'flex-start',
+                                    borderColor: '#FAFAFA',
                                     alignSelf: 'flex-start',
-                                    paddingLeft: 10,
-                                    paddingRight: 10,
-                                    paddingTop: 10,
-                                    paddingBottom: 10
-                                }}>{this.props.dataItem.messageContent}</Text>
+
+                                }}>
+                                    <Text style={{
+
+                                        justifyContent: 'flex-start',
+                                        alignSelf: 'flex-start',
+                                        paddingLeft: 10,
+                                        paddingRight: 10,
+                                        paddingTop: 10,
+                                        paddingBottom: 10
+                                    }}>{this.props.dataItem.messageContent}</Text>
+                                </View>
 
                             </View>
                             {/*<Text style={{flex: 1, justifyContent: 'flex-start'}}>{this.props.dataItem.createdAt}</Text>*/}
@@ -105,7 +125,7 @@ export default class ChatItem extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 {this.renderMsgForUser()}
             </View>
         )

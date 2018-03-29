@@ -121,7 +121,8 @@ export default class SearchUser extends Component {
                                 borderColor:'#000',
                                 shadowColor: '#000',
                                 paddingLeft:5,
-                                marginBottom:10
+                                marginBottom:10,
+                                minHeight:50
                                 
                             }}
                             onChangeText={(text)=>this.debounce(function(e){
