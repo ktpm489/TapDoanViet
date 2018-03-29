@@ -59,27 +59,33 @@ export default class PhiDichVuItem extends Component {
                             <Text style={{textAlign:'left',color:'red'}}>{itemPhiDichVU.status}</Text>
                             <Text style={{textAlign:'right',flex:1,alignSelf: 'flex-end',color:'red',fontWeight:'bold'}}>{itemPhiDichVU.total_cost}</Text>
                         </View>
-                        <FlatList
-                                data={itemPhiDichVU.details}
-                                renderItem={(item) => {
-                                    return (
-                                        <SubItemPhiDichVu
-                                            dataItem={item}
-                                        
-                                        />
-                                    )
-                                }}
-                                keyExtractor={(item, index) => index.toString()}
-                                style={{
+                        <View
+                            style={{
                                     
-                                    padding:10,
-                                    borderWidth:1,
-                                    borderRadius:5,
-                                    borderColor:'#ddd',
-                                    shadowColor: '#000',
-                                    shadowOffset: { width: 0, height: 2 },
-                                    shadowOpacity: 0.8,}}
-                        />
+                                padding:10,
+                                borderWidth:1,
+                                borderRadius:5,
+                                borderColor:'gray',
+                                // shadowColor: 'gray',
+                                // shadowOffset: { width: 0, height: 2 },
+                                // shadowOpacity: 0.8,
+                            
+                            }}
+                        >
+                            <FlatList
+                                    data={itemPhiDichVU.details}
+                                    renderItem={(item) => {
+                                        return (
+                                            <SubItemPhiDichVu
+                                                dataItem={item}
+                                            
+                                            />
+                                        )
+                                    }}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    
+                            />
+                        </View>
 
                 </View>
 

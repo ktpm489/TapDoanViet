@@ -100,16 +100,18 @@ export default class DichVuDetail extends Component {
                         <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                             <TouchableOpacity
                             onPress={()=>this.refs.modal.open()}
+                            style={{borderRadius: 5,
+                                borderWidth: 0.5,
+                                borderColor: 'red',
+                                backgroundColor: 'red',}}
 
                             >
                                 <Text style={{
                                     textAlign: 'center',
-                                    backgroundColor: 'red',
+                                    
                                     color: 'white',
                                     padding: 10,
-                                    borderRadius: 5,
-                                    borderWidth: 0.5,
-                                    borderColor: 'red'
+                                    
                                 }}>Gọi
                                     ngay</Text>
                             </TouchableOpacity>
