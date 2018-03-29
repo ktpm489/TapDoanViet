@@ -49,11 +49,11 @@ class MenuLeft extends Component {
                                   onPress = {()=> this.props.navigation.navigate('ThongTinCaNhan')}
                     />
                     <ItemLeftMenu title ="Chi Phí"
-                                  source = {images.tienich}
+                                  source = {images.chiphi}
                                   onPress = {() => this.props.navigation.navigate('PhiDichVu')}
                     />
                     <ItemLeftMenu title ="Lịch sử yêu cầu dịch vụ"
-                                  source = {images.info}
+                                  source = {images.lichsu}
                                   onPress = {()=>this.props.navigation.navigate('ServiceHistory')}
                     />
                     <ItemLeftMenu title ="Tiện Ích"
@@ -77,11 +77,11 @@ class MenuLeft extends Component {
                                   onPress = {()=> this.props.navigation.navigate('DieuKhoan')}
                     />
                     <ItemLeftMenu title ="Về chúng tôi"
-                                  source = {images.baocao}
+                                  source = {images.vechungtoi}
                                   onPress = {()=> this.props.navigation.navigate('AboutUs')}
                     />
                     <ItemLeftMenu title ="Chia sẻ"
-                                  source = {images.baocao}
+                                  source = {images.chiase}
                                   onPress = {()=> alert("click chia sẻ")}
                     />
                     <TouchableOpacity

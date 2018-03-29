@@ -25,14 +25,18 @@ export default class DichVuItem extends Component {
             return true;
     }
     render() {
-        const {navigation} = this.props;
+        const {navigation,fromSubDichVu} = this.props;
         const {item} = this.props.dataItem;
        
         return (
 
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('DichVuDetail', {dataItem: item});
+                    if(fromSubDichVu){
+                        navigation.navigate('DichVuDetail', {dataItem: item});
+                        
+                    }else
+                    navigation.navigate('SubDichVu', {dataItem: item});
                 }}
             >
                 <View key={item.index}
