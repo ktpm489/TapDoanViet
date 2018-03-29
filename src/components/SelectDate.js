@@ -179,16 +179,20 @@ export default class SelectDate extends Component {
               style={{ width: 25, height: 25, margin: 10 }}
             />
           </TouchableOpacity>
+          <View
+              style={{flex:1,alignSelf:'center',justifyContent:'center',alignItems:'center'}}
+          >
           <Text
             style={{
-              flex: 1,
-              alignSelf: "stretch",
+              
+              alignSelf: "center",
               textAlign: "center",
               textAlignVertical: "center"
             }}
           >
             {titleDate}
           </Text>
+          </View>
           <TouchableOpacity
             onPress={() => {
               if (this.state.currentPost == 5) {

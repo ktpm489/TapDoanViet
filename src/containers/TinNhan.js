@@ -7,7 +7,8 @@ import {
     StyleSheet,
     Image,
     Picker,
-    AsyncStorage,ActivityIndicator
+    AsyncStorage,ActivityIndicator,
+    Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import TinNhanItem from '../components/TinNhanItem';
@@ -90,6 +91,7 @@ export default class TinNhan extends Component {
         );
     }
 
+    
     render() {
         const {navigation} = this.props;
         return (
@@ -136,13 +138,24 @@ export default class TinNhan extends Component {
                             swipeArea={20}
                             position={"center"} ref={"modal"} isDisabled={false}
                             
+                            
                         >
                             <TouchableOpacity
                                 style ={{flex:1,justifyContent:'center',alignItems:'center'}}
 
                                 onPress={()=>{
-                                    navigation.navigate("SearchUser");
+
+                                    
                                     this.refs.modal.close()
+                                    if(Platform.OS === "ios"){
+                                        setTimeout(()=>{
+                                            navigation.navigate("SearchUser");
+                                        },500);
+                                     }else{
+                                        navigation.navigate("SearchUser");
+                                     }
+                                    
+                                    
                                 }}
                             
                             >
@@ -152,8 +165,16 @@ export default class TinNhan extends Component {
                             <TouchableOpacity
                                 style ={{flex:1,justifyContent:'center',alignItems:'center'}}
                                 onPress={()=>{
-                                    navigation.navigate("CreateGroup");
                                     this.refs.modal.close()
+                                    if(Platform.OS === "ios"){
+                                        setTimeout(()=>{
+                                            navigation.navigate("CreateGroup");
+                                        },500);
+                                     }else{
+                                        navigation.navigate("CreateGroup");
+                                     }
+                                   
+                                    
                                 }}
 
                                 >

@@ -29,6 +29,7 @@ import AboutUs from "../containers/AboutUs"
 import DieuKhoan from "../containers/DieuKhoan"
 import ChatGroup from "../containers/ChatGroup"
 import DanhSachNhom from "../containers/DanhSachNhom";
+import SubDichVu from "../containers/SubDichVu";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -68,14 +69,15 @@ const Tab = TabNavigator ({
 },
     {
         tabBarPosition: 'bottom',
+        
         animationEnabled: true,
         tabBarOptions: {
             upperCaseLabel: false,
          //    showIcon: true,
             activeTintColor: 'black',
             inactiveTintColor: 'white',
-            activeBackgroundColor:'white',
-            inactiveBackgroundColor:'#eaa33f',
+            // activeBackgroundColor:'white',
+            // inactiveBackgroundColor:'#eaa33f',
             // pressColor: 'white',
             indicatorStyle: {
                 // backgroundColor: 'white'
@@ -83,10 +85,15 @@ const Tab = TabNavigator ({
             },
             labelStyle: {
                 fontSize: 12,
+                alignSelf:'center'
 
             },
             style: {
                 backgroundColor: '#eaa33f',
+                justifyContent:'center',
+                alignItems:'center',
+                alignSelf:'center',
+            
             },
             // tabStyle: {
             //     backgroundColor:'white'
@@ -261,6 +268,10 @@ const Stack = StackNavigator ({
         navigationOptions: {
             title: 'Thành viên'
         }
+    },
+    SubDichVu:{
+        screen:SubDichVu,
+        
     }
 
 

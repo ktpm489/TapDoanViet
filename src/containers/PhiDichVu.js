@@ -109,12 +109,12 @@ export default class PhiDichVu extends Component {
             <View style={{flex: 1}}>
             <View style={{backgroundColor:"green",flexDirection:'row',margin:10,justifyContent:'center',alignItems:'center',maxHeight:40}}>
                 <Text style={{color:'white',fontWeight:'bold',marginRight:10,marginLeft:10, fontSize:16,width:60}}>Căn hộ: </Text>
-                <Picker
+                {/* <Picker
                     style={{backgroundColor:"#ffffff",flex:1}}
                     selectedValue={this.state.departmebtSelect}
                     onValueChange={(itemValue, itemIndex) => this.setState({departmebtSelect: itemValue})}>
                     {this.renderPickerItemSource(this.state.listDepartment)}
-                </Picker>
+                </Picker> */}
                 
                 
             </View>
@@ -123,12 +123,14 @@ export default class PhiDichVu extends Component {
                 
                 <Text style={{color:'white',fontWeight:'bold',marginLeft:10,marginRight:10,fontSize:16,width:60}}>Năm: </Text>
                 
-                <Picker
+                {/* <Picker
                     style={{backgroundColor:"#ffffff",flex:1}}
                     selectedValue={this.state.yearSelect}
-                    onValueChange={(itemValue, itemIndex) => this.setState({yearSelect: itemValue})}>
+                    onValueChange={(itemValue, itemIndex) => this.setState({yearSelect: itemValue})}
+                    >
+                    
                     {this.renderPickerItemSource(this.state.listYear)}
-                </Picker>
+                </Picker> */}
                 
             </View>
                 
