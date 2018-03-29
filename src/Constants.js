@@ -10,6 +10,7 @@ export const SLIDER = "/api/slider/home-slider";
 export const UPLOAD_IMAGE = "/api/media/upload-image";
 export const CREATE_NEW = "/api/post/create-new";
 export const GET_INFO = "/api/user/info";
+export const UPDATE_INFO = "/api/user/update-info";
 export const GET_POST = "/api/post/";
 export const GET_CMT = "/api/post/";
 export const CREATE_CMT = "/api/comment/create-new";

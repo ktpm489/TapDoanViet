@@ -1,140 +1,231 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     View,
     Text,
     Image,
     StyleSheet,
     ImageBackground,
+    TouchableOpacity,
+    TextInput,
 } from 'react-native'
 import images from "../components/images";
 import Dimensions from 'Dimensions';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {callApiProfile} from "../actions/ProfileActions";
+import PickerImage from "../components/PickerImage";
+import {callApiUploadImg} from "../actions/TaoBaiVietActions";
+import {callApiUpdateInfo} from "../actions/UpdateInfoActions";
+
 // import {callApiProfile} from "../actions/ProfileActions";
 
 class ThongTinCaNhan extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            dataProfile :'',
+            FisrtName: '',
+            LastName: '',
+            GioiTinh: '',
+            NgaySinh: '',
+            SoDienThoai: '',
+            Email: '',
+
+            dataProfile: '',
+            avatarSource: null,
+            dataImage: null,
+            isCheck : true
 
         }
     }
-    static navigationOptions = ({ navigation }) => {
-        const { params = {} } = navigation.state
+
+    static navigationOptions = ({navigation}) => {
+        const {params = {}} = navigation.state
 
         return {
-            title:'Thông tin cá nhân',
+            title: 'Thông tin cá nhân',
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
             headerTintColor: 'white',
 
         }
     }
-    componentWillMount(){
-        const { callApiProfile } = this.props;
-        callApiProfile().then(dataRes=> {
+    show(){
+        PickerImage((source, data) => {
+            this.setState({avatarSource: source, dataImage: data, isCheck: false}, () => {
+                    this.upload();
+                }
+            )
+        });
+    }
+    upload (){
+        // console.log('base64', this.state.dataImage)
+        // dataImg = this.state.dataImage;
+
+        const { callApiUploadImg } = this.props;
+        callApiUploadImg(this.state.dataImage).then(dataPost => {
+            console.log('datapost1', dataPost)
+
+            // console.log('datapost1', dataPost.message)
+        })
+    }
+
+
+    componentWillMount() {
+        const {callApiProfile} = this.props;
+        callApiProfile().then(dataRes => {
             this.setState({
                 dataProfile: dataRes.data[0]
+            }, ()=> {
+                this.setState({
+                    FisrtName: this.state.dataProfile.firstName,
+                    LastName: this.state.dataProfile.lastName,
+                    GioiTinh: this.state.dataProfile.gender,
+                    // NgaySinh: this.state.dataProfile.firstName,
+                    SoDienThoai: this.state.dataProfile.phoneNumber,
+                    Email: this.state.dataProfile.email,
+                })
             })
             console.log('dataprofile', this.state.dataProfile)
         })
+
     }
-    render (){
+    EditInfo = () => {
+        callApiUpdateInfo().then(dataRes => {
+            console.log('dataRes', dataRes)
+        })
+
+    }
+    render() {
+        let img = this.state.avatarSource == null? null:
+            <Image
+                source={this.state.avatarSource}
+                style={styles.image_circle}
+            />
         return (
-            <View style = {{flex:1}}>
-                <ImageBackground style = {{flex:3, alignItems:'center', width: null, height: null}}
-                                 source = {images.hieu}>
-                    <Image style={styles.image_circle}
-                           source={{
-                               uri: 'https://znews-photo-td.zadn.vn/w820/Uploaded/kcwvouvs/2017_04_18/15624155_1264609093595675_8005514290339512320_n.jpg'
-                           }}
-                           resizeMode="cover"
-                    >
-                    </Image>
+            <View style={{flex: 1}}>
+                <ImageBackground style={{flex: 3, alignItems: 'center', width: null, height: null}}
+                                 source={images.hieu}>
+                    {
+                        this.state.isCheck ?
+                        <TouchableOpacity onPress = {this.show.bind(this)}>
+                            <Image style={styles.image_circle}
+                                   source={{
+                                       uri: 'https://znews-photo-td.zadn.vn/w820/Uploaded/kcwvouvs/2017_04_18/15624155_1264609093595675_8005514290339512320_n.jpg'
+                                   }}
+                                   resizeMode="cover"
+                            >
+                            </Image>
+                        </TouchableOpacity> : img
+                    }
+
                 </ImageBackground>
-                <View style = {{backgroundColor:'white', flex:5}}></View>
-                <View style = {{
-                        position: 'absolute', zIndex: 99,
-                        marginTop: DEVICE_WIDTH / 3 + 50,
-                        backgroundColor:'white', marginLeft:40,
-                        height: 360,
-                        width: 280,
-                        borderWidth:1,
-                        borderRadius:10,
-                        borderColor:'#ddd',
+                <View style={{backgroundColor: 'white', flex: 5}}></View>
+                <View style={{
+                    position: 'absolute', zIndex: 99,
+                    marginTop: DEVICE_WIDTH / 3 + 50,
+                    backgroundColor: 'white', marginLeft: 40,
+                    height: 350,
+                    width: 280,
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    borderColor: '#ddd',
                     shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 2 },
+                    shadowOffset: {width: 0, height: 2},
                     shadowOpacity: 0.8,
-                    }}>
-                    <Text style = {{marginLeft:10, color: 'black', fontSize:15, marginTop: 10}}>Thông tin cá nhân</Text>
-                    <View style = {{height:1, marginHorizontal:10 , backgroundColor:'#9E9E9E', marginTop:5}}/>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:10}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Họ tên: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>{this.state.dataProfile.userName} </Text>
+                }}>
+                    <Text style={{marginLeft: 10, color: 'black', fontSize: 15, marginTop: 10}}>Thông tin cá nhân</Text>
+                    <View style={{height: 1, marginHorizontal: 10, backgroundColor: '#9E9E9E', marginTop: 5}}/>
+                    <View style={styles.viewItem}>
+                        <Text style={{fontSize: 15, color: 'black'}}>Tên: </Text>
+                        <TextInput
+                            value = {this.state.LastName}
+                            underlineColorAndroid={this.state.underline}
+                            editable={false}
+                            selectTextOnFocus={false}
+                                style = {styles.textinput}/>
                     </View>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:5}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Giới tính: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>Nam</Text>
+                    <View style={styles.viewItem}>
+                        <Text style={{fontSize: 15, color: 'black'}}>Giới tính: </Text>
+                        <TextInput
+                            value = {this.state.GioiTinh}
+                            underlineColorAndroid={this.state.underline}
+                            editable={false}
+                            selectTextOnFocus={false}
+                            style = {styles.textinput}/>
                     </View>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:5}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Ngày sinh: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>08/09/1993 </Text>
+                    <View style={styles.viewItem}>
+                        <Text style={{fontSize: 15, color: 'black'}}>Ngày sinh: </Text>
+                        <TextInput
+                            value = {this.state.NgaySinh}
+                            underlineColorAndroid={this.state.underline}
+                            editable={false}
+                            selectTextOnFocus={false}
+                            style = {styles.textinput}/>
                     </View>
-                    <Text style = {{marginLeft:10, color: 'black', fontSize:15, marginTop: 20}}>Thông tin liên hệ</Text>
-                    <View style = {{height:1, marginHorizontal:10 , backgroundColor:'#9E9E9E', marginTop:5}}/>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:10}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Số điện thoại: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>0963250395 </Text>
+                    <Text style={{marginLeft: 10, color: 'black', fontSize: 15, marginTop: 20}}>Thông tin liên hệ</Text>
+                    <View style={{height: 1, marginHorizontal: 10, backgroundColor: '#9E9E9E', marginTop: 5}}/>
+                    <View style={styles.viewItem}>
+                        <Text style={{fontSize: 15, color: 'black'}}>Số điện thoại: </Text>
+                        <TextInput
+                            value = {this.state.SoDienThoai}
+                            underlineColorAndroid={this.state.underline}
+                            editable={false}
+                            selectTextOnFocus={false}
+                            style = {styles.textinput}/>
                     </View>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:5}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Email: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>{this.state.dataProfile.email}</Text>
+                    <View style={styles.viewItem}>
+                        <Text style={{fontSize: 15, color: 'black'}}>Email: </Text>
+                        <TextInput
+                            value = {this.state.Email}
+                            underlineColorAndroid={this.state.underline}
+                            editable={false}
+                            selectTextOnFocus={false}
+                            style = {styles.textinput}/>
                     </View>
-                    <Text style = {{marginLeft:10, color: 'black', fontSize:15, marginTop:20}}>Thông tin cá nhân</Text>
-                    <View style = {{height:1, marginHorizontal:10 , backgroundColor:'#9E9E9E', marginTop:5}}/>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:10}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Khu đô thị: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>Time City </Text>
-                    </View>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:5}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Số nhà: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>1080</Text>
-                    </View>
-                    <View style = {{flexDirection:'row', marginLeft: 10, marginTop:5}}>
-                        <Text style = {{fontSize: 15, color:'black'}}>Tầng/Lầu: </Text>
-                        <Text style = {{fontSize: 15, color:'black'}}>10 </Text>
-                    </View>
+                    <TouchableOpacity onPress = {this.EditInfo}>
+                        <View style = {{justifyContent:'center', alignItems:'center',
+                            marginTop: 40, minHeight: 40, marginHorizontal:90,
+                            backgroundColor: '#eaa33f',
+                            borderWidth:1,
+                            borderRadius: 5,
+                            borderColor:'#FF9800'}}>
+                            <Text>Chỉnh sửa</Text>
+                        </View>
+                    </TouchableOpacity>
+
                 </View>
                 {/*<View style = {{*/}
-                    {/*position: 'absolute', zIndex: 100,*/}
-                    {/*marginTop:  DEVICE_WIDTH / 1 +10,*/}
-                    {/*backgroundColor: 'red', marginLeft: 40,*/}
-                    {/*height: 30,*/}
-                    {/*width: 80,*/}
-                    {/*borderWidth: 1,*/}
-                    {/*borderRadius: 10,*/}
-                    {/*borderColor: 'white'*/}
+                {/*position: 'absolute', zIndex: 100,*/}
+                {/*marginTop:  DEVICE_WIDTH / 1 +10,*/}
+                {/*backgroundColor: 'red', marginLeft: 40,*/}
+                {/*height: 30,*/}
+                {/*width: 80,*/}
+                {/*borderWidth: 1,*/}
+                {/*borderRadius: 10,*/}
+                {/*borderColor: 'white'*/}
                 {/*}}>*/}
 
-                    {/*</View>*/}
+                {/*</View>*/}
             </View>
         )
 
     }
 }
+
 const mapStateToProps = (state) => {
     return {
+
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        callApiProfile : bindActionCreators(callApiProfile, dispatch),
+        callApiProfile: bindActionCreators(callApiProfile, dispatch),
+        callApiUploadImg : bindActionCreators(callApiUploadImg, dispatch),
+        callApiUpdateInfo : bindActionCreators(callApiUpdateInfo, dispatch),
     }
 };
 
-ThongTinCaNhan = connect( mapStateToProps, mapDispatchToProps)(ThongTinCaNhan);
+ThongTinCaNhan = connect(mapStateToProps, mapDispatchToProps)(ThongTinCaNhan);
 export default ThongTinCaNhan;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -148,5 +239,15 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 20
 
+    },
+    textinput: {
+        color: "#757575",
+        padding: 0,
+    },
+    viewItem: {
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginTop: 10,
+        alignItems:'center'
     }
 })
