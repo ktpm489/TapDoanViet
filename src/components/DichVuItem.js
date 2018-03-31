@@ -36,7 +36,7 @@ export default class DichVuItem extends Component {
                         navigation.navigate('DichVuDetail', {dataItem: item});
                         
                     }else
-                    navigation.navigate('SubDichVu', {dataItem: item});
+                        navigation.navigate('SubDichVu', {idItem: item.id,subtitle:item.name});
                 }}
             >
                 <View key={item.index}
@@ -47,8 +47,6 @@ export default class DichVuItem extends Component {
                           marginBottom:10,
                           width:Dimention.DEVICE_WIDTH/3-30,
                           height:Dimention.DEVICE_WIDTH/3-30,
-                          borderRadius:5,
-                          backgroundColor:Const.COLOR_APP_GREEN,
                           flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                     <Image
                         
@@ -56,7 +54,7 @@ export default class DichVuItem extends Component {
                          resizeMode="cover"
                          style={{width:50,height:50}}
                     />
-                    <Text style={{textAlign:'center',color:'white',fontWeight:'bold'}}>{item.serviceName}</Text>
+                    <Text style={{textAlign:'center',color:'black',fontWeight:'bold'}}>{fromSubDichVu? item.serviceName:item.name}</Text>
                 </View>
 
             </TouchableOpacity>)

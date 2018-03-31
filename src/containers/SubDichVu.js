@@ -10,13 +10,13 @@ import {
 } from 'react-native'
 
 import DichVuItem from '../components/DichVuItem'
-
+import * as URL from '../Constants'
 class SubDichVu extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
 
         return {
-            title:'Dịch vụ',
+            title:params.title,
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
             headerTintColor: 'white',
@@ -27,14 +27,43 @@ class SubDichVu extends Component {
         super(props);
 
         this.state = {
-            listTienIch:[],
+            listSubDichVu:[],
             isLoading:false
         }
+
+        this.idItem = this.props.navigation.state.params.idItem;
+        this.props.navigation.setParams({title:this.props.navigation.state.params.subtitle});
     }
 
 
     componentWillMount(){
+        this.getListDichVu();
        
+    }
+
+    getListDichVu =  ()=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            this.setState({isLoading:true})
+            fetch(URL.BASE_URL + URL.GET_SUB_SERVICE+this.idItem, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('get sub dichvu response', data);
+                if(data && data.errorCode == 0){
+                    this.setState({listSubDichVu:data.data,isLoading:false})
+                }
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
     }
 
     
@@ -44,16 +73,14 @@ class SubDichVu extends Component {
 
 
     render (){
-        this.data = [];
-        this.data.push(this.props.navigation.state.params.dataItem);
-        console.log("subdichvu",this.data);
+        
         return (
             
-          
+          <View>
             < FlatList
                     showsHorizontalScrollIndicator={false}
                     showVerticalScrollIndicator={false}
-                    data={this.data}
+                    data={this.state.listSubDichVu}
                     renderItem={(item) => {
                         return (
                             <DichVuItem
@@ -67,6 +94,13 @@ class SubDichVu extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     style={{marginBottom: 100, marginLeft: 10, marginRight: 10, marginTop: 10}}
        />
+       {this.state.isLoading?
+        <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+            <ActivityIndicator size="large" color="green"/>
+        </View>:null
+    }
+
+       </View>
               
             
         )

@@ -92,7 +92,7 @@ class DichVu extends Component {
     getListDichVu =  ()=>{
         AsyncStorage.getItem('token').then((value)=> {
             this.setState({isLoading:true})
-            fetch(URL.BASE_URL + URL.GET_SERVICE, {
+            fetch(URL.BASE_URL + URL.GET_SERVICE_CATEGORY, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -142,6 +142,7 @@ class DichVu extends Component {
                                 <DichVuItem
                                     dataItem={item}
                                     navigation={navigation}
+                                    fromSubDichVu= {false}
                                 />
                             )
                         }}
