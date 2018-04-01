@@ -39,7 +39,8 @@ class AddMember extends Component {
         this.state = {
             resultSearch: [],
             userGroup: [],
-            isLoading: false
+            isLoading: false,
+            dataIdUser: [],
         };
 
         this.timeout = 0;
@@ -71,6 +72,7 @@ class AddMember extends Component {
 
     }
     AddMember= ()=> {
+        console.log('id ', this.state.dataIdUser)
         const { params } = this.props.navigation.state
         AsyncStorage.getItem("token").then(value => {
 
@@ -81,7 +83,7 @@ class AddMember extends Component {
                     "x-access-token": value
                 },
                 body: JSON.stringify({
-                    memberIds: ["5aba41bf3a75c007f7c8301c", "5aba48c0a79cdd087169d80c"]
+                    memberIds: this.state.dataIdUser
 
 
                 })
@@ -174,7 +176,12 @@ class AddMember extends Component {
         });
     };
     clickItemSearch = (userSelect,index)=>{
-        //console.log("user select",userSelect);
+        console.log("user select",userSelect);
+        let addID = this.state.dataIdUser;
+        addID.push(userSelect.id)
+        this.setState({
+            dataIdUser: addID
+        })
         console.log("user index",index);
         var addNew = [...this.state.userGroup,userSelect];
         this.setState({userGroup:addNew});

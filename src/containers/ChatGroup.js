@@ -132,6 +132,7 @@ class ChatGroup extends Component {
 
 
     sendMessage = () => {
+        const { params } = this.props.navigation.state
         if (this.input_msg === "")
             return;
         this.textInput.clear();
@@ -139,8 +140,8 @@ class ChatGroup extends Component {
         // console.log("user:", this.dataUser2._id);
 
         var sendTo = {
-            room: this.dataUser2._id,
-            userName: this.dataUser2.userName
+            room: params.IdGroup,
+            userName: params.groupname
 
         };
         // console.log("room", this.props.SocketRef.userSocket.room);
