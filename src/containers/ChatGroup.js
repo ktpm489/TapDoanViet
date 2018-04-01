@@ -20,20 +20,18 @@ import {bindActionCreators} from 'redux'
 
 import ChatItem from '../components/ChatItem'
 import {callApiDichVu} from "../actions/DichvuActions";
-import Modal from 'react-native-modalbox';
 import {connectToSocket, disConnectToSocket, joinToChat} from "../actions/SocketActions";
 
 
 class ChatGroup extends Component {
-
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
-    
+
         return {
             headerRight: <TouchableOpacity style = {{marginRight:10}}
                                            onPress={() => params.actionMore()}>
                 <Image style = {{width:30,height:30}}
-                        source={require('../images/more.png')}
+                       source={require('../images/more.png')}
                 />
             </TouchableOpacity>,
             title:params.title,
@@ -42,18 +40,12 @@ class ChatGroup extends Component {
             headerTintColor: 'white',
         }
     }
-
-    actionMore = ()=>{
-        this.refs.modal.open();
-    }
-
     constructor(props) {
         super(props);
-        this.dataUser2 = this.props.navigation.state.params.userGroup;
         this.groupname = this.props.navigation.state.params.groupname;
         this.props.navigation.setParams({title:this.groupname})
-         console.log("userGroup",this.dataUser2);
-        console.log("groupname", this.groupname);
+        // console.log("user",this.dataUser2);
+        // console.log("data pass", this.dataUser2);
         console.ignoredYellowBox = [
             'Setting a timer'
         ];
@@ -63,6 +55,7 @@ class ChatGroup extends Component {
         };
         this.input_msg = '';
 
+        console.log('scoket', this.props.SocketRef)
 
         AsyncStorage.getItem('token').then((token) => {
             this.token = token;
@@ -95,7 +88,9 @@ class ChatGroup extends Component {
 
 
     getOldMSG = (uid, page, pageSize) => {
-        fetch(URL.BASE_URL + URL.PAHT_GET_CHAT + this.dataUser2._id + '?page=' + page + '&pageSize=' + pageSize, {
+        const { params } = this.props.navigation.state
+        console.log('params', params)
+        fetch(URL.BASE_URL + URL.PAHT_GET_CHAT + params.IdGroup + "?groupId=true" + '&page=' + page + '&pageSize=' + pageSize, {
             headers: {
                 // 'Authorization': this.token,
                 'x-access-token': this.token,
@@ -125,7 +120,6 @@ class ChatGroup extends Component {
     componentWillMount() {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-        this.props.navigation.setParams({ actionMore: this.actionMore});
     }
 
     _keyboardDidShow() {
@@ -161,49 +155,11 @@ class ChatGroup extends Component {
 
     render() {
         let userName;
-        const{navigation} = this.props;
         if (this.props.SocketRef && this.props.SocketRef.userSocket)
             userName = this.props.SocketRef.userSocket.userName;
         return (
 
             <View style={{flex: 1}}>
-
-            {/* modal show more  */}
-                    <Modal  style={{
-                            height: 100,
-                            width: Dimention.DEVICE_WIDTH-50,
-                        }}
-                            swipeArea={20}
-                            position={"center"} ref={"modal"} isDisabled={false}
-                            
-                        >
-                            <TouchableOpacity
-                                style ={{flex:1,justifyContent:'center',alignItems:'center'}}
-
-                                onPress={()=>{
-                                    navigation.navigate("CreateGroup",{groupname:this.groupname,userGroup:this.dataUser2});
-                                    this.refs.modal.close()
-                                }}
-                            
-                            >
-                                <Text style ={{color:'black'}}>Thêm thành viên mới</Text>
-                            </TouchableOpacity>
-                            <View style ={{height:1,backgroundColor:'gray'}}></View>
-                            <TouchableOpacity
-                                style ={{flex:1,justifyContent:'center',alignItems:'center'}}
-                                onPress={()=>{
-                                    navigation.navigate("DanhSachNhom",{userGroup:this.dataUser2});
-                                    this.refs.modal.close()
-                                }}
-
-                                >
-                                <Text style ={{color:'black'}}>Danh sách thành viên</Text>
-                            </TouchableOpacity>
-                        </Modal>
-
-
-                {/* list chat */}
-
                 <FlatList
                     style={{backgroundColor: "#E0E0E0", flex: 1}}
                     data={this.state.dataChat}
@@ -213,7 +169,6 @@ class ChatGroup extends Component {
                         return (
                             <ChatItem
                                 dataItem={item}
-                                fromGroupChat = {true}
                                 myName={userName ? userName : ""}
                             />
                         )
@@ -305,7 +260,7 @@ const mapDispatchToProps = (dispatch) => {
 
     }
 };
-Chat = connect(mapStateToProps, mapDispatchToProps)(ChatGroup)
+ChatGroup = connect(mapStateToProps, mapDispatchToProps)(ChatGroup)
 export default ChatGroup;
 
 

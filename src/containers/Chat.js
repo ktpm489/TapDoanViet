@@ -38,6 +38,7 @@ class Chat extends Component {
         };
         this.input_msg = '';
 
+        console.log('scoket', this.props.SocketRef)
 
         AsyncStorage.getItem('token').then((token) => {
             this.token = token;
@@ -70,7 +71,7 @@ class Chat extends Component {
 
 
     getOldMSG = (uid, page, pageSize) => {
-        fetch(URL.BASE_URL + URL.PAHT_GET_CHAT + this.dataUser2._id + '?page=' + page + '&pageSize=' + pageSize, {
+        fetch(URL.BASE_URL + URL.PAHT_GET_CHAT + this.dataUser2._id + "?groupId=true" + '&page=' + page + '&pageSize=' + pageSize, {
             headers: {
                 // 'Authorization': this.token,
                 'x-access-token': this.token,

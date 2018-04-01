@@ -66,7 +66,7 @@ class AddMember extends Component {
             return;
         }
         this.AddMember()
-        this.props.navigation.navigate("ChatGroup", { groupname: params.groupname})
+        this.props.navigation.navigate("ChatGroup", { groupname: params.groupname, IdGroup: params.IdGroup})
         // Alert.alert("Thông báo","Tạo nhóm thành công");
 
     }
@@ -89,12 +89,6 @@ class AddMember extends Component {
                 return response.json()
             }).then(dataRes => {
                 console.log('add member', dataRes)
-                // this.setState({
-                //     IdGroup: dataRes.group._id
-                //
-                // }, ()=> {
-                //     this.props.navigation.navigate("AddMember", {IdGroup: this.state.IdGroup, groupname: this.state.TenGroup})
-                // })
 
             }).catch(e => {
                 console.log("exception", e);
