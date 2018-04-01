@@ -30,6 +30,7 @@ import DieuKhoan from "../containers/DieuKhoan"
 import ChatGroup from "../containers/ChatGroup"
 import DanhSachNhom from "../containers/DanhSachNhom";
 import SubDichVu from "../containers/SubDichVu";
+import AddMember from "../containers/AddMember";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -272,6 +273,9 @@ const Stack = StackNavigator ({
     SubDichVu:{
         screen:SubDichVu,
         
+    },
+    AddMember: {
+        screen: AddMember
     }
 
 

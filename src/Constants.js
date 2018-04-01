@@ -22,6 +22,8 @@ export const GET_REQUEST = "/api/service/history-transaction";
 export const SEARCH_USER = "/api/user/search?keyword=";
 export const GET_NOTI = "/api/notification/list";
 export const REGISTER = "/api/user/register";
+export const CREATE_GROUP = "/api/chat/create-group";
+export const ADD_MEMBER = "/api/chat/add-member-to-group/";
 
 
 export const COLOR_APP_GREEN = '#23b34c';
