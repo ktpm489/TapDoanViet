@@ -89,13 +89,11 @@ const Tab = TabNavigator ({
                 alignSelf:'center'
 
             },
-            // style: {
-            //     backgroundColor: '#eaa33f',
-            //     justifyContent:'center',
-            //     alignItems:'center',
-            //     alignSelf:'center',
+            style: {
+                backgroundColor: '#eaa33f',
+                
             
-            // },
+            },
             // tabStyle: {
             //     backgroundColor:'white'
             // }
