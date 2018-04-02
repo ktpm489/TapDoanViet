@@ -42,12 +42,18 @@ export default class ServiceHistory extends Component {
 
     getServiceHistory = async()=>{
         this.setState({isLoading:true})
+        
         var data = await fetch(URL.BASE_URL + URL.GET_REQUEST, {
             headers: {
-                'Authorization': 'Bearer '+this.token,
+                'Authorization': this.token,
                 'Content-Type': 'application/json'
             }
-        }).then((data) => data.json());
+        }).then((response) => {
+            return response.json();
+        }).catch(e=>{
+            console.log("exception",e);
+            this.setState({isLoading:false})
+        });
              console.log("list history services",data);
         if(data.errorCode === 0){
             this.setState({listHistory:data.data,isLoading:false});

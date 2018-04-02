@@ -23,7 +23,15 @@ export default class ThongBaoDetail extends Component {
         else
             return true;
     }
-
+    componentWillUnmount(){
+       
+        const item = this.props.navigation.state.params.dataItem;
+        const reloadDataFromBack = this.props.navigation.state.params.reloadDataFromBack;
+        if(item.status === 1){
+           
+            reloadDataFromBack();
+        }
+    }
 
    
     render() {

@@ -12,7 +12,7 @@ import {
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
 import moment from 'moment';
-import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
+import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE,UPDATE_HISTORY} from "../Constants";
 import PickerImage from "../components/PickerImage"
 export default class ItemServiceHistory extends Component {
 
@@ -83,7 +83,7 @@ export default class ItemServiceHistory extends Component {
                         this.urlUpload = this.urlUpload +","+data.data.imageUrl;
                     if(this.countImageUploadDone == this.countImageUpload){
                         this.props.updateStateLoading(false);
-                        alert("da upload xong");
+                        this.updateStatus(this.props.dataItem.id);
                     }
                 }
 
@@ -91,6 +91,34 @@ export default class ItemServiceHistory extends Component {
                
             }).catch(e => {
                 console.log('exception',e)
+            })
+        });
+    }
+
+    updateStatus = (id)=>{
+       
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(BASE_URL + UPDATE_HISTORY, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                body: JSON.stringify({
+                    id: id,
+                    invoice_imgs: this.urlUpload,
+                })
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+
+                console.log("update history",data);
+                if(data && data.errorCode == 0){
+                    this.props.navigation.goBack();
+                }
+            }).catch(e=>{
+                    console.log("exception",e);
             })
         });
     }
@@ -123,7 +151,7 @@ export default class ItemServiceHistory extends Component {
         
         const {navigation} = this.props;
         const item = this.props.dataItem;
-        const status = false;
+        const status = this.props.dataItem.done;
         var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:MM");
         var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:MM");
 
@@ -188,7 +216,7 @@ export default class ItemServiceHistory extends Component {
                     </Text>
                     <Text>
                         <Text style={{fontWeight: "bold"}}>Dịch vụ đăng ký: </Text>
-                        <Text>{item.service.serviceName}</Text>
+                        <Text>{!item.service?"Không xác định":item.service.serviceName}</Text>
                     </Text>
                     <Text>
                         <Text style={{fontWeight: "bold"}}>Trạng thái: </Text>
