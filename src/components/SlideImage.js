@@ -59,7 +59,7 @@ export default class SildeImage extends Component {
         }else{
             return (
                <View
-               style={{height:170}}
+               style={{height:200}}
                >
                     <ImageSlider images={imgs}
                     position={this.state.position}

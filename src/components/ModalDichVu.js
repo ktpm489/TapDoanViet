@@ -408,9 +408,9 @@ class ModalDichVu extends Component {
                 if(data && data.errorCode == 0){
                     this.countImageUploadDone++;
                     if(this.urlUpload === "")
-                        this.urlUpload = data.data.imageUrl;
+                        this.urlUpload = data.data.fileName;
                     else
-                        this.urlUpload = this.urlUpload +","+data.data.imageUrl;
+                        this.urlUpload = this.urlUpload +","+data.data.fileName;
                     if(this.countImageUploadDone == this.countImageUpload){
                         this.sendInfoToServer();
                     }
