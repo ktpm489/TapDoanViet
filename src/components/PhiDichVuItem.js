@@ -34,10 +34,10 @@ export default class PhiDichVuItem extends Component {
         }
     
     render() {
-        //console.log('this.props.dataItem',this.props.dataItem)
-        const itemPhiDichVU = this.props.dataItem.item;
-        itemPhiDichVU.total_cost = this.format_curency(itemPhiDichVU.total_cost) +"đ";
-        console.log('item con',itemPhiDichVU.time)
+        console.log('this.props.dataItem',this.props.dataItem)
+        // const itemPhiDichVU = this.props.dataItem.item;
+        // itemPhiDichVU.total_cost = this.format_curency(itemPhiDichVU.total_cost) +"đ";
+        // console.log('item con',itemPhiDichVU.time)
         return (
 
             <TouchableOpacity
@@ -53,7 +53,7 @@ export default class PhiDichVuItem extends Component {
                         //   backgroundColor:'red',
                           flexDirection: 'column'}}>
 
-                    <Text style={{flex:1,color:'black',fontWeight:'bold'}}>{itemPhiDichVU.time}</Text>
+                    {/* <Text style={{flex:1,color:'black',fontWeight:'bold'}}>{itemPhiDichVU.time}</Text>
                     
                         <View style={{flexDirection:'row',}}>
                             <Text style={{textAlign:'left',color:'red'}}>{itemPhiDichVU.status}</Text>
@@ -85,7 +85,7 @@ export default class PhiDichVuItem extends Component {
                                     keyExtractor={(item, index) => index.toString()}
                                     
                             />
-                        </View>
+                        </View> */}
 
                 </View>
 

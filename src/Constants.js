@@ -26,6 +26,7 @@ export const CREATE_GROUP = "/api/chat/create-group";
 export const ADD_MEMBER = "/api/chat/add-member-to-group/";
 export const UPDATE_NOTI_SEEN = "/api/notification/updateStatus/"
 export const UPDATE_HISTORY = "/api/service/history-update"
+export const COST = "/api/cost/apartment-cost?year="
 
 
 export const COLOR_APP_GREEN = '#23b34c';
