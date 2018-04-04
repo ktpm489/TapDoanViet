@@ -164,6 +164,8 @@ export default class ItemServiceHistory extends Component {
 
         var imgRender = [];
         for (var i = 0; i < arrImages.length; i++) {
+            if(!arrImages[i] ||  arrImages[i]=== "")
+                break;
             imgRender.push(<TouchableOpacity
 
                 key={i}
