@@ -71,7 +71,7 @@ class AddMember extends Component {
         // Alert.alert("Thông báo","Tạo nhóm thành công");
 
     }
-    AddMember= ()=> {
+    AddMember = () => {
         console.log('id ', this.state.dataIdUser)
         const { params } = this.props.navigation.state
         AsyncStorage.getItem("token").then(value => {

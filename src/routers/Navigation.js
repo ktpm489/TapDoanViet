@@ -91,7 +91,6 @@ const Tab = TabNavigator ({
             },
             style: {
                 backgroundColor: '#eaa33f',
-                
             
             },
             // tabStyle: {
