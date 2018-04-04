@@ -4,10 +4,12 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
+import * as URL from '../Constants'
 import moment from 'moment';
 export default class ThongBaoItem extends Component {
 
@@ -24,22 +26,52 @@ export default class ThongBaoItem extends Component {
             return true;
     }
 
+    updateStateSeen = (id_noti)=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            
+            fetch(URL.BASE_URL + URL.UPDATE_NOTI_SEEN+id_noti, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('cap nhat trang thai da xem ', data);
+                if(data && data.errorCode == 0){
+                    
+                }
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+    }
+
+    
 
    
     render() {
-        const {navigation} = this.props;
+       
         const {item} = this.props.dataItem;
+        const{reloadDataFromBack,navigation}=this.props;
         var convertTime =  moment(item.createdAt).format("DD-MM-YYYY HH:MM");
 
         return (
 
             <TouchableOpacity
                 onPress={() => {
-                   navigation.navigate('ThongBaoDetail', {dataItem: item});
+                    if(item.status && item.status === 1){
+                        this.updateStateSeen(item.id);
+                    }
+                   navigation.navigate('ThongBaoDetail', {dataItem: item,reloadDataFromBack:reloadDataFromBack});
                 }}
             >
                 <View key={item.index}
-                      style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',backgroundColor:item.isSeen?'white':'#b2ebf2'}}>
+                      style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',backgroundColor:item.status === 2?'white':'#b2ebf2'}}>
                     <Image style={myStyle.image_circle}
                         source={require('../../src/images/logo.png')}
                            resizeMode="cover"

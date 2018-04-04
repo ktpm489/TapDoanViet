@@ -69,6 +69,11 @@ export default class ThongBao extends Component {
         });
     }
 
+    reloadDataFromBack = ()=>{
+        console.log("reload data");
+        this.callApi();
+    }
+
     componentWillMount(){
         this.callApi();
     }
@@ -83,6 +88,7 @@ export default class ThongBao extends Component {
                         <ThongBaoItem
                             dataItem={item}
                             navigation={navigation}
+                            reloadDataFromBack = {this.reloadDataFromBack}
                         />
                     )
                 }}

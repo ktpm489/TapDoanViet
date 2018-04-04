@@ -54,9 +54,8 @@ class StatusItems extends Component {
                         </View>
                         <View style = {{flexDirection:'row', marginRight:20}}>
                             <Icon1 name="comment" size={25} color="#424242" />
-                            <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id})}>
+
                                 <Text style = {{color: '#424242'}}>Bình luận</Text>
-                            </TouchableOpacity>
                         </View>
                     </View>
 
@@ -66,9 +65,7 @@ class StatusItems extends Component {
                             style={styles.image_circle}
                             resizeMode="cover">
                         </Image>
-                        <TouchableOpacity
-                            // onPress={() => {
-                            // this.BinhLuan(item.PostID)}}
+                        <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id})}
                                           style={{
                                               marginLeft: 10, flex: 1,
                                               backgroundColor: '#F5F5F5', borderRadius: 50,
