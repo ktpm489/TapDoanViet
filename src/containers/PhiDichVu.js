@@ -45,7 +45,7 @@ export default class PhiDichVu extends Component {
             departmebtSelect: "Chọn căn hộ",
             yearSelect: this.arrYear[0],
             isLoading: false,
-            clickOpenDialogType: 0
+            clickOpenDialogType: 1
         }
 
 
@@ -55,8 +55,8 @@ export default class PhiDichVu extends Component {
     }
 
     callApiChiPhi = (year_select) => {
-        console.log("yearrrrrrrr=======", year_select);
-        this.setState({ isLoading: true })
+        // console.log("yearrrrrrrr=======", year_select);
+        this.setState({ isLoading: true,dataSum:[],listDepartment:[],listCost:[] })
         AsyncStorage.getItem('token').then((value) => {
             fetch(BASE_URL + COST + year_select, {
                 method: "GET",
@@ -124,14 +124,13 @@ export default class PhiDichVu extends Component {
                         this.refs.modal.close();
 
 
-                        if (this.state.clickOpenDialogType == 1) {
+                        if (this.state.clickOpenDialogType === 1) {
                             if (this.state.yearSelect !== s) {
                                 this.setState({ yearSelect: s });
-                            }else{
                                 this.callApiChiPhi(s);
                             }
                         }
-                        else if (this.state.clickOpenDialogType == 2){
+                        else if (this.state.clickOpenDialogType === 2){
                             
                             let index = this.state.listDepartment.indexOf(s);
                             if(index > -1){
@@ -140,7 +139,7 @@ export default class PhiDichVu extends Component {
 
                         }
 
-                        this.setState({ clickOpenDialogType: 0 });
+                       
                     }}
 
                 >
@@ -209,7 +208,7 @@ export default class PhiDichVu extends Component {
 
                 />
                 <Modal style={{
-                    height: this.state.clickOpenDialogType == 2 ? this.state.listDepartment.length * 40 : this.arrYear.length * 40,
+                    height: this.state.clickOpenDialogType === 2 ? this.state.listDepartment.length * 40 : this.arrYear.length * 40,
                     width: Dimention.DEVICE_WIDTH - 50,
 
                 }}
@@ -220,7 +219,7 @@ export default class PhiDichVu extends Component {
                     }}
 
                 >
-                    {this.state.clickOpenDialogType == 2 ? this.renderModalContent(this.state.listDepartment) : this.renderModalContent(this.arrYear)}
+                    {this.state.clickOpenDialogType === 2 ? this.renderModalContent(this.state.listDepartment) : this.renderModalContent(this.arrYear)}
                 </Modal>
                 {this.state.isLoading ?
                     <View style={{ top: -10, bottom: -10, left: -10, right: -10, justifyContent: 'center', alignItems: 'center', position: 'absolute', zIndex: 1, backgroundColor: 'rgba(52, 52, 52, 0.3)' }}>
