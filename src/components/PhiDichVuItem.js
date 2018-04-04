@@ -34,12 +34,25 @@ export default class PhiDichVuItem extends Component {
         }
     
     render() {
-        console.log('this.props.dataItem',this.props.dataItem)
-        // const itemPhiDichVU = this.props.dataItem.item;
-        // itemPhiDichVU.total_cost = this.format_curency(itemPhiDichVU.total_cost) +"đ";
-        // console.log('item con',itemPhiDichVU.time)
-        return (
+        // console.log('this.props.dataItem',this.props.dataItem)
+        
+        const itemPhiDichVU = this.props.dataItem.item;
+        // let totalMoney = itemPhiDichVU.reduce((initValue,item,index,itemPhiDichVU)=>{
+        //     return initValue+=item.money;
+        // })
+        let statePayment = true;
+        let total_cost = 0;
+        itemPhiDichVU.map((item,indez)=>{
+            if(item.status === 0)
+                statePayment = false
+            total_cost+=item.money;
+        })
 
+        total_cost = this.format_curency(total_cost) +"đ";
+        // console.log('item con',itemPhiDichVU.time)
+        if(itemPhiDichVU.length > 0)
+            return (
+            
             <TouchableOpacity
                 
             >
@@ -53,11 +66,11 @@ export default class PhiDichVuItem extends Component {
                         //   backgroundColor:'red',
                           flexDirection: 'column'}}>
 
-                    {/* <Text style={{flex:1,color:'black',fontWeight:'bold'}}>{itemPhiDichVU.time}</Text>
+                    <Text style={{flex:1,color:'black',fontWeight:'bold'}}>Tháng {this.props.dataItem.index+1}</Text>
                     
                         <View style={{flexDirection:'row',}}>
-                            <Text style={{textAlign:'left',color:'red'}}>{itemPhiDichVU.status}</Text>
-                            <Text style={{textAlign:'right',flex:1,alignSelf: 'flex-end',color:'red',fontWeight:'bold'}}>{itemPhiDichVU.total_cost}</Text>
+                            <Text style={{textAlign:'left',color:'red'}}>{statePayment?"Đã thanh toán":"Chưa thanh toán"}</Text>
+                            <Text style={{textAlign:'right',flex:1,alignSelf: 'flex-end',color:'red',fontWeight:'bold'}}>{total_cost}</Text>
                         </View>
                         <View
                             style={{
@@ -73,7 +86,7 @@ export default class PhiDichVuItem extends Component {
                             }}
                         >
                             <FlatList
-                                    data={itemPhiDichVU.details}
+                                    data={itemPhiDichVU}
                                     renderItem={(item) => {
                                         return (
                                             <SubItemPhiDichVu
@@ -85,7 +98,7 @@ export default class PhiDichVuItem extends Component {
                                     keyExtractor={(item, index) => index.toString()}
                                     
                             />
-                        </View> */}
+                        </View>
 
                 </View>
 
@@ -108,6 +121,28 @@ export default class PhiDichVuItem extends Component {
                 <View style={{height:1,backgroundColor:'gray',margin:10}}></View>
 
             </TouchableOpacity>)
+    else{
+        return(
+            <TouchableOpacity
+                
+            >
+                <View key={this.props.dataItem.index}
+                      style={{flex: 1,
+                          marginLeft:10,
+                          marginRight:10,
+                          marginTop:10,
+                          marginBottom:10,
+                          borderRadius:5,
+                        //   backgroundColor:'red',
+                          flexDirection: 'column'}}>
+
+                    <Text style={{flex:1,color:'black',fontWeight:'bold'}}>Tháng {this.props.dataItem.index+1}</Text>
+                    <Text style={{flex:1,alignSelf:'center'}}>Không có dữ liệu</Text>
+                    </View>
+                    <View style={{height:1,backgroundColor:'gray',margin:10}}></View>
+                    </TouchableOpacity>
+        )
+    }
     }
 };
 const myStyle = StyleSheet.create({

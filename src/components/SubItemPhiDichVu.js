@@ -33,7 +33,7 @@ export default class SubItemPhiDichVu extends Component {
     render() {
         const {navigation} = this.props;
         const itemSubPhiDichVu = this.props.dataItem.item;
-        itemSubPhiDichVu.value_chiphi = this.format_curency(itemSubPhiDichVu.value_chiphi)+"đ";
+        itemSubPhiDichVu.money = this.format_curency(itemSubPhiDichVu.money)+"đ";
         return (
 
             
@@ -54,8 +54,8 @@ export default class SubItemPhiDichVu extends Component {
                          resizeMode="cover"
                          style={{width:20,height:20}}
                     />
-                    <Text style={{textAlign:'left',color:'black',marginLeft:10,}}>{itemSubPhiDichVu.name_chiphi}</Text>
-                    <Text style={{textAlign:'right',flex:1,alignSelf: 'flex-end'}}>{itemSubPhiDichVu.value_chiphi}</Text>
+                    <Text style={{textAlign:'left',color:'black',marginLeft:10,}}>{itemSubPhiDichVu.costType.name}</Text>
+                    <Text style={{textAlign:'right',flex:1,alignSelf: 'flex-end'}}>{itemSubPhiDichVu.money}</Text>
                 </View>
 
         )
