@@ -37,6 +37,7 @@ class DangKi extends Component {
                         <TextInput
                             style = {{marginLeft: 10}}
                             placeholder = 'Số điện thoại'
+                            keyboardType={'numeric'}
                             underlineColorAndroid="transparent"
                             onChangeText = {(SoDienThoai) => this.setState({SoDienThoai})}/>
                     </View>

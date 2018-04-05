@@ -80,6 +80,7 @@ class Login extends Component {
                     <UserInput nameIcon = "user-circle"
                                // keyboardType={'numeric'}
                                placeholder={'Nhập số điện thoại'}
+                               keyboardType={'numeric'}
                                autoCapitalize={'none'}
                                returnKeyType={'done'}
                                autoCorrect={false}

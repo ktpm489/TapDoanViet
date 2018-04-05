@@ -96,12 +96,47 @@ class MenuLeft extends Component {
                         <Text style={{flex:5, fontSize:17, color:'white'}}>Đăng xuất</Text>
                     </TouchableOpacity>
                 </View>
+                {/*<Modal*/}
+                    {/*isVisible={this.state.visibleModal === 5}*/}
+                    {/*style={styles.bottomModal}*/}
+                {/*>*/}
+                    {/*<View>*/}
+                        {/*<TouchableOpacity onPress =  {()=> {*/}
+                            {/*AsyncStorage.removeItem('token')*/}
+                            {/*const resetAction = NavigationActions.reset({*/}
+                                {/*index: 0,*/}
+                                {/*actions: [*/}
+                                    {/*NavigationActions.navigate({*/}
+                                        {/*routeName: 'Login',*/}
+                                    {/*}),*/}
+                                {/*]*/}
+                            {/*});*/}
+                            {/*this.props.navigation.dispatch(resetAction)}}>*/}
+                            {/*<View style = {styles.modalContent}>*/}
+                                {/*<Text style = {{fontSize:11}}>Bạn có muốn đăng xuất tài khoản này?</Text>*/}
+                                {/*<View style = {{height:1, backgroundColor: 'red'}}/>*/}
+                                {/*<Text style = {{color: 'red', fontSize:18, marginTop: 15}}>*/}
+                                    {/*Đăng xuất*/}
+                                {/*</Text>*/}
+                            {/*</View>*/}
+                        {/*</TouchableOpacity>*/}
+                        {/*<TouchableOpacity onPress = { ()=> this.setState({ visibleModal: null })}>*/}
+                            {/*<View style = {[styles.modalContent, {marginTop: 10}]}>*/}
+                                {/*<Text style = {{fontSize:18, color: '#2196F3'}}>*/}
+                                    {/*Hủy*/}
+                                {/*</Text>*/}
+                            {/*</View>*/}
+                        {/*</TouchableOpacity>*/}
+                    {/*</View>*/}
+                {/*</Modal>*/}
                 <Modal
                     isVisible={this.state.visibleModal === 5}
                     style={styles.bottomModal}
                 >
                     <View>
                         <TouchableOpacity onPress =  {()=> {
+                            this.setState({ visibleModal: null })
+                            // this.UnSubcribe()
                             AsyncStorage.removeItem('token')
                             const resetAction = NavigationActions.reset({
                                 index: 0,
