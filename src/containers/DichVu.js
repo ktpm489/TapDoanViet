@@ -133,6 +133,7 @@ class DichVu extends Component {
                         imageSlider={this.state.imageSlider}
                        
                     />
+                    <View style={{justifyContent:'center',alignItems:'center'}}>
                     < FlatList
                          showsHorizontalScrollIndicator={false}
                          showVerticalScrollIndicator={false}
@@ -148,8 +149,9 @@ class DichVu extends Component {
                         }}
                         numColumns={3}
                         keyExtractor={(item, index) => index.toString()}
-                        style={{marginBottom: 100, marginLeft: 10, marginRight: 10, marginTop: 10}}
+                        style={{marginBottom: 100,}}
                     />
+                    </View>
                     {this.state.isLoading?
                         <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
                             <ActivityIndicator size="large" color="green"/>

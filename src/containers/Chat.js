@@ -130,6 +130,8 @@ class Chat extends Component {
             to: sendTo,
             messageContent: this.input_msg
         };
+
+        console.log("send data",dataSend)
         this.props.SocketRef.socket.emit("send_message", dataSend);
 
     };

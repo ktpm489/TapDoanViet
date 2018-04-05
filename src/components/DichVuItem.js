@@ -39,23 +39,53 @@ export default class DichVuItem extends Component {
                         navigation.navigate('SubDichVu', {idItem: item.id,subtitle:item.name});
                 }}
             >
+
+            {fromSubDichVu?
                 <View key={item.index}
                       style={{flex: 1,
-                          marginLeft:10,
-                          marginRight:10,
-                          marginTop:10,
-                          marginBottom:10,
-                          width:Dimention.DEVICE_WIDTH/3-30,
-                          height:Dimention.DEVICE_WIDTH/3-30,
-                          flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+
+                        borderRadius: 1,
+                                borderColor: '#FF9800',
+                                shadowColor: '#FF9800',
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowOpacity: 0.8,
+                        backgroundColor:'#e3e3da',
+                          marginLeft:1,
+                          marginRight:1,
+                          marginTop:1,
+                          marginBottom:1,
+                          
+                          width:Dimention.DEVICE_WIDTH/3-9,
+                           height:Dimention.DEVICE_WIDTH/3,
+                          flexDirection: 'column', justifyContent: 'flex-start',alignItems:'center' }}>
+                    
+                
                     <Image
                         
-                         source={{uri:item.iconUrl}}
-                         resizeMode="cover"
-                         style={{width:50,height:50}}
-                    />
-                    <Text style={{textAlign:'center',color:'black',fontWeight:'bold'}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+                    source={{uri:item.iconUrl}}
+                    resizeMode="cover"
+                    style={{width:'100%',height:'70%'}}
+               />
+               <View style ={{flex:1,justifyContent: 'center',alignItems:'center'}}>
+                    <Text style={{textAlign:'center',alignSelf:'center',color:'black',fontWeight:'bold'}}>{fromSubDichVu? item.serviceName:item.name}</Text>
                 </View>
+                </View>
+                :<View key={item.index}
+                style={{flex: 1,
+                 
+                  width:Dimention.DEVICE_WIDTH/3-10,
+                     height:Dimention.DEVICE_WIDTH/3-10,
+                    flexDirection: 'column', justifyContent: 'center',alignItems:'center' }}>
+              
+          
+              <Image
+                  
+              source={{uri:item.iconUrl}}
+              resizeMode="cover"
+              style={{width:Dimention.DEVICE_WIDTH/5-10,height:Dimention.DEVICE_WIDTH/5-10}}
+         />
+              <Text style={{textAlign:'center',color:'black',fontWeight:'bold'}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+          </View>}
 
             </TouchableOpacity>)
     }
