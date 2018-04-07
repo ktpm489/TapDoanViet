@@ -23,32 +23,50 @@ export default class Launcher extends Component{
         },500)
     }
     pushScreen(){
-        AsyncStorage.getItem('token').then((value)=>{
-            console.log("token",value);
-            if(value){ // co van de
-                // this.props.navigation.navigate('Tab')
+        AsyncStorage.getItem('isFirstLogin').then((isFirstLogin)=>{
+            
+            if(isFirstLogin){
+                AsyncStorage.getItem('token').then((value)=>{
+                    console.log("token",value);
+                    if(value){ // co van de
+                        // this.props.navigation.navigate('Tab')
+                        const resetAction = NavigationActions.reset({
+                            index: 0,
+                            actions: [
+                                NavigationActions.navigate({
+                                    routeName: 'Tab',
+                                }),
+                            ]
+                        });
+                        this.props.navigation.dispatch(resetAction)
+                    }
+                    else {
+                        const resetAction = NavigationActions.reset({
+                            index: 0,
+                            actions: [
+                                NavigationActions.navigate({
+                                    routeName: 'Login',
+                                }),
+                            ]
+                        });
+                        this.props.navigation.dispatch(resetAction)
+                    }
+                })
+            }else{
                 const resetAction = NavigationActions.reset({
                     index: 0,
                     actions: [
                         NavigationActions.navigate({
-                            routeName: 'Tab',
+                            routeName: 'FirstScreen',
                         }),
                     ]
                 });
                 this.props.navigation.dispatch(resetAction)
             }
-            else {
-                const resetAction = NavigationActions.reset({
-                    index: 0,
-                    actions: [
-                        NavigationActions.navigate({
-                            routeName: 'Login',
-                        }),
-                    ]
-                });
-                this.props.navigation.dispatch(resetAction)
-            }
-        })
+        });
+
+
+        
     }
     render (){
         return (

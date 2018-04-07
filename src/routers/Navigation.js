@@ -31,6 +31,7 @@ import ChatGroup from "../containers/ChatGroup"
 import DanhSachNhom from "../containers/DanhSachNhom";
 import SubDichVu from "../containers/SubDichVu";
 import AddMember from "../containers/AddMember";
+import FirstScreen from "../containers/FirstScreen";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -140,7 +141,12 @@ const Stack = StackNavigator ({
             header : null
         }
     },
-
+    FirstScreen:{
+        screen:FirstScreen,
+        navigationOptions: {
+            header : null
+        }
+    },
 
     Login: {
         screen: Login,

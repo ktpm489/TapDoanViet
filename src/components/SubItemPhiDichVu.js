@@ -48,7 +48,7 @@ export default class SubItemPhiDichVu extends Component {
 
                     <Image
                           source={{
-                              uri: 'https://cdn3.iconfinder.com/data/icons/currency-2/460/US-dollar-512.png'
+                              uri: itemSubPhiDichVu.costType.iconUrl.length > 0?itemSubPhiDichVu.iconUrl:'https://cdn3.iconfinder.com/data/icons/currency-2/460/US-dollar-512.png'
                           }}
                          //source={itemSubPhiDichVu.icon}
                          resizeMode="cover"
