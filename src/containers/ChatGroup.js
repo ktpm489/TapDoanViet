@@ -202,7 +202,7 @@ class ChatGroup extends Component {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <TouchableOpacity>
+                    {/* <TouchableOpacity>
                         <Image
                             style={{
                                 width: 40,
@@ -214,9 +214,20 @@ class ChatGroup extends Component {
                             }}
                             source={require('../../src/images/camera.png')}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TextInput
-                        style={{flex: 1}}
+                        style={{
+                            flex: 1,
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            marginLeft:1,
+                            borderColor: "#000",
+                            shadowColor: "#000",
+                            paddingLeft: 5,
+                            marginTop:5,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                            minHeight: 50
+                        }}
+                        underlineColorAndroid="transparent"
                         placeholder={"Nhập vào đây..."}
                         onChangeText={
                             (text) => this.input_msg = text}

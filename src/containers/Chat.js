@@ -196,22 +196,33 @@ class Chat extends Component {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <TouchableOpacity>
+                    {/* <TouchableOpacity>
                         <Image
                             style={{
                                 width: 40,
                                 aspectRatio: 1,
                                 paddingBottom: 10,
-                                paddingLeft: 10,
+                                paddingLeft: 10,                                    
                                 paddingRight: 10,
                                 paddingTop: 10,
                             }}
                             source={require('../../src/images/camera.png')}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TextInput
-                        style={{flex: 1}}
+                        style={{
+                            flex: 1,
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            marginLeft:1,
+                            borderColor: "#000",
+                            shadowColor: "#000",
+                            paddingLeft: 5,
+                            marginTop:5,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                            minHeight: 50
+                        }}
                         placeholder={"Nhập vào đây..."}
+                        underlineColorAndroid="transparent"
                         onChangeText={
                             (text) => this.input_msg = text}
                         ref={input => {
@@ -222,6 +233,7 @@ class Chat extends Component {
                     />
                     <TouchableOpacity
                         onPress={this.sendMessage}
+                        style={{justifyContent:'center',alignItems:'center'}}
                     >
                         <Image
                             style={{
