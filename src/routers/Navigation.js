@@ -45,28 +45,16 @@ if (DEVICE_WIDTH >= 500) {
 const Tab = TabNavigator ({
     DichVu: {
         screen: DichVu,
-        navigationOptions:{
-            title: 'Dịch vụ'
-        }
     },
     TrangChu: {
         screen: TrangChu,
-        navigationOptions:{
-            title: 'Trang chủ'
-        }
     },
     Message: {
         screen: TinNhan,
-        navigationOptions:{
-            title: 'Tin nhắn'
-        }
     },
 
     ThongBao: {
         screen: ThongBao,
-        navigationOptions:{
-            title: 'Thông báo'
-        }
     }
 },
     {
@@ -167,9 +155,7 @@ const Stack = StackNavigator ({
 
     Chat:{
         screen:Chat,
-        navigationOptions:{
-            title: 'Chat'
-        }
+        
     },
     LoadData: {
         screen: LoadData,
@@ -180,24 +166,17 @@ const Stack = StackNavigator ({
 
     TaoBaiViet: {
         screen: TaoBaiViet,
-        navigationOptions: {
-            title: 'Tạo bài viết'
-        }
     },
     ThongTinCaNhan: {
         screen: ThongTinCaNhan,
-        navigationOptions: {
-            title: 'Thông tin cá nhân'
-        }
+        
     },
     TienIch: {
         screen: TienIch,
     },
     TienIchDetail:{
         screen: TienIchDetail,
-        navigationOptions: {
-            title: 'Chi tiết'
-        }
+        
     },
     BaoCaoKhanCap: {
         screen: BaoCaoKhanCap,
@@ -221,22 +200,15 @@ const Stack = StackNavigator ({
     },
     SearchUser:{
         screen:SearchUser,
-        navigationOptions: {
-            title: 'Tìm kiếm'
-        }
+        
 
     },
     CreateGroup:{
         screen:CreateGroup,
-        // navigationOptions:{
-        //     title:'Tạo nhóm'
-        // }
     },
     ServiceHistory:{
         screen:ServiceHistory,
-        navigationOptions: {
-            title: 'Lịch sử dịch vụ'
-        }
+        
     },
 
     DangKi: {
@@ -247,21 +219,15 @@ const Stack = StackNavigator ({
     },
     ThongBaoDetail:{
         screen:ThongBaoDetail,
-        navigationOptions: {
-            title: 'Chi tiết thông báo'
-        }
+        
     },
     DieuKhoan:{
         screen:DieuKhoan,
-        navigationOptions: {
-            title: 'Điều khoản'
-        }
+        
     },
     AboutUs:{
         screen:AboutUs,
-        navigationOptions: {
-            title: 'Về chúng tôi'
-        }
+       
     },
     ChatGroup:{
         screen:ChatGroup,
@@ -269,9 +235,7 @@ const Stack = StackNavigator ({
     },
     DanhSachNhom:{
         screen:DanhSachNhom,
-        navigationOptions: {
-            title: 'Thành viên'
-        }
+        
     },
     SubDichVu:{
         screen:SubDichVu,

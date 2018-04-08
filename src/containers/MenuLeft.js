@@ -80,10 +80,10 @@ class MenuLeft extends Component {
                                   source = {images.vechungtoi}
                                   onPress = {()=> this.props.navigation.navigate('AboutUs')}
                     />
-                    <ItemLeftMenu title ="Chia sẻ"
+                    {/* <ItemLeftMenu title ="Chia sẻ"
                                   source = {images.chiase}
                                   onPress = {()=> alert("click chia sẻ")}
-                    />
+                    /> */}
                     <TouchableOpacity
                         // onPress = {this.Logout.bind(this)}
                         onPress = {()=> this.setState({ visibleModal: 5 })}

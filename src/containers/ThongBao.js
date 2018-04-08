@@ -16,17 +16,20 @@ export default class ThongBao extends Component {
     static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
         return {
-            headerLeft:
-                <TouchableOpacity onPress={() => {
+            headerLeft: <TouchableOpacity onPress={() => {
                     navigation.navigate('DrawerOpen')
                 }}>
                     <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
                 </TouchableOpacity>,
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
+            title: 'Thông báo'
+
         }
 
     }
+
+    
 
 
     constructor(props){

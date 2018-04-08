@@ -20,6 +20,19 @@ import {callApiUpdateInfo} from "../actions/UpdateInfoActions";
 // import {callApiProfile} from "../actions/ProfileActions";
 
 class ThongTinCaNhan extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
+
+        return {
+            title:'Thông tin cá nhân',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
+    
     constructor(props) {
         super(props)
         this.state = {

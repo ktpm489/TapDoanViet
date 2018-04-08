@@ -25,9 +25,14 @@ class TaoBaiViet extends Component {
             headerRight: <TouchableOpacity style = {{marginRight:10}}
                                            onPress={() => params.handleSave()}>
                 <Text style = {{color: "#1565C0"}}>Chia sẻ</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>,
+            title:'Tạo bài viết',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
         }
     }
+    
 
 
     constructor(props){

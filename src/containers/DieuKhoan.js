@@ -14,6 +14,18 @@ import {
 import * as Dimention from '../configs/Dimention'
 import Video from 'react-native-video'
 class DieuKhoan extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
+
+        return {
+            title:'Điều khoản',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
     
     constructor(props){
         super(props);
@@ -33,18 +45,12 @@ class DieuKhoan extends Component {
         return (
             
             
-           <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#23b34c'}}>
-               <Video 
-                    repeat={false}
-                    onEnd={()=>{
-                       
-                    }} 
-                    resizeMode='cover'
-                    source={require('../images/video_logo_app.mp4')}
-                    style={{width:Dimention.DEVICE_WIDTH,height:315/560*Dimention.DEVICE_WIDTH}}
-               />
-
-            </View>
+            <WebView
+            // source={{ html: item.content }}
+            source={{ uri: "https://dayngheso1.vn/" }}
+            style = {{flex: 1,}}
+            // scrollEnabled={false}
+            />
             
         )
 

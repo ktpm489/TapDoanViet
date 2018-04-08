@@ -12,6 +12,18 @@ import { BASE_URL, GET_SERVICE } from "../Constants";
 
 export default class TienIchDetail extends Component {
 
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
+
+        return {
+            title:'Chi tiết',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
+
     constructor(props) {
         super(props);
 

@@ -20,16 +20,18 @@ import SlideImage from '../components/SlideImage';
 
 
 class DichVu extends Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
         return {
             headerLeft: <TouchableOpacity onPress={() => {
-                navigation.navigate('DrawerOpen')
-            }}>
-                <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
-            </TouchableOpacity>,
-            headerStyle: {backgroundColor: '#23b34c'},
-            headerTitleStyle: {color: 'white'},
+                    navigation.navigate('DrawerOpen')
+                }}>
+                    <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
+                </TouchableOpacity>,
+            headerStyle: { backgroundColor: '#23b34c' },
+            headerTitleStyle:{ color: 'white'},
+            title: 'Dịch vụ'
+
         }
 
     }

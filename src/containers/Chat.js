@@ -24,6 +24,19 @@ import {connectToSocket, disConnectToSocket, joinToChat} from "../actions/Socket
 
 
 class Chat extends Component {
+
+
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
+
+        return {
+            title:'Chat',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
     constructor(props) {
         super(props);
         this.dataUser2 = this.props.navigation.state.params.dataUser;

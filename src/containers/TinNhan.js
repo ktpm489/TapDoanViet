@@ -23,16 +23,18 @@ import GroupChatItem from "../components/GroupChatItem";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class TinNhan extends Component {
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
         return {
             headerLeft: <TouchableOpacity onPress={() => {
-                navigation.navigate('DrawerOpen')
-            }}>
-                <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
-            </TouchableOpacity>,
-            headerStyle: {backgroundColor: '#23b34c'},
-            headerTitleStyle: {color: 'white'},
+                    navigation.navigate('DrawerOpen')
+                }}>
+                    <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
+                </TouchableOpacity>,
+            headerStyle: { backgroundColor: '#23b34c' },
+            headerTitleStyle:{ color: 'white'},
+            title: 'Tin nhắn'
+
         }
 
     }
@@ -41,7 +43,7 @@ export default class TinNhan extends Component {
         super(props)
         this.token = '';
         this.state = {
-            dataMSG: [],
+            dataUsers: [],
             isLoading: false,
             dataGroupChat: [],
 
@@ -57,9 +59,9 @@ export default class TinNhan extends Component {
                 'Content-Type': 'application/json'
             }
         }).then((data) => data.json());
-        // console.log("list message",data);
+         console.log("list client",data);
         if (data.errorCode === 0) {
-            this.setState({dataMSG: data.data, isLoading: false});
+            this.setState({dataGroupChat: data.data.groups, dataUsers:data.data.users,isLoading: false});
         } else {
             this.setState({isLoading: false})
         }
@@ -74,34 +76,34 @@ export default class TinNhan extends Component {
             this.getListMessage();
 
         })
-        this.getGroupChat();
+        // this.getGroupChat();
 
     }
 
-    getGroupChat = () => {
-        AsyncStorage.getItem('token').then((value) => {
-            fetch(BASE_URL + GET_GROUPCHAT, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': value,
-                },
+    // getGroupChat = () => {
+    //     AsyncStorage.getItem('token').then((value) => {
+    //         fetch(BASE_URL + GET_GROUPCHAT, {
+    //             method: "GET",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'x-access-token': value,
+    //             },
 
 
-            }).then((response) => {
-                return response.json();
-            }).then(data => {
-                console.log('data', data.data)
-                this.setState({
-                    dataGroupChat: data.data
-                })
+    //         }).then((response) => {
+    //             return response.json();
+    //         }).then(data => {
+    //             console.log('data', data.data)
+    //             this.setState({
+    //                 dataGroupChat: data.data.groups
+    //             })
 
 
-            }).catch(e => {
-                console.log('exception', e)
-            })
-        });
-    }
+    //         }).catch(e => {
+    //             console.log('exception', e)
+    //         })
+    //     });
+    // }
 
 
     shouldComponentUpdate() {
@@ -126,9 +128,11 @@ export default class TinNhan extends Component {
     render() {
         const {navigation} = this.props;
         return (
+
+            <View style={{flex:1}}>
             <ScrollView style={{flex: 1, flexDirection: 'column'}}>
                 <FlatList
-                    data={this.state.dataMSG}
+                    data={this.state.dataUsers}
                     renderItem={(item) => {
                         return (
                             <TinNhanItem
@@ -153,26 +157,7 @@ export default class TinNhan extends Component {
                     keyExtractor={(item, index) => index}
                     ItemSeparatorComponent={this.renderSeparator}
                 />
-                <TouchableOpacity
-                    style={{
-                        borderWidth: 1,
-                        borderColor: '#01a699',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 70,
-                        position: 'absolute',
-                        bottom: 10,
-                        right: 10,
-                        height: 70,
-                        backgroundColor: '#fff',
-                        borderRadius: 100,
-                    }}
-
-                    onPress={() => this.refs.modal.open()}
-
-                >
-                    <Icon name="plus" size={30} color="#01a699"/>
-                </TouchableOpacity>
+                
 
                 <Modal style={{
                     height: 100,
@@ -242,6 +227,27 @@ export default class TinNhan extends Component {
 
 
             </ScrollView>
+            <TouchableOpacity
+                    style={{
+                        borderWidth: 1,
+                        borderColor: '#01a699',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 70,
+                        position: 'absolute',
+                        bottom: 10,
+                        right: 10,
+                        height: 70,
+                        backgroundColor: '#fff',
+                        borderRadius: 100,
+                    }}
+
+                    onPress={() => this.refs.modal.open()}
+
+                >
+                    <Icon name="plus" size={30} color="#01a699"/>
+                </TouchableOpacity>
+            </View>
         );
     }
 

@@ -28,6 +28,7 @@ class TrangChu extends Component {
                 </TouchableOpacity>,
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
+            title: 'Trang chủ'
 
         }
 
