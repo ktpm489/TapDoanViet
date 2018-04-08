@@ -76,35 +76,10 @@ export default class TinNhan extends Component {
             this.getListMessage();
 
         })
-        // this.getGroupChat();
 
     }
 
-    // getGroupChat = () => {
-    //     AsyncStorage.getItem('token').then((value) => {
-    //         fetch(BASE_URL + GET_GROUPCHAT, {
-    //             method: "GET",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'x-access-token': value,
-    //             },
-
-
-    //         }).then((response) => {
-    //             return response.json();
-    //         }).then(data => {
-    //             console.log('data', data.data)
-    //             this.setState({
-    //                 dataGroupChat: data.data.groups
-    //             })
-
-
-    //         }).catch(e => {
-    //             console.log('exception', e)
-    //         })
-    //     });
-    // }
-
+    
 
     shouldComponentUpdate() {
         return true;
@@ -124,6 +99,10 @@ export default class TinNhan extends Component {
         );
     }
 
+    onReloadBack = ()=>{
+        this.getListMessage();
+    }
+
 
     render() {
         const {navigation} = this.props;
@@ -138,6 +117,7 @@ export default class TinNhan extends Component {
                             <TinNhanItem
                                 dataItem={item}
                                 navigation={navigation}
+                                onReloadBack ={this.onReloadBack}
                             />
                         )
                     }}
@@ -151,10 +131,11 @@ export default class TinNhan extends Component {
                             <GroupChatItem
                                 dataItem={item}
                                 navigation={navigation}
+                                onReloadBack ={this.onReloadBack}
                             />
                         )
                     }}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={this.renderSeparator}
                 />
                 

@@ -121,6 +121,9 @@ class ChatGroup extends Component {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
+    componentWillUnmount(){
+        this.props.navigation.state.params.onReloadBack();
+    }
 
     _keyboardDidShow() {
         //console.log('Keyboard Shown');

@@ -41,7 +41,7 @@ export default class GroupChatItem extends Component {
 
                         this.props.sendDataClick(item,index);
                     }else
-                        navigation.navigate('ChatGroup', {groupname: item.groupName, IdGroup: item._id});
+                        navigation.navigate('ChatGroup', {groupname: item.groupName, IdGroup: item._id,onReloadBack:this.props.onReloadBack});
                 }}
             >
                 <View key={index}
@@ -58,6 +58,9 @@ export default class GroupChatItem extends Component {
                            resizeMode="cover"
                     >
                     </Image>
+                    <View style={{top:10,left:Dimention.DEVICE_WIDTH / 6-10, width:20,height:20,borderRadius:10,backgroundColor:'red',position:'absolute',zIndex:1,justifyContent:'center',alignItems:'center'}}>
+                               <Text style = {{textAlign:'center',color:'white',fontSize:10}}>5</Text>
+                    </View>
                     <View style={{flex: 4, flexDirection: 'column', marginLeft: 10, marginTop: 10, marginBottom: 10}}>
                         <View style={{flex: 1, flexDirection: 'row'}}>
                             <Text style={{flex: 2}} numberOfLines={1}
@@ -79,7 +82,9 @@ const myStyle = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        borderColor:'white',
+        borderWidth:1,
 
     }
 })
