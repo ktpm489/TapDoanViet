@@ -67,7 +67,7 @@ class AddMember extends Component {
             return;
         }
         this.AddMember()
-        this.props.navigation.navigate("ChatGroup", { groupname: params.groupname, IdGroup: params.IdGroup})
+        this.props.navigation.navigate("ChatGroup", { groupname: params.groupname, IdGroup: params.IdGroup,onReloadBack:this.props.navigation.state.params.onReloadBack})
         // Alert.alert("Thông báo","Tạo nhóm thành công");
 
     }

@@ -140,56 +140,7 @@ export default class TinNhan extends Component {
                 />
                 
 
-                <Modal style={{
-                    height: 100,
-                    width: Dimention.DEVICE_WIDTH - 50,
-                }}
-                       swipeArea={20}
-                       position={"center"} ref={"modal"} isDisabled={false}
-
-
-                >
-                    <TouchableOpacity
-                        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-
-                        onPress={() => {
-
-
-                            this.refs.modal.close()
-                            if (Platform.OS === "ios") {
-                                setTimeout(() => {
-                                    navigation.navigate("SearchUser");
-                                }, 500);
-                            } else {
-                                navigation.navigate("SearchUser");
-                            }
-
-
-                        }}
-
-                    >
-                        <Text style={{color: 'black'}}>Tin nhắn mới</Text>
-                    </TouchableOpacity>
-                    <View style={{height: 1, backgroundColor: 'gray'}}></View>
-                    <TouchableOpacity
-                        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-                        onPress={() => {
-                            this.refs.modal.close()
-                            if (Platform.OS === "ios") {
-                                setTimeout(() => {
-                                    navigation.navigate("CreateGroup");
-                                }, 500);
-                            } else {
-                                navigation.navigate("CreateGroup");
-                            }
-
-
-                        }}
-
-                    >
-                        <Text style={{color: 'black'}}>Nhóm mới</Text>
-                    </TouchableOpacity>
-                </Modal>
+                
                 {this.state.isLoading ?
                     <View style={{
                         top: -10,
@@ -228,6 +179,56 @@ export default class TinNhan extends Component {
                 >
                     <Icon name="plus" size={30} color="#01a699"/>
                 </TouchableOpacity>
+                <Modal style={{
+                    height: 100,
+                    width: Dimention.DEVICE_WIDTH - 50,
+                }}
+                       swipeArea={20}
+                       position={"center"} ref={"modal"} isDisabled={false}
+
+
+                >
+                    <TouchableOpacity
+                        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+
+                        onPress={() => {
+
+
+                            this.refs.modal.close()
+                            if (Platform.OS === "ios") {
+                                setTimeout(() => {
+                                    navigation.navigate("SearchUser",{onReloadBack:this.onReloadBack});
+                                }, 500);
+                            } else {
+                                navigation.navigate("SearchUser",{onReloadBack:this.onReloadBack});
+                            }
+
+
+                        }}
+
+                    >
+                        <Text style={{color: 'black'}}>Tin nhắn mới</Text>
+                    </TouchableOpacity>
+                    <View style={{height: 1, backgroundColor: 'gray'}}></View>
+                    <TouchableOpacity
+                        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+                        onPress={() => {
+                            this.refs.modal.close()
+                            if (Platform.OS === "ios") {
+                                setTimeout(() => {
+                                    navigation.navigate("CreateGroup",{onReloadBack:this.onReloadBack});
+                                }, 500);
+                            } else {
+                                navigation.navigate("CreateGroup",{onReloadBack:this.onReloadBack});
+                            }
+
+
+                        }}
+
+                    >
+                        <Text style={{color: 'black'}}>Nhóm mới</Text>
+                    </TouchableOpacity>
+                </Modal>
             </View>
         );
     }

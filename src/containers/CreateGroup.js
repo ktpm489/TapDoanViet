@@ -99,7 +99,7 @@ export default class CreateGroup extends Component {
                     IdGroup: dataRes.group._id
 
                 }, ()=> {
-                    this.props.navigation.navigate("AddMember", {IdGroup: this.state.IdGroup, groupname: this.state.TenGroup})
+                    this.props.navigation.navigate("AddMember", {IdGroup: this.state.IdGroup, groupname: this.state.TenGroup,onReloadBack:this.props.navigation.state.params.onReloadBack})
                 })
 
             }).catch(e => {

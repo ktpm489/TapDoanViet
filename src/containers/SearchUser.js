@@ -155,6 +155,8 @@ export default class SearchUser extends Component {
                                 <TinNhanItem
                                     dataItem={item}
                                     navigation={navigation}
+                                    onReloadBack={this.props.navigation.state.params.onReloadBack}
+
                                 />
                             )
                         }}

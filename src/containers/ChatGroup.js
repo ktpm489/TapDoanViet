@@ -90,7 +90,7 @@ class ChatGroup extends Component {
     getOldMSG = (uid, page, pageSize) => {
         const { params } = this.props.navigation.state
         console.log('params', params)
-        fetch(URL.BASE_URL + URL.PAHT_GET_CHAT + params.IdGroup + "?groupId=true" + '&page=' + page + '&pageSize=' + pageSize, {
+        fetch(URL.BASE_URL + URL.PAHT_GET_CHAT + params.IdGroup + "?isGroup=true" + '&page=' + page + '&pageSize=' + pageSize, {
             headers: {
                 // 'Authorization': this.token,
                 'x-access-token': this.token,
@@ -144,7 +144,8 @@ class ChatGroup extends Component {
 
         var sendTo = {
             room: params.IdGroup,
-            userName: params.groupname
+            userName: params.groupname,
+            isGroup:true
 
         };
         // console.log("room", this.props.SocketRef.userSocket.room);

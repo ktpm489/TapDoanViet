@@ -58,16 +58,17 @@ export default class GroupChatItem extends Component {
                            resizeMode="cover"
                     >
                     </Image>
+                    {item.messUnread&&item.messUnread>0 ? 
                     <View style={{top:10,left:Dimention.DEVICE_WIDTH / 6-10, width:20,height:20,borderRadius:10,backgroundColor:'red',position:'absolute',zIndex:1,justifyContent:'center',alignItems:'center'}}>
-                               <Text style = {{textAlign:'center',color:'white',fontSize:10}}>5</Text>
-                    </View>
+                               <Text style = {{textAlign:'center',color:'white',fontSize:10}}>{item.messUnread>20?"20+":item.messUnread}</Text>
+                    </View>:null}
                     <View style={{flex: 4, flexDirection: 'column', marginLeft: 10, marginTop: 10, marginBottom: 10}}>
                         <View style={{flex: 1, flexDirection: 'row'}}>
-                            <Text style={{flex: 2}} numberOfLines={1}
-                                  ellipsizeMode={'tail'}>{item.groupName}</Text>
+                            <Text style={{flex: 2, fontWeight:'600'}} numberOfLines={1}
+                                  ellipsizeMode={'tail'}>Nhóm: {item.groupName}</Text>
                             {/*<Text style={{flex: 1}}>{item.createdAt}</Text>*/}
                         </View>
-                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{item.members.length}</Text>
+                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{item.members.length} thành viên</Text>
                     </View>
                 </View>
 

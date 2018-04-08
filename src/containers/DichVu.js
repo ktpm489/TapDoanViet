@@ -59,6 +59,7 @@ class DichVu extends Component {
             const {callConnectSocket, callJoinToChat, listenDisconnectSocket} = this.props;
             console.log("call connect socket");
             callConnectSocket(this.socket).then(() => {
+                
                 if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected) {
                     console.log("call join to chat");
                     callJoinToChat(this.props.SocketRef.socket);
