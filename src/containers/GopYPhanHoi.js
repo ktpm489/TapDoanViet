@@ -5,13 +5,15 @@ import {
     TextInput,
     StyleSheet,
     Image,
-    TouchableOpacity,
+    Alert,
+    TouchableOpacity, AsyncStorage,
 } from 'react-native'
 import Dimensions from 'Dimensions';
 import PickerImage from "../components/PickerImage";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {callApiUploadImg} from "../actions/TaoBaiVietActions";
+import {BASE_URL, CREATE_GROUP, FEEDBACK} from "../Constants";
 
 class GopYPhanHoi extends Component {
     constructor(props){
@@ -20,7 +22,8 @@ class GopYPhanHoi extends Component {
             isCheck:true,
             dataImage: null,
             avatarSource: null,
-            Mota: ''
+            MoTa: '',
+            fileName: '',
 
         }
 
@@ -51,10 +54,57 @@ class GopYPhanHoi extends Component {
 
         const { callApiUploadImg } = this.props;
         callApiUploadImg(this.state.dataImage).then(dataPost => {
-            console.log('datapost1', dataPost)
+            this.setState({
+                fileName: dataPost.data.fileName
+            })
 
             // console.log('datapost1', dataPost.message)
         })
+    }
+    BaoCaoSaiPham =  ()=> {
+        this.textInput.clear();
+        AsyncStorage.getItem("token").then(value => {
+
+            fetch(BASE_URL + FEEDBACK, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": value
+                },
+                body: JSON.stringify({
+                    content: this.state.MoTa ,
+                    image: this.state.fileName
+
+
+                })
+            }).then(response => {
+                return response.json()
+            }).then(dataRes => {
+                if(dataRes.errorCode===0) {
+                    Alert.alert(
+                        'Alert',
+                        dataRes.message,
+                        [
+                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        ],
+                        { cancelable: false }
+                    )
+                }
+                else {
+                    Alert.alert(
+                        'Alert',
+                        dataRes.message,
+                        [
+                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        ],
+                        { cancelable: false }
+                    )
+                }
+
+            }).catch(e => {
+                console.log("exception", e);
+            });
+        });
     }
     render (){
         let img = this.state.avatarSource == null? null:
@@ -84,15 +134,20 @@ class GopYPhanHoi extends Component {
                         }}
                         placeholder = 'Nhập nôi dung báo cáo sai phạm'
                         underlineColorAndroid="transparent"
-                        onChangeText = {(MoTa) => this.setState({MoTa})}/>
+                        onChangeText = {(MoTa) => this.setState({MoTa})}
+                        ref={input => {
+                            this.textInput = input
+                        }}/>
                 </View>
-                <View style = {styles.viewGui}>
-                    <Text style = {{fontSize: 17}}>
-                        Báo cáo sai phạm
-                    </Text>
+                <TouchableOpacity onPress = {this.BaoCaoSaiPham}>
+                    <View style = {styles.viewGui}>
+                        <Text style = {{fontSize: 17}}>
+                            Báo cáo sai phạm
+                        </Text>
 
 
-                </View>
+                    </View>
+                </TouchableOpacity>
 
             </View>
         )

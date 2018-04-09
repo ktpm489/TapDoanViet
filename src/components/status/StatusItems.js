@@ -4,14 +4,39 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    StyleSheet,
+    StyleSheet, AsyncStorage,
 
 } from 'react-native'
 import Dimensions from 'Dimensions';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon1 from 'react-native-vector-icons/EvilIcons';
+import {BASE_URL, CREATE_GROUP, LIKE} from "../../Constants";
 class StatusItems extends Component {
+    likePost = () => {
+        AsyncStorage.getItem("token").then(value => {
+
+            fetch(BASE_URL + LIKE, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": value
+                },
+                body: JSON.stringify({
+                    postId: "",
+                    action: 1
+
+
+                })
+            }).then(response => {
+                return response.json()
+            }).then(dataRes => {
+            }).catch(e => {
+                console.log("exception", e);
+            });
+        });
+
+    }
     render (){
         const {item} = this.props.dataItem;
         const {navigation} = this.props;
@@ -100,4 +125,9 @@ const styles = StyleSheet.create({
         // marginTop: 10
 
     },
+    imagePost: {
+        width: DEVICE_WIDTH,
+        height: 250,
+        marginTop: 10
+    }
 })
