@@ -6,13 +6,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     Picker,
-    Alert,
+    Alert, AsyncStorage,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {callApiDangKy} from "../actions/DangKyActions";
 import { NavigationActions } from 'react-navigation';
+import {BASE_URL, LIKE, LISTTOA} from "../Constants";
 class NhapThongTin extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
@@ -29,17 +30,50 @@ class NhapThongTin extends Component {
         super(props)
         this.state = {
             GioiTinh: 1,
+            Toa: '',
             Ho: '',
             Ten: '',
             Email: '',
+            dataToa: [],
+            NgaySinh: '',
 
         }
+    }
+    getToa = () => {
+        AsyncStorage.getItem("token").then(value => {
+
+            fetch(BASE_URL + LISTTOA, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": value
+                },
+
+            }).then(response => {
+                return response.json()
+            }).then(dataRes => {
+                console.log('dtatREs', dataRes)
+                this.setState({
+                    dataToa: dataRes.data,
+                    Toa: dataRes.data[0]._id
+                }, ()=> {
+                    console.log('dataToa', this.state.dataToa)
+                })
+            }).catch(e => {
+                console.log("exception", e);
+            });
+        });
+
+    }
+    componentDidMount(){
+        this.getToa()
     }
     DangKyTaiKhoan=  ()=> {
         const { params } = this.props.navigation.state
         console.log('params', params)
         const { callApiDangKy } = this.props
-        callApiDangKy(this.state.Ten, this.state.Ho, this.state.Email, params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh).then(dataRes => {
+        callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh, this.state.Toa, this.state.NgaySinh).then(dataRes => {
+            console.log('data', dataRes)
             if(dataRes.errorCode===0) {
                 Alert.alert(
                     'Alert',
@@ -77,6 +111,7 @@ class NhapThongTin extends Component {
 
     }
     render() {
+        dataToaNha = this.state.dataToa;
         return (
             <View style = {{backgroundColor:'white', flex:1}}>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15, marginTop: 10}}>Họ</Text>
@@ -93,15 +128,23 @@ class NhapThongTin extends Component {
                     underlineColorAndroid="transparent"
                     onChangeText = {(Ten) => this.setState({Ten})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
-                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Email</Text>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Ngày sinh</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
-                    placeholder = 'Tên'
+                    placeholder = 'DD/MM/YYYY'
                     underlineColorAndroid="transparent"
-                    onChangeText = {(Email) => this.setState({Email})}/>
+                    onChangeText = {(NgaySinh) => this.setState({NgaySinh})}/>
+                <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tòa nhà</Text>
+                <Picker
+                    style = {{ marginLeft: 3}}
+                    selectedValue={this.state.Toa}
+                    onValueChange={(value) => this.setState({Toa: value})}>
+                    {dataToaNha.map((value)=><Picker.Item key ={value} label={value.abgName} value={value._id}/>)}
+                </Picker>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính</Text>
-                <Picker
+                    <Picker
                     style = {{ width: 100, marginLeft: 3}}
                     selectedValue={this.state.GioiTinh}
                     onValueChange={(value) => this.setState({GioiTinh: value})}>

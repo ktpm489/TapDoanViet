@@ -26,6 +26,12 @@ class TrangChu extends Component {
                 }}>
                     <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
                 </TouchableOpacity>,
+            tabBarIcon: () => (
+                <Image
+                    source={require('../images/iconhome.png')}
+                    style = {styles.iconTab}
+                />
+            ),
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
             title: 'Trang chủ'
@@ -126,5 +132,10 @@ const styles = StyleSheet.create({
         marginTop:7,
         minHeight:50,
     },
+
+        iconTab: {
+            height:25,
+            width:25,
+        }
 
 })

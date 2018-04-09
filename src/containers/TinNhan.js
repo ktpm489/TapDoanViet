@@ -31,6 +31,12 @@ export default class TinNhan extends Component {
                 }}>
                     <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
                 </TouchableOpacity>,
+            tabBarIcon: () => (
+                <Image
+                    source={require('../images/icontinnhan.png')}
+                    style = {styles.iconTab}
+                />
+            ),
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
             title: 'Tin nhắn'
@@ -236,4 +242,10 @@ export default class TinNhan extends Component {
     }
 
 }
+const styles = StyleSheet.create({
+    iconTab: {
+        height:24,
+        width:24,
+    }
+})
 

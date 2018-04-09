@@ -42,6 +42,7 @@ class ThongTinCaNhan extends Component {
             NgaySinh: '',
             SoDienThoai: '',
             Email: '',
+            fileName: '',
 
             dataProfile: '',
             avatarSource: null,
@@ -71,14 +72,13 @@ class ThongTinCaNhan extends Component {
         });
     }
     upload (){
-        // console.log('base64', this.state.dataImage)
-        // dataImg = this.state.dataImage;
-
         const { callApiUploadImg } = this.props;
-        callApiUploadImg(this.state.dataImage).then(dataPost => {
+        callApiUploadImg(this.state.dataImage, 'avatar').then(dataPost => {
             console.log('datapost1', dataPost)
+            this.setState({
+                fileName: dataPost.data.fileName
+            })
 
-            // console.log('datapost1', dataPost.message)
         })
     }
 
@@ -92,11 +92,20 @@ class ThongTinCaNhan extends Component {
                 this.setState({
                     FisrtName: this.state.dataProfile.firstName,
                     LastName: this.state.dataProfile.lastName,
-                    GioiTinh: this.state.dataProfile.gender,
                     // NgaySinh: this.state.dataProfile.firstName,
                     SoDienThoai: this.state.dataProfile.phoneNumber,
                     Email: this.state.dataProfile.email,
+                }, () => {
+                    this.state.dataProfile.gender == 1 ? this.setState ({
+                        GioiTinh: "Nam"
+                    }) : this.state.dataProfile.gender == 2 ? this.setState ({
+                        GioiTinh: "Nữ" }) :
+                        this.state.dataProfile.gender == 3 ? this.setState ({
+                        GioiTinh: "Khác" }) : null
+
                 })
+
+
             })
             console.log('dataprofile', this.state.dataProfile)
         })

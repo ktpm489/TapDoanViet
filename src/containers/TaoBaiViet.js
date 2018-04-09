@@ -47,6 +47,10 @@ class TaoBaiViet extends Component {
     }
 
     share() {
+        if (this.state.Status === "") {
+            Alert.alert("Thông báo", "Nội dung không được để trống");
+            return;
+        }
         // console.log('hhhh', this.props)
         const { callApiCreatePost } = this.props;
         callApiCreatePost(this.state.Status, this.state.fileName).then(dataPost => {

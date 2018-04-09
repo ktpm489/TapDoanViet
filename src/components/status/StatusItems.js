@@ -37,6 +37,30 @@ class StatusItems extends Component {
         });
 
     }
+    unlikePost = () => {
+        AsyncStorage.getItem("token").then(value => {
+
+            fetch(BASE_URL + LIKE, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": value
+                },
+                body: JSON.stringify({
+                    postId: "",
+                    action: 0
+
+
+                })
+            }).then(response => {
+                return response.json()
+            }).then(dataRes => {
+            }).catch(e => {
+                console.log("exception", e);
+            });
+        });
+
+    }
     render (){
         const {item} = this.props.dataItem;
         const {navigation} = this.props;
@@ -52,7 +76,8 @@ class StatusItems extends Component {
                         </Image>
                         <View style = {{marginLeft: 10}}>
                             <Text style = {{color: 'black', fontWeight:'bold'}}>{item.createdBy.lastName} {item.createdBy.firstName}</Text>
-                            <Text>{moment(item.createdAt).startOf("hour").fromNow()}</Text>
+                            {/*<Text>{moment(item.createdAt).startOf("hour").fromNow()}</Text>*/}
+                            <Text>{moment(item.createdAt).format("DD-MM-YYYY HH:MM")}</Text>
                         </View>
                     </View>
                     <View style = {{marginHorizontal: 10, marginTop:10}}>
