@@ -35,6 +35,7 @@ class NhapThongTin extends Component {
             Ten: '',
             Email: '',
             dataToa: [],
+            NgaySinh: '',
 
         }
     }
@@ -71,7 +72,8 @@ class NhapThongTin extends Component {
         const { params } = this.props.navigation.state
         console.log('params', params)
         const { callApiDangKy } = this.props
-        callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh, this.state.Toa).then(dataRes => {
+        callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh, this.state.Toa, this.state.NgaySinh).then(dataRes => {
+            console.log('data', dataRes)
             if(dataRes.errorCode===0) {
                 Alert.alert(
                     'Alert',
@@ -125,13 +127,13 @@ class NhapThongTin extends Component {
                     placeholder = 'Nhập tên'
                     underlineColorAndroid="transparent"
                     onChangeText = {(Ten) => this.setState({Ten})}/>
-                {/*<View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>*/}
-                {/*<Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Email</Text>*/}
-                {/*<TextInput*/}
-                    {/*style = {{marginLeft: 10}}*/}
-                    {/*placeholder = 'Tên'*/}
-                    {/*underlineColorAndroid="transparent"*/}
-                    {/*onChangeText = {(Email) => this.setState({Email})}/>*/}
+                <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Ngày sinh</Text>
+                <TextInput
+                    style = {{marginLeft: 10}}
+                    placeholder = 'DD/MM/YYYY'
+                    underlineColorAndroid="transparent"
+                    onChangeText = {(NgaySinh) => this.setState({NgaySinh})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tòa nhà</Text>
                 <Picker
