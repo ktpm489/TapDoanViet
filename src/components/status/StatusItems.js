@@ -58,6 +58,16 @@ class StatusItems extends Component {
                     <View style = {{marginHorizontal: 10, marginTop:10}}>
                         <Text style = {{color: '#212121'}}>{item.content}</Text>
                     </View>
+                    {
+                        item.images ?
+                            <Image source={{
+                                uri: item.imageUrl.split(",")[0]
+                            }}
+                                   style={styles.imagePost}
+                                   resizeMode="cover">
+                            </Image>
+                            : null
+                    }
                     <View style = {{flexDirection:'row', marginTop:20, justifyContent:'space-between'}}>
                         <View style = {{flexDirection:'row', marginLeft:10}}>
                             <Icon1 name="like" size={25} color="#424242" />

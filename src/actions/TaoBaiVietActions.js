@@ -6,7 +6,7 @@ import {
 
 import {BASE_URL, CREATE_NEW, UPLOAD_IMAGE} from "../Constants";
 
-export const callApiUploadImg = (imgdata) => {
+export const callApiUploadImg = (imgdata, imageType) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem('token').then((value)=> {
@@ -18,7 +18,7 @@ export const callApiUploadImg = (imgdata) => {
                     },
                     body: JSON.stringify({
                         imageData: imgdata,
-                        imageType: 'post',
+                        imageType: imageType,
                     })
 
                 }).then((response) => {

@@ -53,7 +53,7 @@ class GopYPhanHoi extends Component {
         // dataImg = this.state.dataImage;
 
         const { callApiUploadImg } = this.props;
-        callApiUploadImg(this.state.dataImage).then(dataPost => {
+        callApiUploadImg(this.state.dataImage, 'feedback').then(dataPost => {
             this.setState({
                 fileName: dataPost.data.fileName
             })

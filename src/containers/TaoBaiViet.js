@@ -42,13 +42,14 @@ class TaoBaiViet extends Component {
             avatarSource: null,
             dataImage: null,
             resizedImageUri: '',
+            fileName: '',
         }
     }
 
     share() {
         // console.log('hhhh', this.props)
         const { callApiCreatePost } = this.props;
-        callApiCreatePost(this.state.Status).then(dataPost => {
+        callApiCreatePost(this.state.Status, this.state.fileName).then(dataPost => {
             console.log('datapost', dataPost.message)
             if(dataPost.errorCode=== 0) {
                 Alert.alert(
@@ -89,8 +90,12 @@ class TaoBaiViet extends Component {
         // dataImg = this.state.dataImage;
 
         const { callApiUploadImg } = this.props;
-        callApiUploadImg(this.state.dataImage).then(dataPost => {
-                console.log('datapost1', dataPost)
+        callApiUploadImg(this.state.dataImage, 'post').then(dataPost => {
+            console.log('datapost1', dataPost)
+            this.setState({
+                fileName: dataPost.data.fileName
+            })
+
 
                 // console.log('datapost1', dataPost.message)
         })

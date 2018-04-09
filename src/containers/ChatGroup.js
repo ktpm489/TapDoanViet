@@ -55,7 +55,7 @@ class ChatGroup extends Component {
         };
         this.input_msg = '';
 
-        console.log('scoket', this.props.SocketRef)
+        // console.log('scoket', this.props.SocketRef)
 
         AsyncStorage.getItem('token').then((token) => {
             this.token = token;
@@ -70,12 +70,12 @@ class ChatGroup extends Component {
                     newMsg.push(dataMessage);
                     this.setState({dataChat: newMsg});
                 });
-                // this.props.SocketRef.socket.on('owner_message', (dataMessage) => {
-                //     console.log("receiev owner_message", dataMessage);
-                //     let newMsg2 = this.state.dataChat;
-                //     newMsg2.push(dataMessage);
-                //     this.setState({dataChat: newMsg2});
-                // });
+                this.props.SocketRef.socket.on('owner_message', (dataMessage) => {
+                    console.log("receiev owner_message", dataMessage);
+                    let newMsg2 = this.state.dataChat;
+                    newMsg2.push(dataMessage);
+                    this.setState({dataChat: newMsg2});
+                });
 
 
             } else {
