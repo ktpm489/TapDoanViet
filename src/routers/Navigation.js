@@ -63,7 +63,7 @@ const Tab = TabNavigator ({
         animationEnabled: true,
         tabBarOptions: {
             upperCaseLabel: false,
-         //    showIcon: true,
+            showIcon: true,
             activeTintColor: 'black',
             inactiveTintColor: 'white',
             // activeBackgroundColor:'white',

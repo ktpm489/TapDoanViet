@@ -5,7 +5,9 @@ import {
     AsyncStorage,
     TouchableOpacity,
     FlatList,ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    Image,
+    StyleSheet
 } from 'react-native';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -28,6 +30,12 @@ class DichVu extends Component {
                 }}>
                     <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
                 </TouchableOpacity>,
+            tabBarIcon: () => (
+                <Image
+                    source={require('../images/icondichvu.png')}
+                    style = {styles.iconTab}
+                />
+            ),
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
             title: 'Dịch vụ'
@@ -188,3 +196,9 @@ const mapDispatchToProps = (dispatch) => {
 DichVu = connect(mapStateToProps, mapDispatchToProps)(DichVu);
 
 export default DichVu
+const styles = StyleSheet.create({
+    iconTab: {
+        height:24,
+        width:24,
+    }
+})

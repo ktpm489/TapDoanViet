@@ -37,6 +37,30 @@ class StatusItems extends Component {
         });
 
     }
+    unlikePost = () => {
+        AsyncStorage.getItem("token").then(value => {
+
+            fetch(BASE_URL + LIKE, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": value
+                },
+                body: JSON.stringify({
+                    postId: "",
+                    action: 0
+
+
+                })
+            }).then(response => {
+                return response.json()
+            }).then(dataRes => {
+            }).catch(e => {
+                console.log("exception", e);
+            });
+        });
+
+    }
     render (){
         const {item} = this.props.dataItem;
         const {navigation} = this.props;

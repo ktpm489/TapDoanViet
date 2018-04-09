@@ -42,6 +42,7 @@ class ThongTinCaNhan extends Component {
             NgaySinh: '',
             SoDienThoai: '',
             Email: '',
+            fileName: '',
 
             dataProfile: '',
             avatarSource: null,
@@ -71,14 +72,13 @@ class ThongTinCaNhan extends Component {
         });
     }
     upload (){
-        // console.log('base64', this.state.dataImage)
-        // dataImg = this.state.dataImage;
-
         const { callApiUploadImg } = this.props;
-        callApiUploadImg(this.state.dataImage).then(dataPost => {
+        callApiUploadImg(this.state.dataImage, 'avatar').then(dataPost => {
             console.log('datapost1', dataPost)
+            this.setState({
+                fileName: dataPost.data.fileName
+            })
 
-            // console.log('datapost1', dataPost.message)
         })
     }
 

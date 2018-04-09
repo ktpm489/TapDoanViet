@@ -136,6 +136,7 @@ class ChatGroup extends Component {
 
     sendMessage = () => {
         const { params } = this.props.navigation.state
+        console.log('paramsIdGroup', params.IdGroup)
         if (this.input_msg === "")
             return;
         this.textInput.clear();
@@ -145,7 +146,7 @@ class ChatGroup extends Component {
         var sendTo = {
             room: params.IdGroup,
             userName: params.groupname,
-            isGroup:true
+            isGroup: true
 
         };
         // console.log("room", this.props.SocketRef.userSocket.room);
