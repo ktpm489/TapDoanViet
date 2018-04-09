@@ -112,8 +112,7 @@ export default class DichVuDetail extends Component {
                                     color: 'white',
                                     padding: 10,
                                     
-                                }}>Gọi
-                                    ngay</Text>
+                                }}>Đặt lịch ngay</Text>
                             </TouchableOpacity>
                         </View>
 

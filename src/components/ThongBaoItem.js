@@ -58,7 +58,7 @@ export default class ThongBaoItem extends Component {
        
         const {item} = this.props.dataItem;
         const{reloadDataFromBack,navigation}=this.props;
-        var convertTime =  moment(item.createdAt).format("DD-MM-YYYY HH:MM");
+        var convertTime =  moment(item.createdAt).format("DD-MM-YYYY HH:mm");
 
         return (
 

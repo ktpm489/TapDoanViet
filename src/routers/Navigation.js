@@ -32,6 +32,7 @@ import DanhSachNhom from "../containers/DanhSachNhom";
 import SubDichVu from "../containers/SubDichVu";
 import AddMember from "../containers/AddMember";
 import FirstScreen from "../containers/FirstScreen";
+import ShowImage from "../containers/ShowImage"
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -243,6 +244,9 @@ const Stack = StackNavigator ({
     },
     AddMember: {
         screen: AddMember
+    },
+    ShowImage:{
+        screen:ShowImage
     }
 
 

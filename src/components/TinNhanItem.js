@@ -4,10 +4,12 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
+import * as URL from '../Constants'
 
 export default class TinNhanItem extends Component {
 
@@ -23,18 +25,49 @@ export default class TinNhanItem extends Component {
         else
             return true;
     }
+
+
+    callApiUpdateReaded = (chatId)=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(URL.BASE_URL + URL.UPDATE_READ+chatId, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('update read message: ', data);
+                
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+            })
+        });
+       
+    }
+
+
     render() {
         const {navigation} = this.props;
         const {item,index} = this.props.dataItem;
-        // console.log("item",item)
+        //  console.log("item",item);
        
-        const{fromSearch} = this.props;
-        const{fromDachSach} = this.props;
+        const{fromDachSach,fromTinNhan,fromSearch} = this.props;
         
         return (
 
             <TouchableOpacity
                 onPress={() => {
+                    if(fromTinNhan && item.messUnread&&item.messUnread>0 ){
+                       this.callApiUpdateReaded(item._id)
+                    }
+
                     if(fromDachSach)
                         return;
                     if(fromSearch){

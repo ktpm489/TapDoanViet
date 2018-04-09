@@ -103,7 +103,7 @@ export default class ServiceHistory extends Component {
         
                     <FlatList
                         data={this.state.listHistory}
-                        renderItem={({item}) => {
+                        renderItem={(item) => {
                             return (
                                 <ItemServiceHistory
                                     dataItem={item}

@@ -48,7 +48,7 @@ export default class ThongBaoDetail extends Component {
    
     render() {
         const item = this.props.navigation.state.params.dataItem;
-        var convertTime =  moment(item.createdAt).format("DD-MM-YYYY HH:MM");
+        var convertTime =  moment(item.createdAt).format("DD-MM-YYYY HH:mm");
         return (
 
         

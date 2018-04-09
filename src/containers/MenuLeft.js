@@ -56,7 +56,7 @@ class MenuLeft extends Component {
                                   source = {images.lichsu}
                                   onPress = {()=>this.props.navigation.navigate('ServiceHistory')}
                     />
-                    <ItemLeftMenu title ="Tiện Ích"
+                    <ItemLeftMenu title ="Tiện ích"
                                   source = {images.tienich}
                                   onPress = {()=>this.props.navigation.navigate('TienIch')}
                     />

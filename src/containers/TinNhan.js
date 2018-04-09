@@ -118,6 +118,7 @@ export default class TinNhan extends Component {
                                 dataItem={item}
                                 navigation={navigation}
                                 onReloadBack ={this.onReloadBack}
+                                fromTinNhan={true}
                             />
                         )
                     }}
@@ -132,6 +133,7 @@ export default class TinNhan extends Component {
                                 dataItem={item}
                                 navigation={navigation}
                                 onReloadBack ={this.onReloadBack}
+                                fromTinNhan={true}
                             />
                         )
                     }}

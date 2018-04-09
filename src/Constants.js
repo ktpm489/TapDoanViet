@@ -30,6 +30,7 @@ export const UPDATE_HISTORY = "/api/service/history-update";
 export const COST = "/api/cost/apartment-cost?year=";
 export const LIKE = "/api/like/create-new";
 export const FEEDBACK = "/api/feedback/create";
+export const UPDATE_READ = "/api/chat/update-read-message/"
 
 
 export const COLOR_APP_GREEN = '#23b34c';

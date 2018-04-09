@@ -151,11 +151,11 @@ export default class ItemServiceHistory extends Component {
     render() {
 
         const { navigation } = this.props;
-        const item = this.props.dataItem;
-        const status = this.props.dataItem.done;
-        var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:MM");
-        var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:MM");
-
+        const item = this.props.dataItem.item;
+        const status = item.done;
+        var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:mm");
+        var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:mm");
+        var updatedAt = moment(item.updatedAt).format("DD-MM-YYYY HH:mm");
 
         var arrImages = [];
         if (item.invoice_imgs_vitrual !== "") {
@@ -166,6 +166,8 @@ export default class ItemServiceHistory extends Component {
         for (var i = 0; i < arrImages.length; i++) {
             if(!arrImages[i] ||  arrImages[i]=== "")
                 break;
+
+            let url = arrImages[i];
             imgRender.push(<TouchableOpacity
 
                 key={i}
@@ -174,10 +176,13 @@ export default class ItemServiceHistory extends Component {
                     borderColor: 'grey', borderRadius: 4, borderWidth: 2,
                 }}
 
-            // onPress={()=>alert(1)}
+             onPress={()=>{
+                 
+                 this.props.navigation.navigate("ShowImage",{url:url})}
+             }
             >
                 <Image
-                    source={{ uri: arrImages[i] }}
+                    source={{ uri:url }}
                     style={{ width: (Dimention.DEVICE_WIDTH - 100) / 3, height: (Dimention.DEVICE_WIDTH - 100) / 3, }}
 
                 />
@@ -189,7 +194,7 @@ export default class ItemServiceHistory extends Component {
         return (
 
             <TouchableOpacity
-                key={item.index}
+                key={this.props.dataItem.index}
                 onPress={() => {
                     //navigation.navigate('DichVuDetail', {dataItem: item});
                 }}
@@ -198,24 +203,24 @@ export default class ItemServiceHistory extends Component {
 
                 >
                     <Text >
-                        <Text style={{ fontWeight: "bold" }}>Họ tên: </Text>
-                        <Text>{item.fullName}</Text>
+                        <Text style={{ fontWeight: "bold" }}>Mã đơn hàng: </Text>
+                        <Text>0000{this.props.dataItem.index + 1}</Text>
                     </Text>
-                    <Text>
+                    {/* <Text>
                         <Text style={{ fontWeight: "bold" }}>Số điện thoại: </Text>
                         <Text>{item.phoneNumber}</Text>
                     </Text>
                     <Text>
                         <Text style={{ fontWeight: "bold" }}>Địa chỉ: </Text>
                         <Text>{item.address}</Text>
-                    </Text>
+                    </Text> */}
                     <Text>
                         <Text style={{ fontWeight: "bold" }}>Đặt lịch: </Text>
                         <Text>{orderAt}</Text>
                     </Text>
                     <Text>
-                        <Text style={{ fontWeight: "bold" }}>Yêu cầu lúc: </Text>
-                        <Text>{createdAt}</Text>
+                        <Text style={{ fontWeight: "bold" }}>{status ?"Hoàn thành:":"Yêu cầu lúc:"} </Text>
+                        <Text>{status ?updatedAt:createdAt}</Text>
                     </Text>
                     <Text>
                         <Text style={{ fontWeight: "bold" }}>Dịch vụ đăng ký: </Text>
@@ -223,17 +228,18 @@ export default class ItemServiceHistory extends Component {
                     </Text>
                     <Text>
                         <Text style={{ fontWeight: "bold" }}>Trạng thái: </Text>
-                        <Text style={{ color: 'red' }}>{status ? "Đã thanh toán" : "Chưa thanh toán"}</Text>
+                        <Text style={{ color: 'red' }}>{status ? "Đã thanh toán số tiền như bên dưới" : "Chưa thanh toán"}</Text>
                     </Text>
 
                     <Text style={{ flex: 1, textAlign: 'center', fontWeight: "bold", marginTop: 10, color: 'blue' }}>{status ? "Ảnh hóa đơn" : "Chụp ảnh hóa đơn để thanh toán"}</Text>
 
 
                     <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        {status ? imgRender : <View style={{flexDirection: 'row',flex:1}} >
+                        {status ? imgRender : <View style={{flexDirection: 'row',flex:1,alignSelf:'center',}} >
                             <TouchableOpacity
                                 style={{
                                     marginLeft: 10,
+                                    flex:1,
                                     borderColor: 'grey', borderRadius: 4, borderWidth: 2,
                                 }}
 
@@ -249,6 +255,7 @@ export default class ItemServiceHistory extends Component {
                             <TouchableOpacity
                                 style={{
                                     marginLeft: 10,
+                                    flex:1,
                                     borderColor: 'grey', borderRadius: 4, borderWidth: 2,
                                 }}
                                 onPress={() => this.showPicker(2)}
@@ -263,6 +270,7 @@ export default class ItemServiceHistory extends Component {
                             <TouchableOpacity
                                 style={{
                                     marginLeft: 10, marginRight: 10,
+                                    flex:1,
                                     borderColor: 'grey', borderRadius: 4, borderWidth: 2,
                                 }}
                                 onPress={() => this.showPicker(3)}
@@ -279,6 +287,7 @@ export default class ItemServiceHistory extends Component {
                         }
                     </View>
                     {status ? null :
+                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                         <TouchableOpacity
                             style={{
                                 backgroundColor: '#FF9800', alignSelf: 'center', padding: 10,
@@ -287,15 +296,41 @@ export default class ItemServiceHistory extends Component {
                                 shadowColor: '#FF9800',
                                 shadowOffset: { width: 0, height: 2 },
                                 shadowOpacity: 0.8,
-                                marginTop: 10
+                                margin: 10,
+                                flex:1
                             }}
 
                             onPress={() => {
                                 this.callApiUpdate();
                             }}
                         >
-                            <Text>Cập nhật thanh toán</Text>
+                            <Text
+                            style={{flex:1,textAlign:'center'}}
+                            >Cập nhật thanh toán</Text>
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: '#FF9800', alignSelf: 'center', padding: 10,
+                                borderRadius: 5,
+                                borderColor: '#FF9800',
+                                shadowColor: '#FF9800',
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowOpacity: 0.8,
+                                margin: 10,
+                                flex:1
+                            }}
+
+                            onPress={() => {
+                               alert('xóa yêu cầu')
+                            }}
+                        >
+                            <Text
+                            style={{flex:1,textAlign:'center'}}
+                            >Xóa yêu cầu</Text>
+                        </TouchableOpacity>
+
+                        </View>
                     }
                     <View style={{ height: 1, backgroundColor: 'gray', margin: 10 }}></View>
 

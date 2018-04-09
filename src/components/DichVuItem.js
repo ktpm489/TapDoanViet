@@ -75,7 +75,7 @@ export default class DichVuItem extends Component {
                  
                   width:Dimention.DEVICE_WIDTH/3-10,
                      height:Dimention.DEVICE_WIDTH/3-10,
-                    flexDirection: 'column', justifyContent: 'center',alignItems:'center' }}>
+                    flexDirection: 'column', justifyContent: 'flex-start',alignItems:'center' }}>
               
           
               <Image

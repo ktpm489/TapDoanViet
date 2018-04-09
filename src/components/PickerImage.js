@@ -1,11 +1,11 @@
 var ImagePicker = require('react-native-image-picker');
 
 var options = {
-    title: 'Select Avatar',
+    // title: 'Select Avatar',
     // customButtons: [
     //     {name: 'fb', title: 'Choose Photo from Facebook'},
     // ],
-    // title: 'Chọn ảnh',
+     title: 'Chọn ảnh',
     quality: 0.5,
     maxWidth: 768,
     maxHeight: 768,
@@ -16,9 +16,9 @@ var options = {
 };
 
 var options2 = {
-    title: 'Select Options',
+    // title: 'Select Options',
     
-    // title: 'Chọn ảnh',
+     title: 'Chọn ảnh',
     quality: 0.5,
     maxWidth: 768,
     maxHeight: 768,
