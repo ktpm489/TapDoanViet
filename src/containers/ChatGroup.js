@@ -28,12 +28,12 @@ class ChatGroup extends Component {
         const { params = {} } = navigation.state
 
         return {
-            headerRight: <TouchableOpacity style = {{marginRight:10}}
-                                           onPress={() => params.actionMore()}>
-                <Image style = {{width:30,height:30}}
-                       source={require('../images/more.png')}
-                />
-            </TouchableOpacity>,
+            // headerRight: <TouchableOpacity style = {{marginRight:10}}
+            //                                onPress={() => params.actionMore()}>
+            //     <Image style = {{width:30,height:30}}
+            //            source={require('../images/more.png')}
+            //     />
+            // </TouchableOpacity>,
             title:params.title,
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
@@ -65,6 +65,9 @@ class ChatGroup extends Component {
             if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
                 this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
                 this.props.SocketRef.socket.on('message', (dataMessage) => {
+
+                    if(dataMessage.sender.id === this.props.SocketRef.userSocket.id)
+                        return;
                     console.log("receiev msg", dataMessage);
                     let newMsg = this.state.dataChat;
                     newMsg.push(dataMessage);

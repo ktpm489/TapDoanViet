@@ -204,7 +204,10 @@ class ThongTinCaNhan extends Component {
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
-                    <TouchableOpacity onPress = {this.EditInfo}>
+                    <TouchableOpacity 
+                    // onPress = {this.EditInfo}
+                    
+                    >
                         <View style = {{justifyContent:'center', alignItems:'center',
                             marginTop: 40, minHeight: 40, marginHorizontal:90,
                             backgroundColor: '#eaa33f',

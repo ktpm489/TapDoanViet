@@ -85,7 +85,7 @@ export default class GroupChatItem extends Component {
                         //    source={!item.avatar || item.avatar.length == 0?require("../images/logo.png"):{
                         //        uri:item.avatarUrl
                         //    }}
-                           source={!item.avatarUrl || item.avatarUrl.length == 0?require("../images/logo.png"):{
+                           source={!item.avatar || item.avatar.length == 0?require("../images/logo.png"):{
                                uri:item.avatarUrl
                            }}
 
