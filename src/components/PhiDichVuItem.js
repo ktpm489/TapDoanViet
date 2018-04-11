@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    FlatList
+    FlatList,Alert
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -113,7 +113,10 @@ export default class PhiDichVuItem extends Component {
                 }}
 
                 onPress={()=>{
-                    alert("Vui lòng thanh toán bằng tiền mặt")
+                    if(statePayment)
+                        Alert.alert("Thông báo","Đã thanh toán");
+                    else
+                        Alert.alert("Thông báo","Vui lòng thanh toán bằng tiền mặt");
                 }}
                 >
                     <Text>Thanh toán</Text>

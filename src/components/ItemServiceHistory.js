@@ -84,7 +84,7 @@ export default class ItemServiceHistory extends Component {
                     if (this.countImageUploadDone == this.countImageUpload) {
                         console.log("imag invoice",this.urlUpload)
                         this.props.updateStateLoading(false);
-                        this.updateStatus(this.props.dataItem.id);
+                        this.updateStatus(this.props.dataItem.item.id);
                     }
                 }
 
@@ -97,7 +97,7 @@ export default class ItemServiceHistory extends Component {
     }
 
     updateStatus = (id) => {
-
+        console.log("id",id);
         AsyncStorage.getItem('token').then((value) => {
             fetch(BASE_URL + UPDATE_HISTORY, {
                 method: "POST",

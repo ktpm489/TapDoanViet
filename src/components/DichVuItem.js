@@ -66,8 +66,8 @@ export default class DichVuItem extends Component {
                     resizeMode="cover"
                     style={{width:'100%',height:'70%'}}
                />
-               <View style ={{flex:1,justifyContent: 'center',alignItems:'center'}}>
-                    <Text style={{textAlign:'center',alignSelf:'center',color:'black',fontWeight:'bold'}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+               <View style ={{flex:1,justifyContent: 'center',alignItems:'center',marginLeft:5,marginRight:5}}>
+                    <Text style={{textAlign:'center',alignSelf:'center',color:'black',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName:item.name}</Text>
                 </View>
                 </View>
                 :<View key={item.index}
@@ -84,7 +84,7 @@ export default class DichVuItem extends Component {
               resizeMode="cover"
               style={{width:Dimention.DEVICE_WIDTH/5-10,height:Dimention.DEVICE_WIDTH/5-10}}
          />
-              <Text style={{textAlign:'center',color:'black',fontWeight:'bold'}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+              <Text style={{textAlign:'center',color:'black',fontWeight:'bold',marginLeft:5,marginRight:5}}>{fromSubDichVu? item.serviceName:item.name}</Text>
           </View>}
 
             </TouchableOpacity>)

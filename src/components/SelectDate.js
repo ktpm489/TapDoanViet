@@ -43,6 +43,7 @@ export default class SelectDate extends Component {
     this.state = {
       listHours: listHours,
       currentPost: 0,
+      listDateState:[],
       next: true,
       prev: false
     };
@@ -62,10 +63,12 @@ export default class SelectDate extends Component {
     tempList[positionHourSelect].select = true;
 
     this.setState({
-      listHours: tempList
+      listHours: tempList,
+      
     });
     this.positionHourSelect = positionHourSelect;
     this.hourSelect = this.state.listHours[positionHourSelect];
+    this.positionDateSelect = 0;
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -80,6 +83,7 @@ export default class SelectDate extends Component {
   componentWillMount() {
     var currentDate = new Date();
 
+    this.listDate = [];
     for (var i = 0; i < 7; i++) {
       var dayOfWeek = currentDate.getDay(); //0-6,0:sunday
       var date = currentDate.getDate();
@@ -107,16 +111,19 @@ export default class SelectDate extends Component {
         month: month,
         year: year,
         nameDate: nameDate,
-        dayOfWeek: dayOfWeek
+        dayOfWeek: dayOfWeek,
+        selected:i===this.positionDateSelect?true:false
       };
       this.listDate.push(objDate);
       currentDate.setDate(date + 1);
-      // this.setState({
-      //   currentPost: 0
-      // });
-      console.log("component willmount select date",this.state.currentPost);
-      this.date = this.listDate[this.state.currentPost];
+
+      // // this.setState({
+      // //   currentPost: 0
+      // // });
+      // console.log("component willmount select date",this.state.currentPost);
+      // this.date = this.listDate[this.state.currentPost];
     }
+    this.setState({listDateState:this.listDate})
   }
   render() {
     // const { navigation } = this.props;
@@ -142,12 +149,32 @@ export default class SelectDate extends Component {
         <View style={{ height: 1, backgroundColor: "white" }} />
         <View
           style={{
-            flexDirection: "row",
+            height:50,
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
-          <TouchableOpacity
+        <FlatList
+                    data={this.state.listDateState}
+                    extraData={this.state.listDateState}
+                    horizontal={true}
+                    
+                    renderItem={({ item }) => {
+                      return (
+                        <TouchableOpacity
+                          style={{backgroundColor:item.selected?'red':'white',padding:10,justifyContent:'center',alignItems:'center'}}
+                        >
+                          <Text style={{minWidth:70,alignSelf:'center',flex:1,}}>{item.nameDate + " " + item.date + "/" + item.month}</Text>
+                        </TouchableOpacity>
+                      );
+                    }}
+                    numColumns={1}
+                    keyExtractor={(item, index) => index.toString()}
+                   style={{flex:1}}
+
+                  />
+
+          {/* <TouchableOpacity
             onPress={() => {
               if (this.state.currentPost == 1) {
                 this.setState({
@@ -223,7 +250,7 @@ export default class SelectDate extends Component {
               }
               style={{ width: 25, height: 25, margin: 10 }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View

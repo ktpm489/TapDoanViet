@@ -136,6 +136,8 @@ class ModalDichVu extends Component {
             const userInfo = this.props.userInfo.userInfo;
             this.name = userInfo.firstName +" "+ userInfo.lastName;
             this.phone = userInfo.phoneNumber;
+            this.email = userInfo.email;
+            this.address = this.email;
             console.log("userInfo",userInfo);
         }
         return (
@@ -240,13 +242,14 @@ class ModalDichVu extends Component {
                             shadowOpacity: 0.8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
                         }}>
                             <Image
-                                source={require('../images/location.png')}
+                                source={require('../images/gopy.png')}
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
                             <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
-                                placeholder={"Địa chỉ"}
+                                placeholder={"Email"}
+                                value={this.email}
                                 onChangeText={(text)=>this.address = text}
                             />
 
