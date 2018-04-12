@@ -140,18 +140,18 @@ class MenuLeft extends Component {
                         <TouchableOpacity onPress =  {()=> {
                             this.setState({ visibleModal: null })
                             // this.UnSubcribe()
-                            // AsyncStorage.removeItem('token')
-                            // LogoutReducers([],{type:'LOGOUT'});
-                            // const resetAction = NavigationActions.reset({
-                            //     index: 0,
-                            //     actions: [
-                            //         NavigationActions.navigate({
-                            //             routeName: 'Login',
-                            //         }),
-                            //     ]
-                            // });
-                            // this.props.navigation.dispatch(resetAction)
-                                logout(AsyncStorage,this.props);
+                            AsyncStorage.removeItem('token')
+                            LogoutReducers([],{type:'LOGOUT'});
+                            const resetAction = NavigationActions.reset({
+                                index: 0,
+                                actions: [
+                                    NavigationActions.navigate({
+                                        routeName: 'Login',
+                                    }),
+                                ]
+                            });
+                            this.props.navigation.dispatch(resetAction)
+                                
                             }}>
                             <View style = {styles.modalContent}>
                                 <Text style = {{fontSize:11}}>Bạn có muốn đăng xuất tài khoản này?</Text>
