@@ -109,7 +109,7 @@ class CongDong extends Component {
 
         return (
             
-                    <View style={{justifyContent:'center',alignItems:'center',margin:10}}>
+                    <View style={{justifyContent:'center',alignItems:'center',margin:10,flex:1}}>
                     < FlatList
                          showsHorizontalScrollIndicator={false}
                          showVerticalScrollIndicator={false}
