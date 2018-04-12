@@ -12,6 +12,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon1 from 'react-native-vector-icons/EvilIcons';
 import {BASE_URL, CREATE_GROUP, LIKE} from "../../Constants";
+import logout from '../TokenExpired'
 class StatusItems extends Component {
     likePost = () => {
         AsyncStorage.getItem("token").then(value => {
@@ -30,7 +31,11 @@ class StatusItems extends Component {
                 })
             }).then(response => {
                 return response.json()
-            }).then(dataRes => {
+            }).then(data => {
+                if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
             }).catch(e => {
                 console.log("exception", e);
             });
@@ -54,7 +59,11 @@ class StatusItems extends Component {
                 })
             }).then(response => {
                 return response.json()
-            }).then(dataRes => {
+            }).then(data => {
+                if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
             }).catch(e => {
                 console.log("exception", e);
             });

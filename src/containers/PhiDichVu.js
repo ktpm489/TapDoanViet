@@ -15,6 +15,7 @@ import * as Dimention from '../configs/Dimention'
 import PhiDichVuItem from '../components/PhiDichVuItem'
 import Modal from 'react-native-modalbox';
 import { BASE_URL, COST } from "../Constants";
+import logout from '../components/TokenExpired'
 export default class PhiDichVu extends Component {
 
     static navigationOptions = ({ navigation }) => {
@@ -84,7 +85,10 @@ export default class PhiDichVu extends Component {
                         departmebtSelect: departmebtSelect,
                         listCost:(data.data)[0].costs
                     })
-                } else {
+                } else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }else {
                     this.setState({ isLoading: false })
                 }
 

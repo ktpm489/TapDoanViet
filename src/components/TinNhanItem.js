@@ -10,6 +10,7 @@ import {
 
 import * as Dimention from '../configs/Dimention'
 import * as URL from '../Constants'
+import logout from '../components/TokenExpired'
 
 export default class TinNhanItem extends Component {
 
@@ -41,6 +42,11 @@ export default class TinNhanItem extends Component {
                 return response.json();
             }).then(data => {
                 console.log('update read message: ', data);
+
+                if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
                 
 
 

@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import {callApiDangKy} from "../actions/DangKyActions";
 import { NavigationActions } from 'react-navigation';
 import {BASE_URL, LIKE, LISTTOA} from "../Constants";
+import logout from '../components/TokenExpired'
 class NhapThongTin extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
@@ -53,6 +54,10 @@ class NhapThongTin extends Component {
                 return response.json()
             }).then(dataRes => {
                 console.log('dtatREs', dataRes)
+                if(dataRes.errorCode && dataRes.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
                 this.setState({
                     dataToa: dataRes.data,
                     Toa: dataRes.data[0]._id

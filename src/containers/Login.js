@@ -56,8 +56,8 @@ class Login extends Component {
                     error: true
                 })
                 Alert.alert(
-                    'Error',
-                    'Đăng nhập thất bại',
+                    'Thông báo',
+                    data.message,
                     [
                         {text: 'OK', onPress: () => console.log('OK Pressed')},
                     ],

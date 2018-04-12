@@ -11,6 +11,7 @@ export const callApiDichVu = () => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem('token').then((value)=> {
+                
                 fetch(BASE_URL + SLIDER, {
                     method: "GET",
                     headers: {

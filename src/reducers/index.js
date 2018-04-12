@@ -11,6 +11,9 @@ import GetPostReducers from './GetPostReducers'
 import CreateCmtReducers from './CreateCmtReducers'
 import DangKyReducers from "./DangKyReducers";
 import UpdateInfoReducers from "./UpdateInfoReducers";
+// import LogoutReducers from "./LogoutReducers";
+
+
 
 const appStore = combineReducers({
     LoginReducers,
@@ -24,6 +27,19 @@ const appStore = combineReducers({
     GetPostReducers,
     CreateCmtReducers,
     DangKyReducers,
-    UpdateInfoReducers
+    UpdateInfoReducers,
+    
 });
+
+const initialState = appStore({}, {})
+export const LogoutReducers = (state, action) => {
+    if (action.type === 'LOGOUT') {
+        state = initialState
+      }
+      console.log("initialState",initialState);
+      return appStore(state, action)
+}
+
 export default appStore
+
+

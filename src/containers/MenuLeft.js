@@ -15,7 +15,10 @@ import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import images from "../components/images";
-
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {LogoutReducers} from '../reducers'
+import logout from '../components/TokenExpired'
 class MenuLeft extends Component {
     constructor(props){
         super(props)
@@ -137,16 +140,19 @@ class MenuLeft extends Component {
                         <TouchableOpacity onPress =  {()=> {
                             this.setState({ visibleModal: null })
                             // this.UnSubcribe()
-                            AsyncStorage.removeItem('token')
-                            const resetAction = NavigationActions.reset({
-                                index: 0,
-                                actions: [
-                                    NavigationActions.navigate({
-                                        routeName: 'Login',
-                                    }),
-                                ]
-                            });
-                            this.props.navigation.dispatch(resetAction)}}>
+                            // AsyncStorage.removeItem('token')
+                            // LogoutReducers([],{type:'LOGOUT'});
+                            // const resetAction = NavigationActions.reset({
+                            //     index: 0,
+                            //     actions: [
+                            //         NavigationActions.navigate({
+                            //             routeName: 'Login',
+                            //         }),
+                            //     ]
+                            // });
+                            // this.props.navigation.dispatch(resetAction)
+                                logout(AsyncStorage,this.props);
+                            }}>
                             <View style = {styles.modalContent}>
                                 <Text style = {{fontSize:11}}>Bạn có muốn đăng xuất tài khoản này?</Text>
                                 <View style = {{height:1, backgroundColor: 'red'}}/>
@@ -170,7 +176,25 @@ class MenuLeft extends Component {
         );
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        LogoutReducers: state.LogoutReducers
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // addTodo: bindActionCreators(addTodo, dispatch),
+        // callResetRedux: bindActionCreators(resetRedux, dispatch)
+    }
+};
+
+MenuLeft = connect(mapStateToProps, mapDispatchToProps)(MenuLeft);
+
 export default MenuLeft;
+
 const styles = StyleSheet.create({
     img : {
         height:25,

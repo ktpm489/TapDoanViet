@@ -5,11 +5,11 @@ import {
 
 import {BASE_URL, GET_POST} from "../Constants";
 
-export const callApiGetPost = () => {
+export const callApiGetPost = (id) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem('token').then((value)=> {
-                fetch(BASE_URL + GET_POST, {
+                fetch(BASE_URL + GET_POST+"/category/"+id, {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',

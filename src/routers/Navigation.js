@@ -33,6 +33,7 @@ import SubDichVu from "../containers/SubDichVu";
 import AddMember from "../containers/AddMember";
 import FirstScreen from "../containers/FirstScreen";
 import ShowImage from "../containers/ShowImage"
+import CongDong from "../containers/CongDong"
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -47,8 +48,8 @@ const Tab = TabNavigator ({
     DichVu: {
         screen: DichVu,
     },
-    TrangChu: {
-        screen: TrangChu,
+    CongDong: {
+        screen: CongDong,
     },
     Message: {
         screen: TinNhan,
@@ -75,7 +76,7 @@ const Tab = TabNavigator ({
                 backgroundColor: 'transparent'
             },
             labelStyle: {
-                fontSize: 12,
+                fontSize: 11,
                 alignSelf:'center'
 
             },
@@ -247,6 +248,9 @@ const Stack = StackNavigator ({
     },
     ShowImage:{
         screen:ShowImage
+    },
+    TrangChu:{
+        screen:TrangChu
     }
 
 

@@ -19,6 +19,7 @@ import * as URL from '../Constants'
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import DichVuItem from '../components/DichVuItem'
 import SlideImage from '../components/SlideImage';
+import logout from '../components/TokenExpired'
 
 
 class DichVu extends Component {
@@ -117,6 +118,9 @@ class DichVu extends Component {
                 console.log('get dichvu response', data);
                 if(data && data.errorCode == 0){
                     this.setState({listDichVu:data.data,isLoading:false})
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }
                
             }).catch(e => {

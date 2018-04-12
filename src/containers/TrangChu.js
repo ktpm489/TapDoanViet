@@ -20,6 +20,7 @@ import {callApiGetPost} from "../actions/GetPostActions";
 class TrangChu extends Component {
     static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
+        const { params = {} } = navigation.state
         return {
             headerLeft: <TouchableOpacity onPress={() => {
                     navigation.navigate('DrawerOpen')
@@ -34,26 +35,32 @@ class TrangChu extends Component {
             ),
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
-            title: 'Trang chủ'
+            title: params.title,
 
         }
 
     }
     constructor(props){
         super(props)
+
+        
         this.state = {
             dataItem : [],
             refresh: false,
             isLoading: true,
 
         }
+        this.item = this.props.navigation.state.params.dataItem;
+        this.props.navigation.setParams({title:this.item.name})
+        console.log("item----", this.item);
+
     }
     componentWillMount(){
        this.GetPost()
     }
-    GetPost = ()=> {
+    GetPost = ()=> {                                                                                                                                                                                                                                                                                            
         const { callApiGetPost } = this.props
-        callApiGetPost().then(dataRes => {
+        callApiGetPost(this.item.id).then(dataRes => {
             console.log('dataRes trang chu', dataRes)
             this.setState({
                 isLoading: false,
@@ -61,6 +68,10 @@ class TrangChu extends Component {
             })
         })
     }
+    onReloadBack = (isReload)=>{
+        this.GetPost();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+    }
+    
 
     render (){
         if (this.state.isLoading) {
@@ -79,14 +90,14 @@ class TrangChu extends Component {
                                style = {{ resizeMode: 'cover',height: 40, width:30, marginLeft:10}}>
                         </Image>
                         <View style = {{marginLeft: 10, borderWidth: 1, borderColor: '#cccccc', borderRadius:20, flex:1,justifyContent:'center' ,alignItems:'center'}}>
-                            <TouchableOpacity onPress = {()=>this.props.navigation.navigate('TaoBaiViet')}>
+                            <TouchableOpacity onPress = {()=>this.props.navigation.navigate('TaoBaiViet',{id_category:this.item.id,onReloadBack:this.onReloadBack})}>
                                 <Text>Soạn đăng bản tin cho KĐT</Text>
                             </TouchableOpacity>
                         </View>
 
                     </View>
                 </View>
-                <View style={{height: 3, backgroundColor: '#cccccc', marginTop: 10}}/>
+                <View style={{height: 3, backgroundColor: '#cccccc', marginTop: 10,}}/>
 
                 <FlatList
                     refreshing={this.state.refresh}
@@ -103,6 +114,7 @@ class TrangChu extends Component {
                     }
                     }
                     keyExtractor={(item, index) => index.toString()}
+                    
                 />
 
 

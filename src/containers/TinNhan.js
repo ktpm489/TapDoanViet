@@ -20,6 +20,7 @@ import {BASE_URL} from "../Constants";
 import {SEARCH_USER} from "../Constants";
 import {GET_GROUPCHAT} from "../Constants";
 import GroupChatItem from "../components/GroupChatItem";
+import logout from '../components/TokenExpired'
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class TinNhan extends Component {
@@ -68,6 +69,9 @@ export default class TinNhan extends Component {
          console.log("list client",data);
         if (data.errorCode === 0) {
             this.setState({dataGroupChat: data.data.groups, dataUsers:data.data.users,isLoading: false});
+        }else if(data.errorCode && data.errorCode === "401"){
+            logout(AsyncStorage,this.props)
+            return;
         } else {
             this.setState({isLoading: false})
         }

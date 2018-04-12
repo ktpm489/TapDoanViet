@@ -14,7 +14,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {callApiUploadImg} from "../actions/TaoBaiVietActions";
 import {BASE_URL, CREATE_GROUP, FEEDBACK} from "../Constants";
-
+import logout from '../components/TokenExpired'
 class GopYPhanHoi extends Component {
     constructor(props){
         super(props)
@@ -79,21 +79,25 @@ class GopYPhanHoi extends Component {
                 })
             }).then(response => {
                 return response.json()
-            }).then(dataRes => {
-                if(dataRes.errorCode===0) {
+            }).then(data => {
+                if(data.errorCode===0) {
                     Alert.alert(
                         'Alert',
-                        dataRes.message,
+                        data.message,
                         [
                             {text: 'OK', onPress: () => console.log('OK Pressed')},
                         ],
                         { cancelable: false }
                     )
                 }
+                else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
                 else {
                     Alert.alert(
                         'Alert',
-                        dataRes.message,
+                        data.message,
                         [
                             {text: 'OK', onPress: () => console.log('OK Pressed')},
                         ],

@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/dist/Entypo'
 import ThongBaoItem from '../components/ThongBaoItem';
 import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
+import logout from '../components/TokenExpired'
 
 export default class ThongBao extends Component {
     static navigationOptions = ({ navigation}) => {
@@ -68,6 +69,9 @@ export default class ThongBao extends Component {
                 console.log('get list noti ', data);
                 if(data && data.errorCode == 0){
                     this.setState({listNoti:data.data,isLoading:false})
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }else
                     this.setState({isLoading:false});
 

@@ -44,6 +44,7 @@ class TaoBaiViet extends Component {
             resizedImageUri: '',
             fileName: '',
         }
+        this.id = this.props.navigation.state.params.id_category;
     }
 
     share() {
@@ -53,22 +54,27 @@ class TaoBaiViet extends Component {
         }
         // console.log('hhhh', this.props)
         const { callApiCreatePost } = this.props;
-        callApiCreatePost(this.state.Status, this.state.fileName).then(dataPost => {
+        callApiCreatePost(this.state.Status, this.state.fileName,this.id).then(dataPost => {
             console.log('datapost', dataPost.message)
             if(dataPost.errorCode=== 0) {
                 Alert.alert(
                     'Alert',
                     dataPost.message,
                     [
-                        {text: 'OK', onPress: () => this.props.navigation.goBack()},
+                        {text: 'OK', onPress: () => {
+                            this.props.navigation.goBack()
+                       
+                            this.props.navigation.state.params.onReloadBack(true);
+                        }
+                    },
                     ],
                     { cancelable: false }
                 )
             }
             else {
                 Alert.alert(
-                    'Alert',
-                    "Cập nhập không thành không",
+                    'Thông báo',
+                    dataPost.message,
                     [
                         {text: 'OK', onPress: () => console.log('OK Pressed')},
                     ],

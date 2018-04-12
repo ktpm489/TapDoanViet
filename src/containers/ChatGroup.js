@@ -21,7 +21,7 @@ import {bindActionCreators} from 'redux'
 import ChatItem from '../components/ChatItem'
 import {callApiDichVu} from "../actions/DichvuActions";
 import {connectToSocket, disConnectToSocket, joinToChat} from "../actions/SocketActions";
-
+import logout from '../components/TokenExpired'
 
 class ChatGroup extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -100,6 +100,11 @@ class ChatGroup extends Component {
                 'Content-Type': 'application/json'
             }
         }).then((data) => data.json()).then((data) => {
+
+            if(data.errorCode && data.errorCode === "401"){
+                logout(AsyncStorage,this.props)
+                return;
+            }
             let tempFilter = data.data.filter((item) => {
                 return item.sender
             });

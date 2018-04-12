@@ -16,6 +16,7 @@ import ItemServiceHistory from '../components/ItemServiceHistory';
 import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
 import Modal from 'react-native-modalbox';
+import logout from '../components/TokenExpired'
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class ServiceHistory extends Component {
@@ -60,6 +61,9 @@ export default class ServiceHistory extends Component {
              console.log("list history services",data);
         if(data.errorCode === 0){
             this.setState({listHistory:data.data,isLoading:false});
+        }else if(data.errorCode && data.errorCode === "401"){
+            logout(AsyncStorage,this.props)
+            return;
         }else
             this.setState({isLoading:false})
         

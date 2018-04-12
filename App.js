@@ -29,7 +29,7 @@ import DichVuDetail from './src/containers/DichVuDetail'
 import * as Consts from './src/Constants';
 import {Tab} from './src/routers/Navigation'
 import ThongTinCaNhan from "./src/containers/ThongTinCaNhan";
-
+import logout from './src/components/TokenExpired'
 
 export default class App extends Component<{}> {
 
@@ -67,10 +67,13 @@ export default class App extends Component<{}> {
                 deviceName:  DeviceInfo.getBrand()
             })
         }).then(data => data.json()).then(data => {
+            if(data.errorCode && data.errorCode === "401"){
+                logout(AsyncStorage,this.props)
+            }
             console.log("data push device token", data)
 
         }).catch(err => {
-            alert("call api token firebase erro: " + err);
+            console.log("call api token firebase erro: " + err);
         })
     }
 

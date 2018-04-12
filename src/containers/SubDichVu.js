@@ -11,6 +11,7 @@ import {
 
 import DichVuItem from '../components/DichVuItem'
 import * as URL from '../Constants'
+import logout from '../components/TokenExpired'
 class SubDichVu extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
@@ -58,6 +59,9 @@ class SubDichVu extends Component {
                 console.log('get sub dichvu response', data);
                 if(data && data.errorCode == 0){
                     this.setState({listSubDichVu:data.data,isLoading:false})
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }
                
             }).catch(e => {

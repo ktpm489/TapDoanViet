@@ -9,6 +9,7 @@ import {
     ActivityIndicator
 } from 'react-native'
 import {BASE_URL, GET_UTILITY} from "../Constants";
+import logout from '../components/TokenExpired'
 
 class TienIch extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -49,7 +50,12 @@ class TienIch extends Component {
                 if(data && data.errorCode == 0){
                     this.setState({listTienIch:data.data,isLoading:false})
                     console.log('statte',this.state.listTienIch)
-                }else{
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
+                
+                else{
                     this.setState({isLoading:false})
                 }
                 

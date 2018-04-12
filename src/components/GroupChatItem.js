@@ -10,6 +10,7 @@ import {
 
 import * as Dimention from '../configs/Dimention'
 import * as URL from '../Constants'
+import logout from './TokenExpired'
 export default class GroupChatItem extends Component {
 
     constructor(props) {
@@ -28,7 +29,7 @@ export default class GroupChatItem extends Component {
     callApiUpdateReaded = (chatId)=>{
         console.log("group id",chatId);
         AsyncStorage.getItem('token').then((value)=> {
-            fetch(URL.BASE_URL + URL.UPDATE_READ+chatId, {
+            fetch(URL.BASE_URL + URL.UPDATE_READ+chatId+"?isGroup=true", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,6 +41,10 @@ export default class GroupChatItem extends Component {
                 
                 return response.json();
             }).then(data => {
+                if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
                 console.log('update read message: ', data);
                 
 

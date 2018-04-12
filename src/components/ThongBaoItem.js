@@ -11,6 +11,7 @@ import {
 import * as Dimention from '../configs/Dimention'
 import * as URL from '../Constants'
 import moment from 'moment';
+import logout from '../components/TokenExpired'
 export default class ThongBaoItem extends Component {
 
     constructor(props) {
@@ -43,6 +44,9 @@ export default class ThongBaoItem extends Component {
                 console.log('cap nhat trang thai da xem ', data);
                 if(data && data.errorCode == 0){
                     
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }
                
             }).catch(e => {

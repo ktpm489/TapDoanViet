@@ -16,6 +16,7 @@ import TinNhanItem from "../components/TinNhanItem";
 import {BASE_URL} from "../Constants";
 import {CREATE_GROUP} from "../Constants";
 import {ADD_MEMBER} from "../Constants";
+import logout from '../components/TokenExpired'
 
 class AddMember extends Component {
     static navigationOptions = ({navigation}) => {
@@ -90,6 +91,11 @@ class AddMember extends Component {
             }).then(response => {
                 return response.json()
             }).then(dataRes => {
+
+                if(dataRes.errorCode && dataRes.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
                 console.log('add member', dataRes)
 
             }).catch(e => {
@@ -168,6 +174,9 @@ class AddMember extends Component {
 
                         console.log("fillter",fillter);
                         this.setState({ resultSearch: fillter, isLoading: false });
+                    }else if(data.errorCode && data.errorCode === "401"){
+                        logout(AsyncStorage,this.props)
+                        return;
                     }
                 })
                 .catch(e => {

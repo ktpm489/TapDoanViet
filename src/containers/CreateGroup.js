@@ -17,6 +17,7 @@ import * as URL from '../Constants'
 import TinNhanItem from '../components/TinNhanItem';
 import {BASE_URL} from "../Constants";
 import {CREATE_GROUP} from "../Constants";
+import logout from '../components/TokenExpired'
 
 export default class CreateGroup extends Component {
 
@@ -94,9 +95,15 @@ export default class CreateGroup extends Component {
                 })
             }).then(response => {
                 return response.json()
-            }).then(dataRes => {
+            }).then(data => {
+
+                if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
+
                 this.setState({
-                    IdGroup: dataRes.group._id
+                    IdGroup: data.group._id
 
                 }, ()=> {
                     this.props.navigation.navigate("AddMember", {IdGroup: this.state.IdGroup, groupname: this.state.TenGroup,onReloadBack:this.props.navigation.state.params.onReloadBack})

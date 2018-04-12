@@ -40,7 +40,7 @@ export const callApiUploadImg = (imgdata, imageType) => {
 
 
 
-export const callApiCreatePost = (content, image) => {
+export const callApiCreatePost = (content, image,id_category) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem('token').then((value)=> {
@@ -53,6 +53,7 @@ export const callApiCreatePost = (content, image) => {
                     body: JSON.stringify({
                         content: content,
                         images: image,
+                        category:id_category
 
 
                     })

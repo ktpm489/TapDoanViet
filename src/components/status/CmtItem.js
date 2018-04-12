@@ -9,29 +9,31 @@ import {
 import moment from 'moment';
 import Dimensions from 'Dimensions';
 
+
 class CmtItem extends Component {
     render (){
         const {item} = this.props.dataItem;
         const {navigation} = this.props;
+        console.log("item-comment",item);
         return (
             <View style = {{flex:1}}>
                 <View style = {{flexDirection: 'row'}}>
                     <Image style={styles.image_circle}
 
                            source={{
-                               uri: "https://znews-photo-td.zadn.vn/w1024/Uploaded/unvjuas/2018_01_14/NGUYEN_BA_NGOC2349_ZING.jpg"
+                               uri: item.createdBy && item.createdBy.avatar?item.createdBy.avatarUrl:require('../../images/logo.png')
                            }}
                            resizeMode="cover"
                     >
                     </Image>
-                    <Text style = {styles.textName}>{item.createdBy.userName}</Text>
+                    <Text style = {styles.textName}>{item.createdBy?item.createdBy.firstName+" "+item.createdBy.lastName:"User"}</Text>
                 </View>
                 <View style = {styles.viewCmt}>
                     <Text style = {styles.textCmt}>{item.content}</Text>
                     <View style = {{flexDirection:'row'}}>
                         <Text>{moment(item.createdAt).startOf("hour").fromNow()}</Text>
-                        <Text style = {{marginLeft:15, color:'black'}}>Like</Text>
-                        <Text style = {{marginLeft:15, color: 'black'}}>Reply</Text>
+                        {/* <Text style = {{marginLeft:15, color:'black'}}>Like</Text> */}
+                        {/* <Text style = {{marginLeft:15, color: 'black'}}>Reply</Text> */}
                     </View>
 
                 </View>

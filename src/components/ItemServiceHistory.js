@@ -14,6 +14,8 @@ import * as Const from '../Constants'
 import moment from 'moment';
 import { BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE, UPDATE_HISTORY } from "../Constants";
 import PickerImage from "../components/PickerImage"
+
+import logout from '../components/TokenExpired'
 export default class ItemServiceHistory extends Component {
 
     constructor(props) {
@@ -87,6 +89,10 @@ export default class ItemServiceHistory extends Component {
                         this.updateStatus(this.props.dataItem.item.id);
                     }
                 }
+                else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
 
 
 
@@ -117,6 +123,9 @@ export default class ItemServiceHistory extends Component {
                 console.log("update history", data);
                 if (data && data.errorCode == 0) {
                     this.props.navigation.goBack();
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }
             }).catch(e => {
                 console.log("exception", e);

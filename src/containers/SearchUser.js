@@ -16,6 +16,7 @@ import TinNhanItem from '../components/TinNhanItem';
 import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
 import Modal from 'react-native-modalbox';
+import logout from '../components/TokenExpired'
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class SearchUser extends Component {
@@ -111,6 +112,9 @@ export default class SearchUser extends Component {
                 console.log('search user data: ', data);
                 if(data && data.errorCode == 0){
                     this.setState({resultSearch:data.data,isLoading:false})
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }
 
 

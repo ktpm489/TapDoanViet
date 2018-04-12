@@ -20,6 +20,7 @@ import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import logout from '../components/TokenExpired'
 
 class ModalDichVu extends Component {
 
@@ -417,6 +418,9 @@ class ModalDichVu extends Component {
                     if(this.countImageUploadDone == this.countImageUpload){
                         this.sendInfoToServer();
                     }
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }
 
 
@@ -476,6 +480,9 @@ class ModalDichVu extends Component {
                 this.props.onCallApiDone();
                 if(data && data.errorCode == 0){
                     alert("Gửi yêu cầu thành công")
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
                 }else{
                     alert(data.message);
                 }

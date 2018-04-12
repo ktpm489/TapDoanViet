@@ -25,7 +25,7 @@ export default class DichVuItem extends Component {
             return true;
     }
     render() {
-        const {navigation,fromSubDichVu} = this.props;
+        const {navigation,fromSubDichVu,fromCongDong} = this.props;
         const {item} = this.props.dataItem;
        
         return (
@@ -35,6 +35,8 @@ export default class DichVuItem extends Component {
                     if(fromSubDichVu){
                         navigation.navigate('DichVuDetail', {dataItem: item});
                         
+                    }else if(fromCongDong){
+                        navigation.navigate('TrangChu', {dataItem: item});
                     }else
                         navigation.navigate('SubDichVu', {idItem: item.id,subtitle:item.name});
                 }}

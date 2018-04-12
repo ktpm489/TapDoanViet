@@ -32,6 +32,7 @@ export const LIKE = "/api/like/create-new";
 export const FEEDBACK = "/api/feedback/create";
 export const UPDATE_READ = "/api/chat/update-read-message/"
 export const LISTTOA = "/api/abg/list";
+export const CONGDONG_CATEGORY = "/api/post/categories";
 
 
 export const COLOR_APP_GREEN = '#23b34c';
