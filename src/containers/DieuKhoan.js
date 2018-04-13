@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 
 import * as Dimention from '../configs/Dimention'
-import Video from 'react-native-video'
 class DieuKhoan extends Component {
 
     static navigationOptions = ({ navigation }) => {
