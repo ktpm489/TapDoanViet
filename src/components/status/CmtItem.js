@@ -14,14 +14,14 @@ class CmtItem extends Component {
     render (){
         const {item} = this.props.dataItem;
         const {navigation} = this.props;
-        console.log("item-comment",item);
+        // console.log("item-comment",item);
         return (
             <View style = {{flex:1}}>
                 <View style = {{flexDirection: 'row'}}>
                     <Image style={styles.image_circle}
 
                            source={{
-                               uri: item.createdBy && item.createdBy.avatar?item.createdBy.avatarUrl:require('../../images/logo.png')
+                               uri: "http://i.chieu-cao.net/wp-content/uploads/2016/12/chieu-cao-va-tieu-su-cua-phuong-ly-1.jpg"
                            }}
                            resizeMode="cover"
                     >
