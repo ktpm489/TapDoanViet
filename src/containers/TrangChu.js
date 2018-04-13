@@ -22,20 +22,11 @@ class TrangChu extends Component {
         const {state} = navigation;
         const { params = {} } = navigation.state
         return {
-            headerLeft: <TouchableOpacity onPress={() => {
-                    navigation.navigate('DrawerOpen')
-                }}>
-                    <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
-                </TouchableOpacity>,
-            tabBarIcon: () => (
-                <Image
-                    source={require('../images/iconhome.png')}
-                    style = {styles.iconTab}
-                />
-            ),
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
             title: params.title,
+            headerTintColor: 'white',
+
 
         }
 
@@ -90,7 +81,7 @@ class TrangChu extends Component {
                                style = {{ resizeMode: 'cover',height: 40, width:30, marginLeft:10}}>
                         </Image>
                         <View style = {{marginLeft: 10, borderWidth: 1, borderColor: '#cccccc', borderRadius:20, flex:1,justifyContent:'center' ,alignItems:'center'}}>
-                            <TouchableOpacity onPress = {()=>this.props.navigation.navigate('TaoBaiViet',{id_category:this.item.id,onReloadBack:this.onReloadBack})}>
+                            <TouchableOpacity onPress = {()=>this.props.navigation.navigate('TaoBaiViet',{id_category:this.item.id,onReloadBack:this.onReloadBack, })}>
                                 <Text>Soạn đăng bản tin cho KĐT</Text>
                             </TouchableOpacity>
                         </View>

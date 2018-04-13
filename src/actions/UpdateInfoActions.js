@@ -2,12 +2,12 @@
 import {
     AsyncStorage
 } from 'react-native'
-
 import {BASE_URL, UPDATE_INFO} from "../Constants";
 
-export const callApiUpdateInfo = (gender, email, userName, lastName, firstName, phoneNumber) => {
+export const callApiUpdateInfo = (gender, email, lastName, avatar) => {
     return dispatch => {
-        return new Promise((resolve, reject) => {
+
+            return new Promise((resolve, reject) => {
             AsyncStorage.getItem('token').then((value)=> {
                 fetch(BASE_URL + UPDATE_INFO, {
                     method: "POST",
@@ -18,10 +18,9 @@ export const callApiUpdateInfo = (gender, email, userName, lastName, firstName, 
                     body: JSON.stringify({
                         gender: gender,
                         email: email,
-                        userName: userName,
                         lastName: lastName,
-                        firstName: firstName,
-                        phoneNumber: phoneNumber
+                        avatar: avatar
+                        // phoneNumber: phoneNumber
                     })
 
                 }).then((response) => {
@@ -34,7 +33,7 @@ export const callApiUpdateInfo = (gender, email, userName, lastName, firstName, 
                     })
                     resolve(data);
                 }).catch(e => {
-                    console.log('exception')
+                    console.log('exception', e)
                 })
             });
         })

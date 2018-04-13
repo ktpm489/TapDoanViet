@@ -113,6 +113,11 @@ class TaoBaiViet extends Component {
 
 
     render () {
+        const { InfoUser } = this.props
+        if (InfoUser.length <= 0 ){
+            return null;
+        }
+        console.log('info', InfoUser)
         let img = this.state.avatarSource == null? null:
             <Image
                 source={this.state.avatarSource}
@@ -126,7 +131,7 @@ class TaoBaiViet extends Component {
                                style = {{ resizeMode: 'cover',height: 40, width:30, marginLeft:10}}>
                         </Image>
                         <View style = {{marginLeft: 10}}>
-                            <Text style = {{color: 'black'}}>Nguyễn Văn A</Text>
+                            <Text style = {{color: 'black'}}>{InfoUser.userInfo.firstName} {InfoUser.userInfo.lastName}</Text>
                             <Text>Mọi người</Text>
                         </View>
                     </View>
@@ -158,7 +163,8 @@ class TaoBaiViet extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        imageGet: state.TaoBaiVietReducers
+        imageGet: state.TaoBaiVietReducers,
+        InfoUser : state.ProfileReducers
     }
 };
 
