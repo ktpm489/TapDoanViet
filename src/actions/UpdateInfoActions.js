@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import {BASE_URL, UPDATE_INFO} from "../Constants";
 
-export const callApiUpdateInfo = (gender, email, lastName) => {
+export const callApiUpdateInfo = (gender, email, lastName, avatar) => {
     return dispatch => {
 
             return new Promise((resolve, reject) => {
@@ -19,6 +19,7 @@ export const callApiUpdateInfo = (gender, email, lastName) => {
                         gender: gender,
                         email: email,
                         lastName: lastName,
+                        avatar: avatar
                         // phoneNumber: phoneNumber
                     })
 

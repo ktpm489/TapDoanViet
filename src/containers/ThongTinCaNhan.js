@@ -79,6 +79,8 @@ class ThongTinCaNhan extends Component {
             console.log('datapost1', dataPost)
             this.setState({
                 fileName: dataPost.data.fileName
+            }, () => {
+                this.UpdateAvt()
             })
 
         })
@@ -128,6 +130,16 @@ class ThongTinCaNhan extends Component {
         })
         const { callApiUpdateInfo } = this.props
         callApiUpdateInfo(this.state.dataProfile.gender, this.state.Email, this.state.LastName).then(dataRes => {
+            console.log('dataRes', dataRes)
+        })
+    }
+    UpdateAvt () {
+
+        const { callApiUpdateInfo, InfoUser } = this.props
+        if (InfoUser.length <=0) {
+            return null
+        }
+        callApiUpdateInfo(InfoUser.userInfo.gender, InfoUser.userInfo.Email, InfoUser.userInfo.firstName, this.state.fileName).then(dataRes => {
             console.log('dataRes', dataRes)
         })
     }
@@ -267,6 +279,7 @@ class ThongTinCaNhan extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        InfoUser: state.ProfileReducers
 
     }
 };
