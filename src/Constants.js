@@ -33,6 +33,7 @@ export const FEEDBACK = "/api/feedback/create";
 export const UPDATE_READ = "/api/chat/update-read-message/"
 export const LISTTOA = "/api/abg/list";
 export const CONGDONG_CATEGORY = "/api/post/categories";
+export const DELETE_SERVICE_REQUEST = "/api/service/delete-request/"
 
 
 export const COLOR_APP_GREEN = '#23b34c';

@@ -29,7 +29,6 @@ export default class SelectDate extends Component {
       "17:00",
       "18:00",
       "19:00",
-      "20:00"
     ];
     var listHours = [];
     for (var i = 0; i < arrHourse.length; i++) {
@@ -52,6 +51,7 @@ export default class SelectDate extends Component {
     this.hourSelect = "";
     this.positionHourSelect = "";
     this.date = "";
+    // this.positionDateSelect = 0;
   }
 
   onHourSelect = positionHourSelect => {
@@ -68,7 +68,6 @@ export default class SelectDate extends Component {
     });
     this.positionHourSelect = positionHourSelect;
     this.hourSelect = this.state.listHours[positionHourSelect];
-    this.positionDateSelect = 0;
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -82,7 +81,7 @@ export default class SelectDate extends Component {
 
   componentWillMount() {
     var currentDate = new Date();
-
+// console.log("selection",this.positionDateSelect)
     this.listDate = [];
     for (var i = 0; i < 7; i++) {
       var dayOfWeek = currentDate.getDay(); //0-6,0:sunday
@@ -112,7 +111,7 @@ export default class SelectDate extends Component {
         year: year,
         nameDate: nameDate,
         dayOfWeek: dayOfWeek,
-        selected:i===this.positionDateSelect?true:false
+        selected:i===this.state.currentPost?true:false
       };
       this.listDate.push(objDate);
       currentDate.setDate(date + 1);
@@ -135,44 +134,73 @@ export default class SelectDate extends Component {
 
     return (
       <View style={{ flex: 1 }}>
+      <View style={{flexDirection:'row',height:110,  }}>
         <Text
           style={{
-            alignSelf: "center",
+            
             color: "red",
+            flex:1,
+            alignSelf:'center',
+            textAlign:'center',
+
             margin: 10,
             fontSize: 20,
             fontWeight: "600"
           }}
         >
-          Đặt lịch
+          Đặt lịch:
         </Text>
-        <View style={{ height: 1, backgroundColor: "white" }} />
+        {/* <View style={{ height: 1, backgroundColor: "white" }} /> */}
         <View
           style={{
-            height:50,
-            alignItems: "center",
-            justifyContent: "center",
+            flex:1,
+            marginTop:5,
+            marginBottom:5,
+            borderRadius:4,
+            marginRight:5,
+            borderRadius:1,
+            borderColor:'gray',
+            borderWidth:1
+
           }}
         >
         <FlatList
                     data={this.state.listDateState}
                     extraData={this.state.listDateState}
-                    horizontal={true}
+                    horizontal={false}
                     
-                    renderItem={({ item }) => {
+                    renderItem={( item ) => {
+                      console.log("aaaa",item)
                       return (
                         <TouchableOpacity
-                          style={{backgroundColor:item.selected?'red':'white',padding:10,justifyContent:'center',alignItems:'center'}}
+                        onPress={()=>{
+                        
+                          // this.positionDateSelect = item.index;
+                          this.state.listDateState.forEach((a,i)=>{
+                            if(i === item.index){
+                              a.selected = true;
+                            }else{
+                              a.selected = false;
+                            }
+                          })
+                          this.setState({listDateState:this.state.listDateState,currentPost:item.index});
+                          this.date = this.state.listDateState[item.index];
+                          console.log("data",item.index);
+                          // console.log("pos",this.positionDateSelect);
+                          console.log("date---",this.date);
+                        }}
+                          style={{backgroundColor:item.item.selected?'red':'white',padding:10,justifyContent:'center',alignItems:'center'}}
                         >
-                          <Text style={{minWidth:70,alignSelf:'center',flex:1,}}>{item.nameDate + " " + item.date + "/" + item.month}</Text>
+                          <Text style={{backgroundColor:item.item.selected?'red':'white',minWidth:70,alignSelf:'center',flex:1,}}>{item.item.nameDate + " " + item.item.date + "/" + item.item.month}</Text>
                         </TouchableOpacity>
                       );
                     }}
                     numColumns={1}
                     keyExtractor={(item, index) => index.toString()}
-                   style={{flex:1}}
+                   style={{flex:1,height:100}}
 
                   />
+        </View>
 
           {/* <TouchableOpacity
             onPress={() => {
@@ -254,7 +282,7 @@ export default class SelectDate extends Component {
         </View>
 
         <View
-          style={{ height: 1, backgroundColor: "white", flexDirection: "row" }}
+          style={{ height: 1, backgroundColor: "gray", flexDirection: "row" }}
         />
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}

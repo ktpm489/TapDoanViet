@@ -79,11 +79,11 @@ class ModalDichVu extends Component {
 
         if (this.state.page3_sellect) {
             return (
-                <Text style={{ color: 'blue', fontSize: 20, flexShrink: 1 }}>Gửi</Text>
+                <Text style={{ color: 'white', fontSize: 20, flexShrink: 1 }}>Gửi</Text>
             )
         } else {
             return (
-                <Text style={{ color: 'red', fontSize: 20, flexShrink: 1 }}>Tiếp theo</Text>
+                <Text style={{ color: 'white', fontSize: 20, flexShrink: 1 }}>Tiếp theo</Text>
             )
         }
     }
@@ -143,7 +143,7 @@ class ModalDichVu extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <View style={{ height: 50, flexDirection: 'row' }} >
+                <View style={{ height: 50, flexDirection: 'row',borderBottomColor:'gray',borderBottomWidth:1 }} >
                     <TouchableOpacity style={this.styleButton(this.state.page1_sellect)}
                         onPress={() => {
                             this.refs.pages.scrollToPage(0, true)
@@ -172,7 +172,7 @@ class ModalDichVu extends Component {
                     </TouchableOpacity>
 
                 </View>
-                <Pages style={{ flex: 1 ,backgroundColor:'#cccccc'}}
+                <Pages style={{ flex: 1 ,backgroundColor:'#ffffff'}}
                     ref={"pages"}
                     indicatorColor={'rgba(0, 0, 0, 0)'}
                     onScrollEnd={(index) => {
@@ -259,7 +259,7 @@ class ModalDichVu extends Component {
 
                     </ScrollView>
                     
-                    <View style={{ flex: 1, backgroundColor:'#cccccc' }} >
+                    <View style={{ flex: 1, backgroundColor:'#ffffff' }} >
                     <SelectDate
 
                         ref="SelectDate"
@@ -268,7 +268,7 @@ class ModalDichVu extends Component {
                          
 
                     </View>
-                    <View style={{ flex: 1, backgroundColor:'#cccccc'}} >
+                    <View style={{ flex: 1, backgroundColor:'#ffffff'}} >
                         <ScrollView >
                             <TextInput 
                                 style={{
@@ -342,7 +342,7 @@ class ModalDichVu extends Component {
                     </View>
                 </Pages>
                 <TouchableOpacity
-                    style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',backgroundColor:'green' }}
                     onPress={() => {
                         // console.log("page",this.refs.pages)
                         // console.log("ref",this.refs.SelectDate)
@@ -355,6 +355,9 @@ class ModalDichVu extends Component {
                                 var objDate = this.refs.SelectDate.date;
                                 var objHour = this.refs.SelectDate.hourSelect;
                                 this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
+                                console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
+                                // alert(this.fullDate);
+                                return;
                             }else{
                                 alert("Bạn chưa chọn thời gian đặt lịch");
                                 return 0;
@@ -469,7 +472,7 @@ class ModalDichVu extends Component {
                         images: this.urlUpload,
                         description: this.description,
                         serviceId: this.props.id_dichvu,
-                        orderAt: '2018-03-22 08:00'
+                        orderAt: this.fullDate
                         
                 })
 
