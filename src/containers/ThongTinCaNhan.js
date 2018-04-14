@@ -143,6 +143,15 @@ class ThongTinCaNhan extends Component {
             console.log('dataRes', dataRes)
         })
     }
+    ChangPass = () => {
+        const { callApiUpdateInfo, InfoUser } = this.props
+        if (InfoUser.length <=0) {
+            return null
+        }
+        callApiUpdateInfo(InfoUser.userInfo.gender, InfoUser.userInfo.Email, InfoUser.userInfo.firstName, this.state.fileName).then(dataRes => {
+            console.log('dataRes', dataRes)
+        })
+    }
     render() {
         const {InfoUser } = this.props
         if (InfoUser.length <= 0){
@@ -238,6 +247,9 @@ class ThongTinCaNhan extends Component {
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
+                    <TouchableOpacity>
+                        <Text style = {{marginTop: 10}}>Đổi mật khẩu</Text>
+                    </TouchableOpacity>
                     { this.state.check ?
                     <TouchableOpacity onPress = {this.EditInfo}
                     >

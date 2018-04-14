@@ -8,14 +8,15 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     Button,
-    Alert
+    Alert, StyleSheet
 } from 'react-native';
 // import stylesContainer from "../../components/style";
 import PickerImage from "../components/PickerImage"
 import Icon from 'react-native-vector-icons/Ionicons';
 import {callApiCreatePost, callApiUploadImg} from "../actions/TaoBaiVietActions";
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import Dimensions from 'Dimensions';
 
 class TaoBaiViet extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -127,8 +128,13 @@ class TaoBaiViet extends Component {
             <View style = {{justifyContent: 'space-between', flex:1, backgroundColor:'white'}}>
                 <View>
                     <View style  = {{flexDirection:'row', marginTop: 15}}>
-                        <Image source={require('../images/chieu-cao-va-tieu-su-cua-phuong-ly-12-e1482887471940.jpg')}
-                               style = {{ resizeMode: 'cover',height: 40, width:30, marginLeft:10}}>
+                        <Image style={styles.image_circle}
+                               source={
+                                   ! InfoUser.userInfo.avatar ? require("../images/noavatar.png") : {
+                                       uri:InfoUser.userInfo.avatarUrl
+                                   }}
+                               resizeMode="cover"
+                        >
                         </Image>
                         <View style = {{marginLeft: 10}}>
                             <Text style = {{color: 'black'}}>{InfoUser.userInfo.firstName} {InfoUser.userInfo.lastName}</Text>
@@ -178,4 +184,15 @@ const mapDispatchToProps = (dispatch) => {
 TaoBaiViet = connect(mapStateToProps, mapDispatchToProps)(TaoBaiViet);
 
 export default TaoBaiViet
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const styles = StyleSheet.create({
+    image_circle: {
+        height: DEVICE_WIDTH / 10,
+        width: DEVICE_WIDTH / 10,
+        borderRadius: DEVICE_WIDTH / 20,
+        marginLeft: 10,
+        // marginTop: 10
+
+    },
+})
 

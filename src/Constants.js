@@ -34,6 +34,7 @@ export const UPDATE_READ = "/api/chat/update-read-message/"
 export const LISTTOA = "/api/abg/list";
 export const CONGDONG_CATEGORY = "/api/post/categories";
 export const DELETE_SERVICE_REQUEST = "/api/service/delete-request/"
+export const DELETE_TOKEN_FIREBASE = "/api/user/remove-token-firebase/"
 
 
 export const COLOR_APP_GREEN = '#23b34c';

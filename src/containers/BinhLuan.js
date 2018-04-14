@@ -15,6 +15,17 @@ import {callApiCreateCmt} from "../actions/CreateCmtActions";
 
 
 class BinhLuan extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state
+
+        return {
+            title:'Bình luận',
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
+
+        }
+    }
     constructor(props){
         console.log('constructor')
         super(props)
@@ -32,10 +43,10 @@ class BinhLuan extends Component {
 
             if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
                 // this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
-                this.props.SocketRef.socket.on('comment', (dataCmt) => {
-                    console.log("receiev msg", dataCmt);
-                    let newCmt = this.state.dataCmt;
-                    newCmt.push(dataCmt);
+                this.props.SocketRef.socket.on('comment', (newCmt) => {
+                    console.log("receiev msg", newCmt);
+                    // let newCmt = this.state.dataCmt;
+                    // newCmt.push(dataCmt);
                     this.setState({dataCmt: newCmt});
                 });
 
@@ -101,21 +112,16 @@ class BinhLuan extends Component {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <TouchableOpacity>
-                        <Image
-                            style={{
-                                width: 40,
-                                aspectRatio: 1,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                paddingTop: 10,
-                            }}
-                            source={require('../images/camera.png')}
-                        />
-                    </TouchableOpacity>
                     <TextInput
-                        style={{flex: 1}}
+                        style={{flex: 1,
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            marginLeft:1,
+                            borderColor: "#000",
+                            shadowColor: "#000",
+                            paddingLeft: 5,
+                            marginTop:5,
+                            minHeight: 50}}
                         placeholder={"Nhập vào đây..."}
                         onChangeText={
                             (text) => this.input_msg = text}

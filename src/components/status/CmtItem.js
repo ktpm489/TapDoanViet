@@ -19,10 +19,10 @@ class CmtItem extends Component {
             <View style = {{flex:1}}>
                 <View style = {{flexDirection: 'row'}}>
                     <Image style={styles.image_circle}
-
-                           source={{
-                               uri: "http://i.chieu-cao.net/wp-content/uploads/2016/12/chieu-cao-va-tieu-su-cua-phuong-ly-1.jpg"
-                           }}
+                           source={
+                               ! item.createdBy.avatar ? require("../../images/noavatar.png") : {
+                                   uri:item.createdBy.avatarUrl
+                               }}
                            resizeMode="cover"
                     >
                     </Image>
@@ -31,9 +31,7 @@ class CmtItem extends Component {
                 <View style = {styles.viewCmt}>
                     <Text style = {styles.textCmt}>{item.content}</Text>
                     <View style = {{flexDirection:'row'}}>
-                        <Text>{moment(item.createdAt).startOf("hour").fromNow()}</Text>
-                        {/* <Text style = {{marginLeft:15, color:'black'}}>Like</Text> */}
-                        {/* <Text style = {{marginLeft:15, color: 'black'}}>Reply</Text> */}
+                        <Text>{moment(item.createdAt).format("DD-MM-YYYY HH:MM")}</Text>
                     </View>
 
                 </View>
