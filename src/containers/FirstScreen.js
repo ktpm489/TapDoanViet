@@ -5,11 +5,11 @@ import {
     ActivityIndicator,
     Alert,
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+    Image
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
-import Video from 'react-native-video'
 import { NavigationActions } from 'react-navigation'
 class FirstScreen extends Component {
     constructor(props){
@@ -17,17 +17,10 @@ class FirstScreen extends Component {
         
     }
     
-
-
-    render (){
-        return (
+    componentWillMount(){
+        setTimeout(()=> {
             
-            
-            <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'#23b34c'}}>
-                <Video 
-                     repeat={false}
-                     onEnd={()=>{
-                        AsyncStorage.setItem("isFirstLogin","true");
+            AsyncStorage.setItem("isFirstLogin","true");
                         const resetAction = NavigationActions.reset({
                             index: 0,
                             actions: [
@@ -37,13 +30,19 @@ class FirstScreen extends Component {
                             ]
                         });
                         this.props.navigation.dispatch(resetAction)
-                     }} 
-                     resizeMode='cover'
-                     source={require('../images/video_logo_app.mp4')}
-                     style={{width:Dimention.DEVICE_WIDTH,height:315/560*Dimention.DEVICE_WIDTH}}
+                     
+        },500)
+    }
+
+    render (){
+        return (
+            
+            
+            <View style = {{ flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
+                <Image
+                    source={require('../../src/images/logo.png')}
                 />
- 
-             </View>
+            </View>
              
          )
     }

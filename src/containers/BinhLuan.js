@@ -19,7 +19,7 @@ class BinhLuan extends Component {
         super(props)
         this.input_msg = '';
         const { params } = this.props.navigation.state
-        // console.log('tong cmt ', params.itemCmt)
+        console.log('tong cmt ', params.itemCmt)
         this.state = {
             dataCmt: params.itemCmt
 
@@ -37,7 +37,7 @@ class BinhLuan extends Component {
                     newCmt.push(dataCmt);
                     this.setState({dataCmt: newCmt});
                 });
-                
+
 
 
             } else {
@@ -57,6 +57,7 @@ class BinhLuan extends Component {
         const { params } = this.props.navigation.state
         this.textInput.clear();
         let SendCMT = this.input_msg;
+        // console.log('sendcmt', s)
         const { callApiCreateCmt } = this.props;
         callApiCreateCmt(params.idRoom, SendCMT).then(dataRes => {
            console.log('cmt', dataRes)

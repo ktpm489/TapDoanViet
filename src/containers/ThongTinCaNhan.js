@@ -43,6 +43,8 @@ class ThongTinCaNhan extends Component {
             SoDienThoai: '',
             Email: '',
             fileName: '',
+            editable: false,
+            check: true,
 
             dataProfile: '',
             avatarSource: null,
@@ -77,6 +79,8 @@ class ThongTinCaNhan extends Component {
             console.log('datapost1', dataPost)
             this.setState({
                 fileName: dataPost.data.fileName
+            }, () => {
+                this.UpdateAvt()
             })
 
         })
@@ -112,10 +116,32 @@ class ThongTinCaNhan extends Component {
 
     }
     EditInfo = () => {
-        callApiUpdateInfo().then(dataRes => {
-            console.log('dataRes', dataRes)
+        console.log('edit info')
+        this.setState({
+            editable: true,
+            check: false ,
         })
 
+    }
+    ok = ()=> {
+        this.setState({
+            editable: true,
+            check: true,
+        })
+        const { callApiUpdateInfo } = this.props
+        callApiUpdateInfo(this.state.dataProfile.gender, this.state.Email, this.state.LastName).then(dataRes => {
+            console.log('dataRes', dataRes)
+        })
+    }
+    UpdateAvt () {
+
+        const { callApiUpdateInfo, InfoUser } = this.props
+        if (InfoUser.length <=0) {
+            return null
+        }
+        callApiUpdateInfo(InfoUser.userInfo.gender, InfoUser.userInfo.Email, InfoUser.userInfo.firstName, this.state.fileName).then(dataRes => {
+            console.log('dataRes', dataRes)
+        })
     }
     render() {
         let img = this.state.avatarSource == null? null:
@@ -162,7 +188,8 @@ class ThongTinCaNhan extends Component {
                         <TextInput
                             value = {this.state.LastName}
                             underlineColorAndroid={this.state.underline}
-                            editable={false}
+                            editable={this.state.editable}
+                            onChangeText = {(LastName) => this.setState({LastName})}
                             selectTextOnFocus={false}
                                 style = {styles.textinput}/>
                     </View>
@@ -171,7 +198,7 @@ class ThongTinCaNhan extends Component {
                         <TextInput
                             value = {this.state.GioiTinh}
                             underlineColorAndroid={this.state.underline}
-                            editable={false}
+                            editable={this.state.editable}
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
@@ -179,8 +206,9 @@ class ThongTinCaNhan extends Component {
                         <Text style={{fontSize: 15, color: 'black'}}>Ngày sinh: </Text>
                         <TextInput
                             value = {this.state.NgaySinh}
+                            onChangeText = {(NgaySinh) => this.setState({NgaySinh})}
                             underlineColorAndroid={this.state.underline}
-                            editable={false}
+                            editable={this.state.editable}
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
@@ -199,14 +227,14 @@ class ThongTinCaNhan extends Component {
                         <Text style={{fontSize: 15, color: 'black'}}>Email: </Text>
                         <TextInput
                             value = {this.state.Email}
+                            onChangeText = {(Email) => this.setState({Email})}
                             underlineColorAndroid={this.state.underline}
-                            editable={false}
+                            editable={this.state.editable}
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
-                    <TouchableOpacity 
-                    // onPress = {this.EditInfo}
-                    
+                    { this.state.check ?
+                    <TouchableOpacity onPress = {this.EditInfo}
                     >
                         <View style = {{justifyContent:'center', alignItems:'center',
                             marginTop: 40, minHeight: 40, marginHorizontal:90,
@@ -216,7 +244,19 @@ class ThongTinCaNhan extends Component {
                             borderColor:'#FF9800'}}>
                             <Text>Chỉnh sửa</Text>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> : <TouchableOpacity onPress = {this.ok}
+                        >
+                            <View style = {{justifyContent:'center', alignItems:'center',
+                                marginTop: 40, minHeight: 40, marginHorizontal:90,
+                                backgroundColor: '#eaa33f',
+                                borderWidth:1,
+                                borderRadius: 5,
+                                borderColor:'#FF9800'}}>
+                                <Text>Hoàn thành</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                    }
 
                 </View>
                 {/*<View style = {{*/}
@@ -239,6 +279,7 @@ class ThongTinCaNhan extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        InfoUser: state.ProfileReducers
 
     }
 };

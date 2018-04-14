@@ -14,8 +14,6 @@ pod 'Firebase/Messaging'
     # Pods for testing
     pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
-    pod 'react-native-video', :path => '../node_modules/react-native-video'
-
   end
 
   target 'TapDoanVietTests' do

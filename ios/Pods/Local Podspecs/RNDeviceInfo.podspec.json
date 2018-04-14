@@ -1,6 +1,6 @@
 {
   "name": "RNDeviceInfo",
-  "version": "0.21.4",
+  "version": "0.21.2",
   "summary": "Device Information for react-native",
   "homepage": "https://github.com/rebeccahughes/react-native-device-info",
   "license": "MIT",
@@ -14,5 +14,5 @@
   "source": {
     "git": "https://github.com/rebeccahughes/react-native-device-info.git"
   },
-  "source_files": "ios/RNDeviceInfo/*.{h,m}"
+  "source_files": "RNDeviceInfo/*.{h,m}"
 }

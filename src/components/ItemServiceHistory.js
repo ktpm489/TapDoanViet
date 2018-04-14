@@ -12,7 +12,7 @@ import {
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
 import moment from 'moment';
-import { BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE, UPDATE_HISTORY } from "../Constants";
+import { BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE, UPDATE_HISTORY,DELETE_SERVICE_REQUEST } from "../Constants";
 import PickerImage from "../components/PickerImage"
 
 import logout from '../components/TokenExpired'
@@ -122,10 +122,13 @@ export default class ItemServiceHistory extends Component {
 
                 console.log("update history", data);
                 if (data && data.errorCode == 0) {
-                    this.props.navigation.goBack();
+                    // this.props.navigation.goBack();
+                    this.props.reloadData();
                 }else if(data.errorCode && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
+                }else{
+                    alert(data.message)
                 }
             }).catch(e => {
                 console.log("exception", e);
@@ -157,6 +160,36 @@ export default class ItemServiceHistory extends Component {
     }
 
 
+    deleteService = (id)=>{
+        AsyncStorage.getItem('token').then((value) => {
+            console.log("url",BASE_URL + DELETE_SERVICE_REQUEST+id);
+            fetch(BASE_URL + DELETE_SERVICE_REQUEST+id, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+
+                console.log("delete item history", data);
+                if (data && data.errorCode == 0) {
+                    // this.props.navigation.goBack();
+                    this.props.reloadData();
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }else{
+                    alert(data.message)
+                }
+            }).catch(e => {
+                console.log("exception", e);
+            })
+        });
+    }
     render() {
 
         const { navigation } = this.props;
@@ -331,7 +364,7 @@ export default class ItemServiceHistory extends Component {
                             }}
 
                             onPress={() => {
-                               alert('xóa yêu cầu')
+                                this.deleteService(this.props.dataItem.item.id);
                             }}
                         >
                             <Text

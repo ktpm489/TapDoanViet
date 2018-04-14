@@ -99,7 +99,9 @@ export default class ServiceHistory extends Component {
     updateStateLoading = (state)=>{
         this.setState({isLoading:state})
     }
-
+    reloadData = ()=>{
+        this.getServiceHistory();
+    }
     render() {
         const {navigation} = this.props;
         return (
@@ -113,6 +115,7 @@ export default class ServiceHistory extends Component {
                                     dataItem={item}
                                     navigation={navigation}
                                     updateStateLoading={this.updateStateLoading}
+                                    reloadData = {this.reloadData}
 
                                 />
                             )
