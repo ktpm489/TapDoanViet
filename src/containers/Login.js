@@ -13,9 +13,11 @@ import {
     TextInput
 } from 'react-native';
 import Dimensions from 'Dimensions';
+import Communications from 'react-native-communications';
 import UserInput from "../components/Login/UserInput";
 import { addTodo, callApiLogin } from "../actions/LoginActions";
 import images from "../components/images";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 class Login extends Component {
@@ -70,9 +72,12 @@ class Login extends Component {
     }
     render(){
         return (
+
             <ImageBackground style = {styles.picture}
                 source = {require('../images/wallpaper.png')}
            >
+                <KeyboardAwareScrollView>
+                <View style = {{flex:1}}>
                 <View style = {{flex:2, alignItems:'center',justifyContent: 'center'}}>
                     <Image source = {images.logo}/>
                 </View>
@@ -117,6 +122,22 @@ class Login extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <View style = {{flexDirection:'row', marginHorizontal: 20, marinTop: 30}}>
+                    <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
+                        <Text style = {styles.bottomText}>
+                            Hotline: 0902703073
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}
+                                        style = {{marginLeft: 20}}>
+                        <Text style = {styles.bottomText}>
+                            Website: tapdoanviet.vn/
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+                </View>
+                </KeyboardAwareScrollView>
             </ImageBackground>
         );
     }
@@ -134,6 +155,11 @@ const styles = StyleSheet.create({
         height: null,
 
     },
+    bottomText: {
+        fontWeight: 'bold',
+        color: '#23b34c'
+
+    }
 })
 
 const mapStateToProps = (state) => {

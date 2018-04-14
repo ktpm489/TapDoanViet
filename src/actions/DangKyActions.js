@@ -4,7 +4,7 @@ import {
 import {BASE_URL, REGISTER} from "../Constants";
 
 
-export const callApiDangKy = (firstName, lastName, avatar, phoneNumber, password, confirmPassword, gender, id, birthDay) => {
+export const callApiDangKy = (firstName, lastName, avatar, phoneNumber, password, confirmPassword, gender, apartmentAddress, birthDay) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
                 fetch(BASE_URL + REGISTER, {
@@ -22,7 +22,7 @@ export const callApiDangKy = (firstName, lastName, avatar, phoneNumber, password
                         password : password,
                         confirmPassword: confirmPassword,
                         gender : gender,
-                        building: id,
+                        apartmentAddress: apartmentAddress,
                         birthDay: birthDay
 
 

@@ -125,7 +125,7 @@ class ThongTinCaNhan extends Component {
     }
     ok = ()=> {
         this.setState({
-            editable: true,
+            editable: false,
             check: true,
         })
         const { callApiUpdateInfo } = this.props
@@ -144,6 +144,10 @@ class ThongTinCaNhan extends Component {
         })
     }
     render() {
+        const {InfoUser } = this.props
+        if (InfoUser.length <= 0){
+            return null
+        }
         let img = this.state.avatarSource == null? null:
             <Image
                 source={this.state.avatarSource}
@@ -157,9 +161,10 @@ class ThongTinCaNhan extends Component {
                         this.state.isCheck ?
                         <TouchableOpacity onPress = {this.show.bind(this)}>
                             <Image style={styles.image_circle}
-                                   source={{
-                                       uri: 'https://znews-photo-td.zadn.vn/w820/Uploaded/kcwvouvs/2017_04_18/15624155_1264609093595675_8005514290339512320_n.jpg'
-                                   }}
+                                   source={
+                                       ! InfoUser.userInfo.avatar ? require("../images/noavatar.png") : {
+                                           uri:InfoUser.userInfo.avatarUrl
+                                       }}
                                    resizeMode="cover"
                             >
                             </Image>
@@ -242,17 +247,17 @@ class ThongTinCaNhan extends Component {
                             borderWidth:1,
                             borderRadius: 5,
                             borderColor:'#FF9800'}}>
-                            <Text>Chỉnh sửa</Text>
+                            <Text style = {{color: "white", fontWeight:'bold'}}>CHỈNH SỬA</Text>
                         </View>
                     </TouchableOpacity> : <TouchableOpacity onPress = {this.ok}
                         >
                             <View style = {{justifyContent:'center', alignItems:'center',
                                 marginTop: 40, minHeight: 40, marginHorizontal:90,
-                                backgroundColor: '#eaa33f',
+                                backgroundColor: '#23b34c',
                                 borderWidth:1,
                                 borderRadius: 5,
-                                borderColor:'#FF9800'}}>
-                                <Text>Hoàn thành</Text>
+                                borderColor:'#33691E'}}>
+                                <Text style = {{color: "white", fontWeight:'bold'}}>HOÀN THÀNH</Text>
                             </View>
                         </TouchableOpacity>
 

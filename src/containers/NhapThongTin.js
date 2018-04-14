@@ -79,10 +79,15 @@ class NhapThongTin extends Component {
         const { callApiDangKy } = this.props
         callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh, this.state.Toa, this.state.NgaySinh).then(dataRes => {
             console.log('data', dataRes)
+            // let errors
+            let errors = dataRes.errorCode !== 0 ? dataRes.errors : null
+            data = JSON.parse(errors)
+            console.log('data1', data)
             if(dataRes.errorCode===0) {
                 Alert.alert(
-                    'Alert',
-                    "Đăng kí tài khoản thành công",
+                    'Thông báo',
+                    "Đăng kí thành công"
+                    ,
                     [
                         {text: 'OK', onPress: () => {
                                 const resetAction = NavigationActions.reset({
@@ -101,8 +106,9 @@ class NhapThongTin extends Component {
             }
             else {
                 Alert.alert(
-                    'Alert',
-                    "Đăng kí không thành công",
+                    'Thông báo',
+                    data[0].msg
+                    ,
                     [
                         {text: 'OK', onPress: () => console.log('OK Pressed')},
                     ],
@@ -141,12 +147,11 @@ class NhapThongTin extends Component {
                     onChangeText = {(NgaySinh) => this.setState({NgaySinh})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tòa nhà</Text>
-                <Picker
-                    style = {{ marginLeft: 3}}
-                    selectedValue={this.state.Toa}
-                    onValueChange={(value) => this.setState({Toa: value})}>
-                    {dataToaNha.map((value)=><Picker.Item key ={value} label={value.abgName} value={value._id}/>)}
-                </Picker>
+                <TextInput
+                    style = {{marginLeft: 10}}
+                    placeholder = 'P101, Tòa nhà Victoria, Quận Hà Đông'
+                    underlineColorAndroid="transparent"
+                    onChangeText = {(Toa) => this.setState({Toa})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính</Text>
                     <Picker
