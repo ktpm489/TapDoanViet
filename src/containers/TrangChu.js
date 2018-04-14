@@ -27,6 +27,7 @@ class TrangChu extends Component {
             headerTintColor: 'white',
             title: params.title,
             headerTintColor: 'white',
+            
 
 
         }
@@ -48,6 +49,7 @@ class TrangChu extends Component {
 
     }
     componentWillMount(){
+        
        this.GetPost()
     }
     GetPost = ()=> {                                                                                                                                                                                                                                                                                            

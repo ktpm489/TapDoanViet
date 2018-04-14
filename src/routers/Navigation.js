@@ -50,9 +50,15 @@ const Tab = TabNavigator ({
     },
     CongDong: {
         screen: CongDong,
+        navigationOptions: {
+            headerBackTitle: 'Back',
+          },
     },
     Message: {
         screen: TinNhan,
+        navigationOptions: {
+            headerBackTitle: '',
+          },
     },
 
     ThongBao: {

@@ -39,7 +39,8 @@ class CongDong extends Component {
         ),
         headerStyle: { backgroundColor: '#23b34c' },
         headerTitleStyle:{ color: 'white'},
-            title: 'Cộng đồng'
+            title: 'Cộng đồng',
+            
 
         }
 
