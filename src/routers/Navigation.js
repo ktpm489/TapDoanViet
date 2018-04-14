@@ -193,9 +193,6 @@ const Stack = StackNavigator ({
     },
     BinhLuan: {
         screen: BinhLuan,
-        navigationOptions: {
-            header: null
-        }
     },
     PhiDichVu:{
         screen:PhiDichVu
