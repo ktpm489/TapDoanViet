@@ -344,8 +344,7 @@ class ModalDichVu extends Component {
                 <TouchableOpacity
                     style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',backgroundColor:'green' }}
                     onPress={() => {
-                        // console.log("page",this.refs.pages)
-                        // console.log("ref",this.refs.SelectDate)
+                        
                         if (this.refs.pages.progress < 2) {
                         
                             this.refs.pages.scrollToPage(this.refs.pages.progress + 1, true);
@@ -356,7 +355,7 @@ class ModalDichVu extends Component {
                                 var objHour = this.refs.SelectDate.hourSelect;
                                 this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
                                 console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
-                                // alert(this.fullDate);
+                                
                                 return;
                             }else{
                                 alert("Bạn chưa chọn thời gian đặt lịch");
@@ -372,12 +371,6 @@ class ModalDichVu extends Component {
                                 alert("Bạn phải nhập mô tả");
                                 return 0;
                             }
-
-                        //    console.log("name ",this.name);
-                        //    console.log("phone ",this.phone);
-                        //    console.log("address ",this.address);
-                        //    console.log("description ",this.description);
-                        //    console.log("fullDate ",this.fullDate);
                            this.callApiRegister();
                            this.props.closeModal();
                         }
@@ -435,6 +428,8 @@ class ModalDichVu extends Component {
     }
 
     callApiRegister = ()=>{
+        console.log('call upload image',this.state)
+        console.log('count img',this.countImageUpload)
         if(this.state.dataImage1 != null){
             this.countImageUpload = this.countImageUpload+1;
             this.uploadImage(this.state.dataImage1);

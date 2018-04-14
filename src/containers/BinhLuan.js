@@ -5,7 +5,8 @@ import {
     FlatList,
     TextInput,
     TouchableOpacity,
-    Image, AsyncStorage
+    Image, AsyncStorage,
+    KeyboardAvoidingView
 } from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -66,7 +67,9 @@ class BinhLuan extends Component {
     }
     render (){
         return (
-            <View style = {{flex:1, backgroundColor:'white'}}>
+
+            <KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={64}>
+            <View style = {{flex:1, backgroundColor:'#ffffff'}}>
                 <FlatList
                     data={this.state.dataCmt}
                     renderItem={(item) => {
@@ -141,6 +144,7 @@ class BinhLuan extends Component {
 
 
             </View>
+            </KeyboardAvoidingView>
         );
     }
 }

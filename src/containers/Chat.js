@@ -9,6 +9,7 @@ import {
     Image,
     KeyboardAvoidingView,
     Keyboard, AsyncStorage
+    
 } from 'react-native';
 
 
@@ -30,7 +31,7 @@ class Chat extends Component {
         const { params = {} } = navigation.state
 
         return {
-            title:'Chat',
+            title:'Chat1',
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
             headerTintColor: 'white',
@@ -162,8 +163,9 @@ class Chat extends Component {
         if (this.props.SocketRef && this.props.SocketRef.userSocket)
             userName = this.props.SocketRef.userSocket.userName;
         return (
-
-            <View style={{flex: 1}}>
+<KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={64}>
+            {/* <View style={{flex: 1}}> */}
+            
                 <FlatList
                     style={{backgroundColor: "#E0E0E0", flex: 1}}
                     data={this.state.dataChat}
@@ -252,8 +254,10 @@ class Chat extends Component {
                             source={require('../../src/images/send.png')}
                         />
                     </TouchableOpacity>
-                </View>
+                {/* </View> */}
+               
             </View>
+            </KeyboardAvoidingView>
 
         );
     }
