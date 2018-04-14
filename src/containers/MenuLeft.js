@@ -6,8 +6,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     StyleSheet,
-    Image,
-    
+    Image, Alert,
+
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Modal from "react-native-modal";
@@ -20,6 +20,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {LogoutReducers} from '../reducers'
 import logout from '../components/TokenExpired'
+import {BASE_URL, DELETE_TOKEN_FIREBASE, FEEDBACK} from "../Constants";
 class MenuLeft extends Component {
     constructor(props){
         super(props)
@@ -27,17 +28,26 @@ class MenuLeft extends Component {
             visibleModal: null
         };
     }
-    Logout() {
-        AsyncStorage.removeItem('token')
-        const resetAction = NavigationActions.reset({
-            index: 0,
-            actions: [
-                NavigationActions.navigate({
-                    routeName: 'Login',
-                }),
-            ]
-        });
-        this.props.navigation.dispatch(resetAction)
+    DeteleTokenFirebase = () => {
+        console.log("deletetoken")
+        AsyncStorage.getItem("token").then(value => {
+            AsyncStorage.getItem("token_firebase").then(value_firebase => {
+                fetch(BASE_URL + DELETE_TOKEN_FIREBASE + value_firebase, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": value
+                    },
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    console.log('datamenuleft', data)
+
+                }).catch(e => {
+                    console.log("exception", e);
+                });
+            })
+        })
     }
     render (){
         const {InfoUser } = this.props
@@ -100,8 +110,10 @@ class MenuLeft extends Component {
                                   onPress = {()=> alert("click chia sẻ")}
                     /> */}
                     <TouchableOpacity
-                        // onPress = {this.Logout.bind(this)}
-                        onPress = {()=> this.setState({ visibleModal: 5 })}
+                        onPress = {()=> {
+                            this.DeteleTokenFirebase()
+                            this.setState({ visibleModal: 5 })
+                        }}
                         style={{flexDirection: 'row',marginTop:20, marginBottom:20}}>
                         <View style = {{marginLeft: 5, flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                             <Image style = {styles.img}
@@ -111,39 +123,6 @@ class MenuLeft extends Component {
                         <Text style={{flex:5, fontSize:17, color:'white'}}>Đăng xuất</Text>
                     </TouchableOpacity>
                 </View>
-                {/*<Modal*/}
-                    {/*isVisible={this.state.visibleModal === 5}*/}
-                    {/*style={styles.bottomModal}*/}
-                {/*>*/}
-                    {/*<View>*/}
-                        {/*<TouchableOpacity onPress =  {()=> {*/}
-                            {/*AsyncStorage.removeItem('token')*/}
-                            {/*const resetAction = NavigationActions.reset({*/}
-                                {/*index: 0,*/}
-                                {/*actions: [*/}
-                                    {/*NavigationActions.navigate({*/}
-                                        {/*routeName: 'Login',*/}
-                                    {/*}),*/}
-                                {/*]*/}
-                            {/*});*/}
-                            {/*this.props.navigation.dispatch(resetAction)}}>*/}
-                            {/*<View style = {styles.modalContent}>*/}
-                                {/*<Text style = {{fontSize:11}}>Bạn có muốn đăng xuất tài khoản này?</Text>*/}
-                                {/*<View style = {{height:1, backgroundColor: 'red'}}/>*/}
-                                {/*<Text style = {{color: 'red', fontSize:18, marginTop: 15}}>*/}
-                                    {/*Đăng xuất*/}
-                                {/*</Text>*/}
-                            {/*</View>*/}
-                        {/*</TouchableOpacity>*/}
-                        {/*<TouchableOpacity onPress = { ()=> this.setState({ visibleModal: null })}>*/}
-                            {/*<View style = {[styles.modalContent, {marginTop: 10}]}>*/}
-                                {/*<Text style = {{fontSize:18, color: '#2196F3'}}>*/}
-                                    {/*Hủy*/}
-                                {/*</Text>*/}
-                            {/*</View>*/}
-                        {/*</TouchableOpacity>*/}
-                    {/*</View>*/}
-                {/*</Modal>*/}
                 <Modal
                     isVisible={this.state.visibleModal === 5}
                     style={styles.bottomModal}

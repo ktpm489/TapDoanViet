@@ -85,6 +85,7 @@ export default class App extends Component<{}> {
 
         FCM.getFCMToken().then(token => {
             console.log("firebase_token",token);
+            AsyncStorage.setItem('token_firebase', token);
             AsyncStorage.getItem("token").then(token_APP => {
 
                 this.pushDeviceToken(token_APP, token);
