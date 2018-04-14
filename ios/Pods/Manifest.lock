@@ -31,15 +31,9 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.5.0)
-  - RNDeviceInfo (0.21.2)
 
 DEPENDENCIES:
   - Firebase/Messaging
-  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
-
-EXTERNAL SOURCES:
-  RNDeviceInfo:
-    :path: ../node_modules/react-native-device-info
 
 SPEC CHECKSUMS:
   Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
@@ -50,8 +44,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  RNDeviceInfo: 82dab2a10d4df51cb9e08b4f22e4d46d29658be6
 
-PODFILE CHECKSUM: a723240f468266ac4f08d8c3b854cf2165856b79
+PODFILE CHECKSUM: b49717dde9e276518fbe910085b24d3ef6e0ebdf
 
 COCOAPODS: 1.4.0.beta.2
