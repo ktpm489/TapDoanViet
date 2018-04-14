@@ -78,8 +78,16 @@ class StatusItems extends Component {
             <View>
                 <View>
                     <View style  = {{flexDirection:'row', marginTop: 15}}>
-                        <Image source={require('../../images/chieu-cao-va-tieu-su-cua-phuong-ly-12-e1482887471940.jpg')}
-                               style = {styles.image_circle}
+                        {/*<Image source={require('../../images/chieu-cao-va-tieu-su-cua-phuong-ly-12-e1482887471940.jpg')}*/}
+                               {/*style = {styles.image_circle}*/}
+                               {/*resizeMode="cover"*/}
+                        {/*>*/}
+                        {/*</Image>*/}
+                        <Image style={styles.image_circle}
+                               source={
+                                   ! item.createdBy.avatar ? require("../../images/noavatar.png") : {
+                                       uri:item.createdBy.avatarUrl
+                                   }}
                                resizeMode="cover"
                         >
                         </Image>
@@ -129,10 +137,13 @@ class StatusItems extends Component {
                     </View>
 
                     <View style={{flexDirection: 'row', marginTop: 5, marginRight: 15, alignItems:'center'}}>
-                        <Image
-                            source={require('../../images/chieu-cao-va-tieu-su-cua-phuong-ly-12-e1482887471940.jpg')}
-                            style={styles.image_circle}
-                            resizeMode="cover">
+                        <Image style={styles.image_circle}
+                               source={
+                                   ! item.createdBy.avatar ? require("../../images/noavatar.png") : {
+                                       uri:item.createdBy.avatarUrl
+                                   }}
+                               resizeMode="cover"
+                        >
                         </Image>
                         <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id})}
                                           style={{

@@ -31,10 +31,10 @@ class BinhLuan extends Component {
 
             if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
                 // this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
-                this.props.SocketRef.socket.on('comment', (dataCmt) => {
-                    console.log("receiev msg", dataCmt);
-                    let newCmt = this.state.dataCmt;
-                    newCmt.push(dataCmt);
+                this.props.SocketRef.socket.on('comment', (newCmt) => {
+                    console.log("receiev msg", newCmt);
+                    // let newCmt = this.state.dataCmt;
+                    // newCmt.push(dataCmt);
                     this.setState({dataCmt: newCmt});
                 });
 
