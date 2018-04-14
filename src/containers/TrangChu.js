@@ -22,19 +22,9 @@ class TrangChu extends Component {
         const {state} = navigation;
         const { params = {} } = navigation.state
         return {
-            headerLeft: <TouchableOpacity onPress={() => {
-                    navigation.navigate('DrawerOpen')
-                }}>
-                    <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
-                </TouchableOpacity>,
-            tabBarIcon: () => (
-                <Image
-                    source={require('../images/iconhome.png')}
-                    style = {styles.iconTab}
-                />
-            ),
-            headerStyle: { backgroundColor: '#23b34c' },
-            headerTitleStyle:{ color: 'white'},
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
             title: params.title,
 
         }
