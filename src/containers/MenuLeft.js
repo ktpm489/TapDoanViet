@@ -9,6 +9,7 @@ import {
     Image,
     
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import Modal from "react-native-modal";
 import ItemLeftMenu from "../components/ItemLeftMenu";
 import { NavigationActions } from 'react-navigation';
@@ -39,14 +40,25 @@ class MenuLeft extends Component {
         this.props.navigation.dispatch(resetAction)
     }
     render (){
+        const {InfoUser } = this.props
+        if (InfoUser.length <= 0){
+            return null
+        }
         return(
             <ScrollView style ={{backgroundColor:'#eaa33f'}}>
             <View style = {{flexDirection:'column', backgroundColor:'white', flex:1}}>
                 <View style = {{alignItems:'center', justifyContent:'center', minHeight:130, flex:1}}>
-                    <Icon name="user-circle" size={70} color="#424242" />
-                    <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#212121', marginTop:10}}>Nguyễn Văn A</Text>
+                    <Image style={styles.image_circle}
+                           source={
+                               ! InfoUser.userInfo.avatar ? require("../images/noavatar.png") : {
+                                   uri:InfoUser.userInfo.avatarUrl
+                               }}
+                           resizeMode="cover"
+                    >
+                    </Image>
+                    <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#212121', marginTop:5}}>{InfoUser.userInfo.firstName} {InfoUser.userInfo.lastName}</Text>
                 </View>
-                <View style = {{backgroundColor:'#eaa33f', flex:5}}>
+                <View style = {{backgroundColor:'#eaa33f', flex:5, marginTop: 10}}>
                     <ItemLeftMenu title ="Thông tin cá nhân"
                                   source = {images.info}
                                   onPress = {()=> this.props.navigation.navigate('ThongTinCaNhan')}
@@ -180,7 +192,8 @@ class MenuLeft extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        LogoutReducers: state.LogoutReducers
+        LogoutReducers: state.LogoutReducers,
+        InfoUser: state.ProfileReducers
     }
 };
 
@@ -194,7 +207,7 @@ const mapDispatchToProps = (dispatch) => {
 MenuLeft = connect(mapStateToProps, mapDispatchToProps)(MenuLeft);
 
 export default MenuLeft;
-
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     img : {
         height:25,
@@ -222,5 +235,15 @@ const styles = StyleSheet.create({
     bottomModal: {
         justifyContent: "flex-end",
         margin: 0
-    }
+    },
+    image_circle: {
+        height: DEVICE_WIDTH / 3,
+        width: DEVICE_WIDTH / 3,
+        borderRadius: DEVICE_WIDTH / 6,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        marginTop: 20
+
+    },
 })
