@@ -22,8 +22,9 @@ class TrangChu extends Component {
         const {state} = navigation;
         const { params = {} } = navigation.state
         return {
-            headerStyle: { backgroundColor: '#23b34c' },
-            headerTitleStyle:{ color: 'white'},
+            headerStyle: {backgroundColor: '#23b34c'},
+            headerTitleStyle: {color: 'white'},
+            headerTintColor: 'white',
             title: params.title,
             headerTintColor: 'white',
 
