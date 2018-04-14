@@ -13,14 +13,11 @@ import Dimensions from 'Dimensions';
 import Modal from "react-native-modal";
 import ItemLeftMenu from "../components/ItemLeftMenu";
 import { NavigationActions } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import images from "../components/images";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {LogoutReducers} from '../reducers'
-import logout from '../components/TokenExpired'
-import {BASE_URL, DELETE_TOKEN_FIREBASE, FEEDBACK} from "../Constants";
+import {BASE_URL, DELETE_TOKEN_FIREBASE} from "../Constants";
 class MenuLeft extends Component {
     constructor(props){
         super(props)
@@ -55,7 +52,7 @@ class MenuLeft extends Component {
             return null
         }
         return(
-            <ScrollView style ={{backgroundColor:'#eaa33f'}}>
+            <ScrollView style ={{backgroundColor:'#fc9b03'}}>
             <View style = {{flexDirection:'column', backgroundColor:'white', flex:1}}>
                 <View style = {{alignItems:'center', justifyContent:'center', minHeight:130, flex:1}}>
                     <Image style={styles.image_circle}
@@ -68,7 +65,7 @@ class MenuLeft extends Component {
                     </Image>
                     <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#212121', marginTop:5}}>{InfoUser.userInfo.firstName} {InfoUser.userInfo.lastName}</Text>
                 </View>
-                <View style = {{backgroundColor:'#eaa33f', flex:5, marginTop: 10}}>
+                <View style = {{backgroundColor:'#fc9b03', flex:5, marginTop: 10}}>
                     <ItemLeftMenu title ="Thông tin cá nhân"
                                   source = {images.info}
                                   onPress = {()=> this.props.navigation.navigate('ThongTinCaNhan')}

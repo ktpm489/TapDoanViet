@@ -66,8 +66,8 @@ const Tab = TabNavigator ({
         tabBarOptions: {
             upperCaseLabel: false,
             showIcon: true,
-            activeTintColor: 'black',
-            inactiveTintColor: 'white',
+            activeTintColor: 'white',
+            inactiveTintColor: 'black',
             // activeBackgroundColor:'white',
             // inactiveBackgroundColor:'#eaa33f',
             // pressColor: 'white',
@@ -81,7 +81,7 @@ const Tab = TabNavigator ({
 
             },
             style: {
-                backgroundColor: '#eaa33f',
+                backgroundColor: '#fc9b03',
             
             },
             // tabStyle: {

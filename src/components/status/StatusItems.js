@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon1 from 'react-native-vector-icons/EvilIcons';
 import {BASE_URL, CREATE_GROUP, LIKE} from "../../Constants";
 import logout from '../TokenExpired'
+import {connect} from "react-redux";
 class StatusItems extends Component {
     likePost = () => {
         AsyncStorage.getItem("token").then(value => {
@@ -72,8 +73,10 @@ class StatusItems extends Component {
     }
     render (){
         const {item} = this.props.dataItem;
-        const {navigation} = this.props;
-        // console.log('item', item.comments.length)
+        const {navigation, InfoUser} = this.props;
+        if (InfoUser.length <= 0){
+            return null
+        }
         return (
             <View>
                 <View>
@@ -139,8 +142,8 @@ class StatusItems extends Component {
                     <View style={{flexDirection: 'row', marginTop: 5, marginRight: 15, alignItems:'center'}}>
                         <Image style={styles.image_circle}
                                source={
-                                   ! item.createdBy.avatar ? require("../../images/noavatar.png") : {
-                                       uri:item.createdBy.avatarUrl
+                                   ! InfoUser.userInfo.avatar ? require("../../images/noavatar.png") : {
+                                       uri:InfoUser.userInfo.avatarUrl
                                    }}
                                resizeMode="cover"
                         >
@@ -169,6 +172,13 @@ class StatusItems extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        LogoutReducers: state.LogoutReducers,
+        InfoUser: state.ProfileReducers
+    }
+};
+StatusItems = connect(mapStateToProps)(StatusItems);
 export default StatusItems
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
