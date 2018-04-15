@@ -139,7 +139,7 @@ class ModalDichVu extends Component {
             this.phone = userInfo.phoneNumber;
             this.email = userInfo.email;
             if(this.userInfo.apartmentAddress)
-             this.address = this.userInfo.apartmentAddress;
+             this.address = userInfo.apartmentAddress;
             console.log("userInfo",userInfo);
         }
         return (
