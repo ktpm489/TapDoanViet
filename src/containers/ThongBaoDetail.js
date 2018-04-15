@@ -4,11 +4,15 @@ import {
     Text,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage,
+    ActivityIndicator
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
 import moment from 'moment';
+import logout from '../components/TokenExpired'
+import * as URL from '../Constants'
 export default class ThongBaoDetail extends Component {
 
     static navigationOptions = ({ navigation }) => {
@@ -25,6 +29,11 @@ export default class ThongBaoDetail extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            isLoading:false,
+            dataDetail:''
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -35,6 +44,60 @@ export default class ThongBaoDetail extends Component {
         else
             return true;
     }
+
+    componentWillMount(){
+        this.callApiDetailNoti();
+        setTimeout(()=>{
+            this.setState({
+                isLoading:false
+            })
+        },3000)
+        
+}
+
+callApiDetailNoti = ()=>{
+    AsyncStorage.getItem('token').then((value)=> {
+        this.setState({
+            isLoading:true
+        })
+        fetch(URL.BASE_URL + URL.GET_DETAIL_NOTI, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': value,
+            },
+        
+
+        }).then((response) => {
+            return response.json();
+        }).then(data => {
+            console.log('get detail noti', data);
+            if(data && data.errorCode == 0){
+                this.setState({
+                    isLoading:false,
+                    dataDetail:data.data
+                })
+                
+            }else if(data.errorCode && data.errorCode === "401"){
+                logout(AsyncStorage,this.props)
+                return;
+            }
+
+
+           
+        }).catch(e => {
+            console.log('exception',e)
+            this.setState({
+                isLoading:false
+            })
+        })
+    });
+}
+
+
+
+
+
     componentWillUnmount(){
        
         const item = this.props.navigation.state.params.dataItem;
@@ -64,7 +127,24 @@ export default class ThongBaoDetail extends Component {
                         <Text>{item.content}</Text>
                         <Text>{convertTime}</Text>
                    
-                </View>)
+                </View>
+                
+
+        //     <View style={{flex:1}}>
+        //     <WebView
+        //    // source={{ html: item.content }}
+        //    source={{ uri: "https://dayngheso1.vn/" }}
+        //    style = {{flex: 1,}}
+        //    />
+        //    {this.state.isLoading?
+        //            <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+        //                <ActivityIndicator size="large" color="green"/>
+        //            </View>:null
+        //        }
+        //    </View>
+            
+            
+            )
     }
 };
 const myStyle = StyleSheet.create({

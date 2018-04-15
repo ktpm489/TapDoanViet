@@ -51,7 +51,7 @@ export default class DichVuItem extends Component {
                                 // shadowColor: '#FF9800',
                                 // shadowOffset: { width: 0, height: 2 },
                                 // shadowOpacity: 0.8,
-                        backgroundColor:'#e3e3da',
+                        backgroundColor:'gray',
                           marginLeft:1,
                           marginRight:1,
                           marginTop:1,
@@ -69,7 +69,7 @@ export default class DichVuItem extends Component {
                     style={{width:'100%',height:'70%'}}
                />
                <View style ={{flex:1,justifyContent: 'center',alignItems:'center',marginLeft:5,marginRight:5}}>
-                    <Text style={{textAlign:'center',alignSelf:'center',color:'black',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+                    <Text style={{textAlign:'center',alignSelf:'center',color:'#ffffff',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName:item.name}</Text>
                 </View>
                 </View>
                 :<View key={item.index}

@@ -35,6 +35,10 @@ export const LISTTOA = "/api/abg/list";
 export const CONGDONG_CATEGORY = "/api/post/categories";
 export const DELETE_SERVICE_REQUEST = "/api/service/delete-request/"
 export const DELETE_TOKEN_FIREBASE = "/api/user/remove-token-firebase/"
+export const GET_ADMIN = "/api/chat/admin";
+export const GET_DIEU_KHOAN = "/api/page/policy";
+export const GET_ABOUT_US = "/api/page/about-us";
+export const GET_DETAIL_NOTI = "";
 
 
 export const COLOR_APP_GREEN = '#23b34c';

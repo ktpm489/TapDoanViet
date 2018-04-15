@@ -13,6 +13,7 @@ const images = {
     lichsu: require('../images/history.png'),
     vechungtoi: require('../images/aboutus.png'),
     chiase: require('../images/share.png'),
+    admin: require('../images/admin.png'),
 
 }
 export default images;

@@ -138,7 +138,7 @@ class ModalDichVu extends Component {
             this.name = userInfo.firstName +" "+ userInfo.lastName;
             this.phone = userInfo.phoneNumber;
             this.email = userInfo.email;
-            this.address = this.email;
+            this.address = this.apartmentAddress;
             console.log("userInfo",userInfo);
         }
         return (
@@ -185,10 +185,10 @@ class ModalDichVu extends Component {
                         <View style={{
                             borderWidth: 1,
                             borderRadius: 5,
-                            borderColor: 'white',
+                            borderColor: 'gray',
                             shadowColor: '#000',
                             margin: 10,
-                            backgroundColor: 'grey',
+                            backgroundColor: 'gray',
                             shadowOffset: { width: 0, height: 2 },
                             shadowOpacity: 0.8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
                         }}>
@@ -197,7 +197,7 @@ class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
+                            <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,paddingRight:2, alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
                                 value={this.name}
@@ -209,10 +209,10 @@ class ModalDichVu extends Component {
                         <View style={{
                             borderWidth: 1,
                             borderRadius: 5,
-                            borderColor: 'white',
+                            borderColor: 'gray',
                             shadowColor: '#000',
                             margin: 10,
-                            backgroundColor: 'grey',
+                            backgroundColor: 'gray',
                             shadowOffset: { width: 0, height: 2 },
                             shadowOpacity: 0.8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
                         }}>
@@ -221,7 +221,7 @@ class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
+                            <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
                                 keyboardType='numeric'
@@ -235,22 +235,22 @@ class ModalDichVu extends Component {
                         <View style={{
                             borderWidth: 1,
                             borderRadius: 5,
-                            borderColor: 'white',
+                            borderColor: 'gray',
                             shadowColor: '#000',
                             margin: 10,
-                            backgroundColor: 'grey',
+                            backgroundColor: 'gray',
                             shadowOffset: { width: 0, height: 2 },
                             shadowOpacity: 0.8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
                         }}>
                             <Image
-                                source={require('../images/gopy.png')}
+                                source={require('../images/location.png')}
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white', flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
+                            <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
-                                placeholder={"Email"}
-                                value={this.email}
+                                placeholder={"Địa chỉ"}
+                                value={this.address}
                                 onChangeText={(text)=>this.address = text}
                             />
 
@@ -274,7 +274,7 @@ class ModalDichVu extends Component {
                                 style={{
                                     borderWidth: 1,
                                     borderRadius: 5,
-                                    borderColor: 'white',
+                                    borderColor: 'gray',
                                     shadowColor: '#000',
                                     margin: 10,
                                     flex:1,
@@ -354,15 +354,15 @@ class ModalDichVu extends Component {
                                 var objDate = this.refs.SelectDate.date;
                                 var objHour = this.refs.SelectDate.hourSelect;
                                 this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
-                                console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
+                                // console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
                                 
-                                return;
+                                // return;
                             }else{
                                 alert("Bạn chưa chọn thời gian đặt lịch");
                                 return 0;
                             }
 
-                            if(this.name === "" || this.phone === "" || this.address == "" ){
+                            if(this.name === "" || this.phone === "" || this.address === "" ){
                                 alert("Bạn phải nhập đầy đủ thông tin");
                                 return 0;
                             }

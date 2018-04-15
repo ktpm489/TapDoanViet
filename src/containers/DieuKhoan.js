@@ -10,7 +10,8 @@ import {
     ScrollView,
     WebView
 } from 'react-native'
-
+import logout from '../components/TokenExpired'
+import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
 class DieuKhoan extends Component {
 
@@ -29,169 +30,80 @@ class DieuKhoan extends Component {
     constructor(props){
         super(props);
 
+        this.state = {
+            isLoading:false,
+            dataDK:''
+        }
+
         
     }
 
 
     componentWillMount(){
-        
+            this.callApiDieuKHoan();
+            
+    }
+
+    callApiDieuKHoan = ()=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            this.setState({
+                isLoading:true
+            })
+            fetch(URL.BASE_URL + URL.GET_DIEU_KHOAN, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+            
+
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                console.log('get dieu khoan', data);
+                if(data && data.errorCode == 0){
+                    this.setState({
+                        isLoading:false,
+                        dataDK:data.data
+                    })
+                    
+                }else if(data.errorCode && data.errorCode === "401"){
+                    logout(AsyncStorage,this.props)
+                    return;
+                }
+
+
+               
+            }).catch(e => {
+                console.log('exception',e)
+                this.setState({
+                    isLoading:false
+                })
+            })
+        });
     }
 
 
     render (){
 
         
-        var strVar="";
-        strVar += "<h2 align=\"justify\" lang=\"vi-VN\">VUI L&Ograve;NG ĐỌC KỸ C&Aacute;C ĐIỀU KHOẢN N&Agrave;Y TRƯỚC KHI TRUY CẬP HOẶC SỬ DỤNG DỊCH VỤ.<\/h2>";
-        strVar += "";
-        strVar += "<p align=\"justify\"><strong>TOHOP<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Phi&ecirc;n bản 1.0 (Được cập nhật ng&agrave;y 30 th&aacute;ng 0<span lang=\"en-US\">4<\/span> năm 201<span lang=\"en-US\">8<\/span>)<\/p>";
-        strVar += "";
-        strVar += "<h6 align=\"justify\" lang=\"vi-VN\">ĐIỀU KHOẢN V&Agrave; ĐIỀU KIỆN<\/h6>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>1. Quan hệ hợp đồng<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">C&aacute;c Điều khoản Sử dụng n&agrave;y (&ldquo;Điều khoản&rdquo;) điều chỉnh việc bạn, một c&aacute; nh&acirc;n, từ bất kỳ quốc gia n&agrave;o tr&ecirc;n thế giới truy cập hoặc sử dụng c&aacute;c ứng dụng, trang web, nội dung, sản phẩm v&agrave; dịch vụ (&ldquo;Dịch vụ&rdquo;) của&nbsp;<span lang=\"en-US\">C&ocirc;ng ty CP dịch vụ Tập Đo&agrave;n Việt ( VIGS GROUP)<\/span>, một c&ocirc;ng ty&nbsp;<span lang=\"en-US\">cổ phần<\/span> th&agrave;nh lập ở Việt Nam, c&oacute; văn ph&ograve;ng tại&nbsp;<span lang=\"en-US\">LK15, Phan Đ&igrave;nh Gi&oacute;t, Văn Kh&ecirc;, H&agrave; Đ&ocirc;ng, H&agrave; Nội<\/span>, Việt Nam, giấy ph&eacute;p đăng k&yacute; tại Sở Kế Hoạch v&agrave; Đầu Tư số&nbsp;<span lang=\"en-US\">0107450770<\/span> (&ldquo;<span lang=\"en-US\">TOHOP<\/span>&rdquo;).<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Việc tiếp cận v&agrave; sử dụng c&aacute;c Dịch vụ của bạn đ&atilde; cấu th&agrave;nh sự chấp nhận chịu sự r&agrave;ng buộc của c&aacute;c Điều khoản n&agrave;y, sự r&agrave;ng buộc n&agrave;y sẽ thiết lập mối quan hệ hợp đồng giữa bạn v&agrave;&nbsp;<span lang=\"en-US\">TOHOP<\/span>. Nếu bạn kh&ocirc;ng đồng &yacute; với c&aacute;c Điều khoản n&agrave;y, bạn sẽ kh&ocirc;ng c&oacute; quyền truy cập hoặc sử dụng c&aacute;c dịch vụ. C&aacute;c Điều khoản n&agrave;y sẽ thay thế cho c&aacute;c thỏa thuận hoặc hợp đồng trước đ&acirc;y của bạn.&nbsp;<span lang=\"en-US\">TOHOP<\/span> c&oacute; thể ngay lập tức chấm dứt c&aacute;c Điều khoản n&agrave;y hoặc bất kỳ Dịch vụ n&agrave;o li&ecirc;n quan đến bạn, hoặc n&oacute;i chung l&agrave; ngừng cung cấp hoặc từ chối quyền truy cập đến c&aacute;c Dịch vụ hoặc bất kỳ phần n&agrave;o của dịch vụ, v&agrave;o bất kỳ l&uacute;c n&agrave;o v&igrave; bất kỳ l&yacute; do g&igrave;.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">C&aacute;c điều khoản bổ sung c&oacute; thể được &aacute;p dụng cho c&aacute;c Dịch vụ nhất định, chẳng hạn như c&aacute;c ch&iacute;nh s&aacute;ch cho một sự kiện, hoạt động hoặc khuyến m&atilde;i cụ thể, v&agrave; c&aacute;c điều khoản bổ sung n&agrave;y sẽ được tiết lộ cho bạn li&ecirc;n quan đến c&aacute;c Dịch vụ được &aacute;p dụng. C&aacute;c điều khoản bổ sung được th&ecirc;m v&agrave;o, v&agrave; sẽ được coi l&agrave; một phần của c&aacute;c Điều khoản d&agrave;nh cho c&aacute;c mục đ&iacute;ch của Dịch vụ được &aacute;p dụng. C&aacute;c điều khoản bổ sung sẽ được ưu ti&ecirc;n &aacute;p dụng hơn c&aacute;c Điều khoản n&agrave;y trong trường hợp c&oacute; xung đột li&ecirc;n quan đến c&aacute;c Dịch vụ được &aacute;p dụng.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">TOHOP c&oacute; thể sửa đổi c&aacute;c Điều khoản li&ecirc;n quan đến c&aacute;c Dịch vụ t&ugrave;y từng thời điểm. C&aacute;c sửa đổi sẽ c&oacute; hiệu lực khi TOHOP đăng c&aacute;c Điều khoản được cập nhật tại vị tr&iacute; n&agrave;y hoặc c&aacute;c ch&iacute;nh s&aacute;ch sửa đổi hoặc c&aacute;c điều khoản bổ sung về Dịch vụ &aacute;p dụng. Nếu bạn tiếp tục truy cập hoặc sử dụng c&aacute;c Dịch vụ sau c&aacute;c b&agrave;i đăng n&agrave;y, nghĩa l&agrave; bạn đồng &yacute; chịu sự r&agrave;ng buộc của c&aacute;c Điều khoản đ&atilde; được sửa đổi.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Việc thu thập v&agrave; sử dụng th&ocirc;ng tin c&aacute; nh&acirc;n li&ecirc;n quan đến c&aacute;c Dịch vụ của ch&uacute;ng t&ocirc;i được quy định trong Ch&iacute;nh s&aacute;ch về Quyền ri&ecirc;ng tư của TOHOP tại&nbsp;<a href=\"https:\/\/www.tohop.vn\/chinh-sach-bao-mat\/\"><u>https:\/\/www.<\/u><u><span lang=\"en-US\">tohop.<\/span><\/u><u>vn\/chinh-sach-bao-mat\/<\/u><\/a>. TOHOP c&oacute; thể cung cấp cho nh&acirc;n vi&ecirc;n xử l&yacute; y&ecirc;u cầu bồi thường hoặc doanh nghiệp bảo hiểm mọi th&ocirc;ng tin cần thiết (bao gồm th&ocirc;ng tin li&ecirc;n lạc của bạn) nếu c&oacute; y&ecirc;u cầu bồi thường, tranh chấp hoặc xung đột, c&oacute; thể bao gồm tai nạn, li&ecirc;n quan đến bạn v&agrave; một Nh&agrave; cung cấp B&ecirc;n Thứ ba v&agrave; c&aacute;c th&ocirc;ng tin hoặc dữ liệu cần thiết để giải quyết c&aacute;c y&ecirc;u cầu bồi thường, tranh chấp hoặc xung đột.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>2. C&aacute;c dịch vụ<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>3. Sử Dụng Dịch Vụ TOHOP<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>T&agrave;i Khoản Người D&ugrave;ng.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Để sử dụng hầu hết c&aacute;c kh&iacute;a cạnh của Dịch vụ, bạn phải đăng k&yacute; v&agrave; duy tr&igrave; hoạt động một t&agrave;i khoản Dịch vụ người d&ugrave;ng c&aacute; nh&acirc;n (&ldquo;T&agrave;i khoản&rdquo;). Bạn phải đủ 18 tuổi trở l&ecirc;n, hoặc đủ tuổi trưởng th&agrave;nh theo ph&aacute;p l&yacute; trong khu vực t&agrave;i ph&aacute;n của m&igrave;nh (nếu tuổi trưởng th&agrave;nh kh&aacute;c 18 tuổi), để c&oacute; được một T&agrave;i khoản. Việc đăng k&yacute; t&agrave;i khoản y&ecirc;u cầu bạn phải gửi cho TOHOP c&aacute;c th&ocirc;ng tin c&aacute; nh&acirc;n nhất định, chẳng hạn như t&ecirc;n, địa chỉ, số điện thoại di động của bạn v&agrave; tuổi t&aacute;c, cũng như tối thiểu một phương thức thanh to&aacute;n hợp lệ (hoặc thẻ t&iacute;n dụng hoặc đối t&aacute;c thanh to&aacute;n được chấp thuận). Bạn đồng &yacute; duy tr&igrave; th&ocirc;ng tin ch&iacute;nh x&aacute;c, đầy đủ v&agrave; cập nhật trong T&agrave;i khoản của bạn. Việc bạn kh&ocirc;ng duy tr&igrave; th&ocirc;ng tin T&agrave;i khoản ch&iacute;nh x&aacute;c, đầy đủ v&agrave; cập nhật, bao gồm đưa phương thức thanh to&aacute;n kh&ocirc;ng hợp lệ hoặc hết hạn sử dụng v&agrave;o trong hồ sơ, c&oacute; thể dẫn đến việc bạn sẽ kh&ocirc;ng c&oacute; quyền truy cập v&agrave; sử dụng Dịch vụ hoặc chấm dứt Thỏa thuận n&agrave;y giữa bạn v&agrave; TOHOP. Bạn chịu tr&aacute;ch nhiệm đối với tất cả c&aacute;c hoạt động diễn ra trong T&agrave;i khoản của bạn, v&agrave; bạn đồng &yacute; duy tr&igrave; t&iacute;nh an ninh v&agrave; bảo mật của t&ecirc;n người d&ugrave;ng v&agrave; mật khẩu T&agrave;i khoản của bạn tại mọi thời điểm. Trừ trường hợp được TOHOP cho ph&eacute;p bằng văn bản, bạn chỉ c&oacute; thể sở hữu một T&agrave;i khoản.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Y&ecirc;u Cầu v&agrave; Ứng Xử của Người D&ugrave;ng.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">C&aacute;c dịch vụ kh&ocirc;ng được cấp cho người d&ugrave;ng dưới 18 tuổi. Bạn kh&ocirc;ng thể uỷ quyền cho b&ecirc;n thứ ba sử dụng T&agrave;i khoản của bạn, v&agrave; bạn kh&ocirc;ng được ph&eacute;p cho người dưới 18 tuổi nhận c&aacute;c dịch vụ vận chuyển hoặc hậu cần từ Nh&agrave; cung cấp B&ecirc;n Thứ ba trừ khi họ đi c&ugrave;ng bạn. Bạn kh&ocirc;ng được chuyển nhượng hoặc chuyển giao T&agrave;i khoản của m&igrave;nh cho bất kỳ c&aacute; nh&acirc;n hoặc thực thể ph&aacute;p l&yacute; n&agrave;o kh&aacute;c. Bạn đồng &yacute; tu&acirc;n thủ tất cả c&aacute;c luật &aacute;p dụng khi sử dụng c&aacute;c Dịch vụ, v&agrave; bạn chỉ c&oacute; thể sử dụng Dịch vụ cho c&aacute;c mục đ&iacute;ch hợp ph&aacute;p. Khi sử dụng c&aacute;c dịch vụ, bạn kh&ocirc;ng được g&acirc;y phiền to&aacute;i, kh&oacute; chịu, bất tiện, hoặc thiệt hại t&agrave;i sản, cho c&aacute;c Nh&agrave; cung cấp B&ecirc;n Thứ ba hoặc bất kỳ b&ecirc;n n&agrave;o kh&aacute;c. Trong một số trường hợp bạn c&oacute; thể được y&ecirc;u cầu cung cấp giấy tờ chứng minh quyền truy cập hoặc sử dụng dịch vụ, v&agrave; bạn đồng &yacute; rằng bạn c&oacute; thể bị từ chối truy cập hoặc sử dụng Dịch vụ nếu bạn từ chối cung cấp giấy tờ chứng minh.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Mọi h&agrave;nh vi với mục đ&iacute;ch l&ocirc;i k&eacute;o kh&aacute;ch h&agrave;ng tr&ecirc;n hệ thống của TOHOP đều bị nghi&ecirc;m cấm. L&ocirc;i k&eacute;o kh&aacute;ch h&agrave;ng tr&ecirc;n hệ thống của TOHOP được hiểu l&agrave; h&agrave;nh động thương lượng ri&ecirc;ng với những Kh&aacute;ch H&agrave;ng của TOHOP (bao gồm cả Người Gi&uacute;p Việc<span lang=\"en-US\">&nbsp;hay c&aacute;c Kỹ Thuật Vi&ecirc;n<\/span>) để cung cấp c&aacute;c dịch vụ của TOHOP m&agrave; kh&ocirc;ng th&ocirc;ng qua hệ thống của TOHOP. TOHOP c&oacute; quyền từ chối phục vụ hay kh&oacute;a t&agrave;i khoản m&agrave; kh&ocirc;ng cần b&aacute;o trước đối với những đối tượng c&oacute; h&agrave;nh vi tr&ecirc;n. Với mỗi Kh&aacute;ch H&agrave;ng (bao gồm cả Người Gi&uacute;p Việc<span lang=\"en-US\">&nbsp;hay c&aacute;c Kỹ Thuật Vi&ecirc;n<\/span>), bạn sẽ phải bồi thường cho TOHOP 5.000.000vnđ\/01 người.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Tin Nhắn Văn Bản.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bằng c&aacute;ch tạo một T&agrave;i khoản, bạn đồng &yacute; rằng c&aacute;c Dịch vụ c&oacute; thể gửi cho bạn tin nhắn văn bản th&ocirc;ng b&aacute;o (SMS) như một phần của hoạt động kinh doanh th&ocirc;ng thường của việc sử dụng c&aacute;c Dịch vụ. Bạn c&oacute; thể chọn kh&ocirc;ng nhận tin nhắn văn bản (SMS) từ TOHOP bất kỳ l&uacute;c n&agrave;o bằng c&aacute;ch gửi email tới&nbsp;<span lang=\"en-US\">tapdoanviet.vn<\/span>@<span lang=\"en-US\">gmail<\/span>.com n&ecirc;u r&otilde; rằng bạn kh&ocirc;ng c&ograve;n muốn nhận c&aacute;c tin nhắn như vậy, c&ugrave;ng với số điện thoại của thiết bị di động nhận tin nhắn. Bạn c&ocirc;ng nhận rằng việc chọn kh&ocirc;ng nhận c&aacute;c tin nhắn văn bản (SMS) c&oacute; thể ảnh hưởng đến việc bạn sử dụng Dịch vụ.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>M&atilde; Khuyến M&atilde;i.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">TOHOP c&oacute; thể tuỳ &yacute; tạo ra c&aacute;c m&atilde; khuyến m&atilde;i để đổi điểm t&iacute;n dụng T&agrave;i khoản, hoặc c&aacute;c t&iacute;nh năng hoặc lợi &iacute;ch kh&aacute;c li&ecirc;n quan đến c&aacute;c Dịch vụ n&agrave;y v&agrave;\/hoặc c&aacute;c dịch vụ của một Nh&agrave; cung cấp B&ecirc;n Thứ ba, t&ugrave;y thuộc v&agrave;o bất kỳ điều khoản bổ sung n&agrave;o m&agrave; TOHOP thiết lập tr&ecirc;n cơ sở từng m&atilde; khuyến m&atilde;i (&ldquo;M&atilde; khuyến m&atilde;i&rdquo;). Bạn đồng &yacute; rằng M&atilde; khuyến m&atilde;i: (i) phải được sử dụng cho c&aacute;c đối tượng v&agrave; mục đ&iacute;ch dự định, theo c&aacute;ch ph&ugrave; hợp với ph&aacute;p luật; (ii) kh&ocirc;ng được sao ch&eacute;p, b&aacute;n hoặc chuyển giao theo bất kỳ c&aacute;ch n&agrave;o, hoặc cung cấp c&ocirc;ng khai (cho d&ugrave; được đăng l&ecirc;n theo h&igrave;nh thức c&ocirc;ng khai hoặc bất kỳ h&igrave;nh thức n&agrave;o kh&aacute;c), trừ khi được sự cho ph&eacute;p của TOHOP; (iii) c&oacute; thể bị TOHOP v&ocirc; hiệu h&oacute;a bất kỳ l&uacute;c n&agrave;o v&igrave; bất kỳ l&yacute; do g&igrave; m&agrave; TOHOP kh&ocirc;ng phải chịu tr&aacute;ch nhiệm; (iv) chỉ c&oacute; thể được sử dụng theo c&aacute;c điều khoản cụ thể m&agrave; TOHOP thiết lập cho M&atilde; khuyến m&atilde;i đ&oacute;; (v) kh&ocirc;ng c&oacute; gi&aacute; trị quy đổi th&agrave;nh tiền mặt; v&agrave; (vi) c&oacute; thể hết hạn trước khi bạn sử dụng. TOHOP c&oacute; quyền giữ lại hoặc khấu trừ c&aacute;c khoản t&iacute;n dụng, c&aacute;c t&iacute;nh năng hoặc lợi &iacute;ch kh&aacute;c thu được th&ocirc;ng qua việc sử dụng c&aacute;c M&atilde; khuyến m&atilde;i của bạn hoặc bất kỳ người d&ugrave;ng n&agrave;o kh&aacute;c trong trường hợp TOHOP x&aacute;c định được hoặc tin rằng việc sử dụng hoặc đổi thưởng M&atilde; khuyến m&atilde;i c&oacute; lỗi, gian lận, bất hợp ph&aacute;p, hoặc vi phạm c&aacute;c điều khoản về M&atilde; khuyến m&atilde;i được &aacute;p dụng hoặc c&aacute;c Điều khoản n&agrave;y.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Nội Dung Người D&ugrave;ng Cung Cấp.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">TOHOP c&oacute; thể t&ugrave;y &yacute; cho ph&eacute;p bạn gửi, tải l&ecirc;n, c&ocirc;ng khai hoặc cung cấp cho TOHOP, th&ocirc;ng qua c&aacute;c t&iacute;nh năng văn bản, &acirc;m thanh v&agrave;\/hoặc h&igrave;nh ảnh của Dịch vụ, c&aacute;c nội dung v&agrave; th&ocirc;ng tin, bao gồm c&aacute;c nhận x&eacute;t v&agrave; phản hồi li&ecirc;n quan đến c&aacute;c Dịch vụ, c&aacute;c y&ecirc;u cầu hỗ trợ, v&agrave; nộp c&aacute;c th&ocirc;ng tin cho c&aacute;c cuộc thi v&agrave; chương tr&igrave;nh khuyến m&atilde;i (&ldquo;Nội dung Người d&ugrave;ng&rdquo;) t&ugrave;y từng thời điểm. Mọi Nội dung Người d&ugrave;ng do bạn cung cấp vẫn l&agrave; t&agrave;i sản của bạn. Tuy nhi&ecirc;n, bằng c&aacute;ch cung cấp Nội dung Người d&ugrave;ng cho TOHOP, bạn cấp cho TOHOP giấy ph&eacute;p kh&ocirc;ng c&oacute; bản quyền, kh&ocirc;ng thể thu hồi, chuyển nhượng, sử dụng vĩnh viễn, tr&ecirc;n to&agrave;n thế giới, với quyền cấp giấy ph&eacute;p con, để sử dụng, sao ch&eacute;p, sửa đổi, tạo ra t&aacute;c phẩm ph&aacute;i sinh, ph&acirc;n phối, c&ocirc;ng khai, thực hiện c&ocirc;ng khai, v&agrave; khai th&aacute;c bằng bất kỳ c&aacute;ch n&agrave;o Nội dung Người d&ugrave;ng trong tất cả c&aacute;c định dạng v&agrave; c&aacute;c k&ecirc;nh ph&acirc;n phối hiện tại hoặc sau đ&acirc;y được đưa ra (bao gồm li&ecirc;n quan đến c&aacute;c Dịch vụ v&agrave; hoạt động kinh doanh của TOHOP v&agrave; tr&ecirc;n c&aacute;c trang web v&agrave; c&aacute;c dịch vụ của b&ecirc;n thứ ba), m&agrave; kh&ocirc;ng cần th&ocirc;ng b&aacute;o th&ecirc;m cho hoặc c&oacute; được sự đồng &yacute; của bạn, v&agrave; kh&ocirc;ng y&ecirc;u cầu bạn hoặc bất kỳ người n&agrave;o hoặc tổ chức n&agrave;o kh&aacute;c phải thanh to&aacute;n.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn tuy&ecirc;n bố v&agrave; đảm bảo rằng: (i) bạn l&agrave; chủ sở hữu duy nhất v&agrave; độc quyền tất cả c&aacute;c Nội dung Người d&ugrave;ng hoặc bạn c&oacute; tất cả c&aacute;c quyền, giấy ph&eacute;p, sự chấp thuận v&agrave; ph&aacute;t h&agrave;nh cần thiết để cấp cho TOHOP giấy ph&eacute;p Nội dung Người d&ugrave;ng như đ&atilde; n&ecirc;u tr&ecirc;n; v&agrave; (ii) Nội dung Người d&ugrave;ng hoặc th&ocirc;ng tin bạn nộp, tải l&ecirc;n, c&ocirc;ng bố hoặc cung cấp Nội dung Người d&ugrave;ng hoặc việc TOHOP sử dụng Nội dung Người d&ugrave;ng như được cho ph&eacute;p bằng văn bản n&agrave;y sẽ kh&ocirc;ng vi phạm, chiếm đoạt, x&acirc;m phạm t&agrave;i sản tr&iacute; tuệ hoặc c&aacute;c quyền sở hữu hoặc quyền c&ocirc;ng khai hoặc ri&ecirc;ng tư của một b&ecirc;n thứ ba, hoặc dẫn đến h&agrave;nh vi vi phạm ph&aacute;p luật hoặc quy định &aacute;p dụng.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn đồng &yacute; kh&ocirc;ng cung cấp Nội dung Người d&ugrave;ng mang t&iacute;nh phỉ b&aacute;ng, b&ocirc;i nhọ, hận th&ugrave;, bạo lực, khi&ecirc;u d&acirc;m, t&igrave;nh dục, bất hợp ph&aacute;p, hoặc g&acirc;y kh&oacute; chịu, như được TOHOP t&ugrave;y &yacute; x&aacute;c định, bất kể c&aacute;c t&agrave;i liệu n&agrave;y c&oacute; thể được ph&aacute;p luật bảo vệ hay kh&ocirc;ng. TOHOP c&oacute; thể, nhưng kh&ocirc;ng c&oacute; nghĩa vụ, r&agrave; so&aacute;t, theo d&otilde;i, hoặc x&oacute;a Nội dung Người d&ugrave;ng, theo to&agrave;n quyền quyết định của TOHOP v&agrave; v&agrave;o bất kỳ l&uacute;c n&agrave;o v&igrave; bất kỳ l&yacute; do n&agrave;o m&agrave; kh&ocirc;ng cần th&ocirc;ng b&aacute;o trước.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Truy Cập Mạng v&agrave; Thiết Bị.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn chịu tr&aacute;ch nhiệm về việc truy cập mạng dữ liệu cần thiết để sử dụng c&aacute;c Dịch vụ. Mạng dữ liệu di động của bạn v&agrave; mức ph&iacute; nhắn tin v&agrave; c&oacute; thể &aacute;p dụng nếu bạn truy cập hoặc sử dụng c&aacute;c Dịch vụ từ một thiết bị kh&ocirc;ng d&acirc;y được k&iacute;ch hoạt v&agrave; bạn phải chịu tr&aacute;ch nhiệm về mức gi&aacute; v&agrave; ph&iacute; n&agrave;y. Bạn chịu tr&aacute;ch nhiệm thu thập v&agrave; cập nhật phần cứng tương th&iacute;ch hoặc c&aacute;c thiết bị cần thiết để truy cập v&agrave; sử dụng c&aacute;c Dịch vụ v&agrave; Ứng dụng n&agrave;y v&agrave; bất kỳ bản cập nhật n&agrave;o. TOHOP kh&ocirc;ng đảm bảo rằng c&aacute;c Dịch vụ, hoặc bất kỳ phần n&agrave;o trong đ&oacute;, sẽ hoạt động tr&ecirc;n bất kỳ phần cứng hoặc c&aacute;c thiết bị cụ thể n&agrave;o. Ngo&agrave;i ra, c&aacute;c Dịch vụ c&oacute; thể bị trục trặc v&agrave; chậm trễ vốn thường gặp trong việc sử dụng Internet v&agrave; c&aacute;c phương tiện li&ecirc;n lạc điện tử.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>4. Thanh To&aacute;n<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn hiểu rằng việc sử dụng c&aacute;c Dịch vụ c&oacute; thể ph&aacute;t sinh chi ph&iacute; cho c&aacute;c dịch vụ hoặc h&agrave;ng h&oacute;a m&agrave; bạn nhận được từ một Nh&agrave; cung cấp B&ecirc;n Thứ ba (&ldquo;Ph&iacute;&rdquo;). Sau khi bạn nhận được dịch vụ hoặc h&agrave;ng h&oacute;a th&ocirc;ng qua việc sử dụng Dịch vụ, TOHOP sẽ tạo điều kiện thanh to&aacute;n c&aacute;c khoản Ph&iacute; được &aacute;p dụng thay mặt Nh&agrave; cung cấp B&ecirc;n Thứ ba như đại l&yacute; thu nhận thanh to&aacute;n của Nh&agrave; cung cấp B&ecirc;n Thứ ba. Thanh to&aacute;n c&aacute;c khoản Ph&iacute; theo c&aacute;ch n&agrave;y sẽ được coi như thanh to&aacute;n được bạn thực hiện trực tiếp cho c&aacute;c Nh&agrave; cung cấp B&ecirc;n Thứ ba. C&aacute;c khoản Ph&iacute; sẽ bao gồm thuế được &aacute;p dụng nếu c&oacute; y&ecirc;u cầu của ph&aacute;p luật. C&aacute;c khoản Ph&iacute; m&agrave; bạn trả l&agrave; cuối c&ugrave;ng v&agrave; kh&ocirc;ng được ho&agrave;n lại, trừ trường hợp được TOHOP quyết định. Bạn vẫn c&oacute; quyền y&ecirc;u cầu Ph&iacute; thấp hơn từ một Nh&agrave; cung cấp B&ecirc;n Thứ ba cho c&aacute;c dịch vụ, h&agrave;ng h&oacute;a nhận được từ Nh&agrave; cung cấp B&ecirc;n Thứ ba tại thời điểm nhận dịch vụ, h&agrave;ng ho&aacute;. TOHOP sẽ phản hồi mọi y&ecirc;u cầu từ Nh&agrave; cung cấp B&ecirc;n Thứ ba để thay đổi Ph&iacute; cho một dịch vụ hoặc h&agrave;ng h&oacute;a cụ thể.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Tất cả c&aacute;c khoản Ph&iacute; phải trả ngay lập tức v&agrave; việc thanh to&aacute;n sẽ được tạo điều kiện bởi TOHOP bằng c&aacute;ch sử dụng phương thức thanh to&aacute;n ưa th&iacute;ch được chỉ định trong T&agrave;i khoản của bạn, sau đ&oacute; TOHOP sẽ gửi cho bạn một bi&ecirc;n nhận qua email, với điều kiện email của bạn đ&atilde; được x&aacute;c thực tr&ecirc;n Ứng dụng. Nếu phương thức thanh to&aacute;n T&agrave;i khoản ch&iacute;nh của bạn được x&aacute;c định l&agrave; đ&atilde; hết hạn, kh&ocirc;ng hợp lệ hoặc kh&ocirc;ng thể t&iacute;nh ph&iacute;, bạn đồng &yacute; rằng TOHOP c&oacute; thể, trong vai tr&ograve; l&agrave; đại l&yacute; thu nhận thanh to&aacute;n của Nh&agrave; cung cấp B&ecirc;n Thứ ba, sử dụng phương thức thanh to&aacute;n thứ hai trong T&agrave;i khoản của bạn, nếu c&oacute;.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Giữa bạn v&agrave; TOHOP, TOHOP c&oacute; quyền t&ugrave;y &yacute; thiết lập, x&oacute;a v&agrave;\/hoặc sửa đổi Ph&iacute; đối với bất kỳ hoặc tất cả c&aacute;c dịch vụ hoặc h&agrave;ng h&oacute;a nhận được th&ocirc;ng qua việc sử dụng Dịch vụ tại bất kỳ thời điểm n&agrave;o. Hơn nữa, bạn c&ocirc;ng nhận v&agrave; đồng &yacute; rằng Ph&iacute; &aacute;p dụng tại c&aacute;c khu vực địa l&yacute; nhất định c&oacute; thể tăng đ&aacute;ng kể trong thời gian nhu cầu cao. TOHOP sẽ nỗ lực th&ocirc;ng b&aacute;o cho bạn về những khoản ph&iacute; c&oacute; thể được &aacute;p dụng, với điều kiện l&agrave; bạn sẽ chịu tr&aacute;ch nhiệm cho c&aacute;c khoản Ph&iacute; ph&aacute;t sinh theo T&agrave;i khoản của bạn bất kể bạn c&oacute; biết về c&aacute;c khoản Ph&iacute; hoặc c&aacute;c khoản tiền đ&oacute; hay kh&ocirc;ng. T&ugrave;y từng thời điểm, TOHOP c&oacute; thể cung cấp cho người d&ugrave;ng nhất định c&aacute;c chương tr&igrave;nh khuyến m&atilde;i v&agrave; giảm gi&aacute; c&oacute; thể dẫn đến việc t&iacute;nh ph&iacute; c&aacute;c khoản tiền kh&aacute;c nhau cho c&ugrave;ng dịch vụ hoặc h&agrave;ng h&oacute;a hay c&aacute;c dịch vụ hoặc h&agrave;ng h&oacute;a tương tự nhận được th&ocirc;ng qua việc sử dụng c&aacute;c Dịch vụ n&agrave;y, v&agrave; bạn đồng &yacute; rằng c&aacute;c chương tr&igrave;nh khuyến m&atilde;i giảm gi&aacute; như vậy sẽ kh&ocirc;ng li&ecirc;n quan đến việc bạn sử dụng c&aacute;c Dịch vụ hoặc c&aacute;c khoản Ph&iacute; &aacute;p dụng đối với bạn, trừ khi cũng được cung cấp cho bạn. Bạn c&oacute; thể chọn hủy bỏ y&ecirc;u cầu về c&aacute;c dịch vụ hoặc h&agrave;ng h&oacute;a từ một Nh&agrave; cung cấp B&ecirc;n Thứ ba bất kỳ l&uacute;c n&agrave;o trước khi Nh&agrave; cung cấp B&ecirc;n Thứ ba thực hiện dịch vụ, trong trường hợp n&agrave;y bạn c&oacute; thể phải trả một khoản ph&iacute; hủy bỏ dịch vụ.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Cơ cấu thanh to&aacute;n n&agrave;y được thiết kế để b&ugrave; đắp đầy đủ cho c&aacute;c Nh&agrave; cung cấp B&ecirc;n Thứ ba đối với c&aacute;c dịch vụ, h&agrave;ng h&oacute;a được cung cấp. Ngoại trừ đối với dịch vụ vận gi&uacute;p việc nh&agrave; th&ocirc;ng qua Ứng dụng, TOHOP kh&ocirc;ng chỉ định bất kỳ phần n&agrave;o trong thanh to&aacute;n của bạn l&agrave;m tiền boa hoặc tiền thưởng cho c&aacute;c Nh&agrave; cung cấp B&ecirc;n Thứ ba. Bất kỳ tuy&ecirc;n bố n&agrave;o của TOHOP (tr&ecirc;n trang web của TOHOP, trong Ứng dụng, hoặc trong c&aacute;c t&agrave;i liệu tiếp thị của TOHOP) c&oacute; mục đ&iacute;ch n&oacute;i rằng tiền boa l&agrave; &ldquo;tự nguyện&rdquo;, &ldquo;kh&ocirc;ng bắt buộc&rdquo; v&agrave;\/hoặc &ldquo;được bao gồm&rdquo; trong c&aacute;c khoản thanh to&aacute;n của bạn cho c&aacute;c dịch vụ, h&agrave;ng h&oacute;a được cung cấp kh&ocirc;ng c&oacute; dụng &yacute; cho thấy rằng TOHOP sẽ cung cấp bất kỳ khoản tiền bổ sung n&agrave;o, ngo&agrave;i những khoản m&ocirc; tả ở tr&ecirc;n, cho c&aacute;c Nh&agrave; cung cấp B&ecirc;n Thứ ba. Bạn hiểu v&agrave; đồng &yacute; rằng, khi bạn được t&ugrave;y &yacute; cung cấp khoản thanh to&aacute;n bổ sung l&agrave;m khoản tiền thưởng cho bất kỳ Nh&agrave; cung cấp B&ecirc;n Thứ ba n&agrave;o cung cấp cho bạn c&aacute;c dịch vụ hoặc h&agrave;ng h&oacute;a nhận được qua Dịch vụ n&agrave;y, bạn kh&ocirc;ng c&oacute; nghĩa vụ phải l&agrave;m như vậy. Tiền thưởng l&agrave; tự nguyện. Sau khi bạn nhận được c&aacute;c dịch vụ hoặc h&agrave;ng h&oacute;a qua Dịch vụ n&agrave;y, bạn sẽ c&oacute; cơ hội đ&aacute;nh gi&aacute; trải nghiệm của bạn v&agrave; để lại phản hồi th&ecirc;m về Nh&agrave; cung cấp B&ecirc;n Thứ ba.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Chi Ph&iacute; Sửa Chữa hoặc Vệ Sinh.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn phải chịu tr&aacute;ch nhiệm về c&aacute;c chi ph&iacute; sửa chữa hư hại, hoặc vệ sinh cần thiết, c&aacute;c phương tiện v&agrave; t&agrave;i sản của Nh&agrave; cung cấp B&ecirc;n Thứ ba do việc sử dụng c&aacute;c Dịch vụ theo T&agrave;i khoản của bạn vượt qu&aacute; mức hư hại &ldquo;hao m&ograve;n&rdquo; b&igrave;nh thường v&agrave; mức l&agrave;m sạch cần thiết (&ldquo;Sửa chữa hoặc L&agrave;m sạch&rdquo;). Trong trường hợp một Nh&agrave; cung cấp B&ecirc;n Thứ ba b&aacute;o c&aacute;o nhu cầu Sửa chữa hoặc Vệ sinh, v&agrave; y&ecirc;u cầu Sửa chữa hoặc Vệ sinh đ&oacute; được TOHOP x&aacute;c nhận theo to&agrave;n quyền hợp l&yacute; của m&igrave;nh, TOHOP c&oacute; quyền tạo điều kiện thanh to&aacute;n cho c&aacute;c chi ph&iacute; hợp l&yacute; của việc Sửa chữa hoặc Vệ sinh đ&oacute; thay mặt Nh&agrave; cung cấp B&ecirc;n Thứ ba bằng c&aacute;ch sử dụng phương thức thanh to&aacute;n được chỉ định trong T&agrave;i khoản của bạn. Số tiền n&agrave;y sẽ được TOHOP chuyển đến c&aacute;c Nh&agrave; cung cấp B&ecirc;n Thứ ba v&agrave; kh&ocirc;ng được ho&agrave;n lại.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>5. Tuy&ecirc;n Bố Miễn Tr&aacute;ch; Giới Hạn Tr&aacute;ch Nhiệm Ph&aacute;p L&yacute;; Bồi Thường.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>TUY&Ecirc;N BỐ MIỄN TR&Aacute;CH.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">C&Aacute;C DỊCH VỤ ĐƯỢC CUNG CẤP &ldquo;NGUY&Ecirc;N TRẠNG&rdquo; V&Agrave; &ldquo;NHƯ SẴN C&Oacute;&rdquo;. TOHOP KHƯỚC TỪ MỌI TUY&Ecirc;N BỐ V&Agrave; BẢO ĐẢM, R&Otilde; R&Agrave;NG, NGỤ &Yacute; HOẶC THEO LUẬT ĐỊNH, KH&Ocirc;NG ĐƯỢC N&Ecirc;U R&Otilde; TRONG NHỮNG ĐIỀU KHOẢN N&Agrave;Y, BAO GỒM C&Aacute;C BẢO ĐẢM VỀ KHẢ NĂNG THƯƠNG MẠI, T&Iacute;NH PH&Ugrave; HỢP CHO MỘT MỤC Đ&Iacute;CH CỤ THỂ V&Agrave; KH&Ocirc;NG VI PHẠM PH&Aacute;P LUẬT. NGO&Agrave;I RA, TOHOP KH&Ocirc;NG ĐƯA RA TUY&Ecirc;N BỐ, BẢO H&Agrave;NH, BẢO ĐẢM VỀ T&Iacute;NH TIN CẬY, T&Iacute;NH KỊP THỜI, CHẤT LƯỢNG, T&Iacute;NH PH&Ugrave; HỢP HOẶC SẴN C&Oacute; CỦA C&Aacute;C DỊCH VỤ N&Agrave;Y, C&Aacute;C DỊCH VỤ HOẶC H&Agrave;NG H&Oacute;A ĐƯỢC Y&Ecirc;U CẦU QUA VIỆC SỬ DỤNG DỊCH VỤ N&Agrave;Y, HOẶC C&Aacute;C DỊCH VỤ N&Agrave;Y SẼ KH&Ocirc;NG BỊ GI&Aacute;N ĐOẠN HOẶC KH&Ocirc;NG C&Oacute; LỖI. TOHOP KH&Ocirc;NG ĐẢM BẢO CHẤT LƯỢNG, T&Iacute;NH PH&Ugrave; HỢP, AN TO&Agrave;N HOẶC NĂNG LỰC CỦA NH&Agrave; CUNG CẤP B&Ecirc;N THỨ BA. BẠN ĐỒNG &Yacute; CHỊU TR&Aacute;CH NHIỆM VỀ TO&Agrave;N BỘ RỦI RO PH&Aacute;T SINH B&Ecirc;N NGO&Agrave;I VIỆC SỬ DỤNG C&Aacute;C DỊCH VỤ N&Agrave;Y V&Agrave; BẤT KỲ DỊCH VỤ HOẶC H&Agrave;NG H&Oacute;A ĐƯỢC Y&Ecirc;U CẦU N&Agrave;O C&Oacute; LI&Ecirc;N QUAN, TRONG PHẠM VI TỐI ĐA PH&Aacute;P LUẬT &Aacute;P DỤNG CHO PH&Eacute;P.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>GIỚI HẠN TR&Aacute;CH NHIỆM PH&Aacute;P L&Yacute;.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">TOHOP SẼ KH&Ocirc;NG CHỊU TR&Aacute;CH NHIỆM VỀ C&Aacute;C THIỆT HẠI MANG T&Iacute;NH GI&Aacute;N TIẾP, NGẪU NHI&Ecirc;N, ĐẶC BIỆT, CẢNH C&Aacute;O, TRỪNG TRỊ HOẶC HẬU QUẢ, BAO GỒM TỔN THẤT VỀ LỢI NHUẬN, TỔN THẤT VỀ DỮ LIỆU, THƯƠNG T&Iacute;CH C&Aacute; NH&Acirc;N HOẶC THIỆT HẠI VỀ T&Agrave;I SẢN, LI&Ecirc;N QUAN, HOẶC PH&Aacute;T SINH TỪ VIỆC SỬ DỤNG C&Aacute;C DỊCH VỤ, NGAY CẢ NẾU TOHOP Đ&Atilde; ĐƯỢC CẢNH B&Aacute;O VỀ NGUY CƠ CỦA C&Aacute;C THIỆT HẠI NHƯ VẬY. TOHOP SẼ KH&Ocirc;NG CHỊU TR&Aacute;CH NHIỆM CHO BẤT KỲ THIỆT HẠI, TR&Aacute;CH NHIỆM HOẶC TỔN THẤT N&Agrave;O PH&Aacute;T SINH DO: (i) VIỆC BẠN SỬ DỤNG HOẶC DỰA TR&Ecirc;N C&Aacute;C DỊCH VỤ HOẶC BẠN KH&Ocirc;NG C&Oacute; QUYỀN TRUY CẬP HOẶC SỬ DỤNG DỊCH VỤ; HOẶC (ii) MỌI GIAO DỊCH HOẶC QUAN HỆ GIỮA BẠN V&Agrave; NH&Agrave; CUNG CẤP B&Ecirc;N THỨ BA, NGAY CẢ NẾU TOHOP Đ&Atilde; ĐƯỢC CẢNH B&Aacute;O VỀ NGUY CƠ CỦA C&Aacute;C THIỆT HẠI NHƯ VẬY. TOHOP SẼ KH&Ocirc;NG CHỊU TR&Aacute;CH NHIỆM VỀ VIỆC TR&Igrave; HO&Atilde;N HOẶC KH&Ocirc;NG HOẠT ĐỘNG DO C&Aacute;C NGUY&Ecirc;N NH&Acirc;N NẰM NGO&Agrave;I KHẢ NĂNG KIỂM SO&Aacute;T CỦA TOHOP. BẠN C&Ocirc;NG NHẬN RẰNG NH&Agrave; CUNG CẤP DỊCH VỤ B&Ecirc;N THỨ BA CUNG CẤP C&Aacute;C DỊCH VỤ ĐƯỢC Y&Ecirc;U CẦU QUA MỘT SỐ THƯƠNG HIỆU Y&Ecirc;U CẦU C&Oacute; THỂ CUNG CẤP DỊCH VỤ D&Ugrave;NG CHUNG HOẶC KH&Aacute;CH H&Agrave;NG ĐỒNG CẤP V&Agrave; C&Oacute; THỂ KH&Ocirc;NG ĐƯỢC CẤP PH&Eacute;P HOẶC CHO PH&Eacute;P HOẠT ĐỘNG MỘT C&Aacute;CH CHUY&Ecirc;N NGHIỆP. TRONG MỌI TRƯỜNG HỢP TOHOP KH&Ocirc;NG CHỊU TR&Aacute;CH NHIỆM PH&Aacute;P L&Yacute; ĐỐI VỚI BẠN LI&Ecirc;N QUAN TỚI C&Aacute;C DỊCH VỤ VỀ MỌI THIỆT HẠI, TỔN THẤT V&Agrave; C&Aacute;C NGUY&Ecirc;N NH&Acirc;N TỐ TỤNG.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">BẠN C&Oacute; THỂ SỬ DỤNG DỊCH VỤ CỦA TOHOP ĐỂ Y&Ecirc;U CẦU V&Agrave; L&Ecirc;N LỊCH DỊCH VỤ GI&Uacute;P VIỆC NH&Agrave; V&Agrave;\/HOẶC BẢO TR&Igrave; M&Aacute;Y LẠNH VỚI NH&Agrave; CUNG CẤP B&Ecirc;N THỨ BA, NHƯNG BẠN ĐỒNG &Yacute; RẰNG TOHOP KH&Ocirc;NG C&Oacute; TR&Aacute;CH NHIỆM HOẶC NGHĨA VỤ VỚI BẠN LI&Ecirc;N QUAN ĐẾN BẤT KỲ DỊCH VỤ GI&Uacute;P VIỆC NH&Agrave; V&Agrave;\/HOẶC BẢO TR&Igrave; M&Aacute;Y LẠNH N&Agrave;O ĐƯỢC NH&Agrave; CUNG CẤP B&Ecirc;N THỨ BA CUNG CẤP CHO BẠN TRỪ C&Aacute;C TR&Aacute;CH NHIỆM ĐƯỢC QUY ĐỊNH R&Otilde; TRONG C&Aacute;C ĐIỀU KHOẢN N&Agrave;Y.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">C&Aacute;C GIỚI HẠN V&Agrave; TUY&Ecirc;N BỐ MIỄN NHIỆM TRONG PHẦN 5 N&Agrave;Y KH&Ocirc;NG NHẰM GIỚI HẠN TR&Aacute;CH NHIỆM HOẶC THAY THẾ C&Aacute;C QUYỀN CỦA NGƯỜI TI&Ecirc;U D&Ugrave;NG KH&Ocirc;NG THỂ LOẠI TRỪ THEO PH&Aacute;P LUẬT.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Bồi Thường.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn đồng &yacute; bồi thường v&agrave; giữ cho TOHOP v&agrave; c&aacute;c c&aacute;n bộ, gi&aacute;m đốc, nh&acirc;n vi&ecirc;n v&agrave; đại l&yacute; v&ocirc; hại khỏi bất kỳ v&agrave; tất cả c&aacute;c y&ecirc;u cầu bồi thường, y&ecirc;u cầu, tr&aacute;ch nhiệm ph&aacute;p l&yacute;, v&agrave; c&aacute;c chi ph&iacute; (bao gồm chi ph&iacute; luật sư) ph&aacute;t sinh từ hoặc li&ecirc;n quan đến: (i) bạn sử dụng c&aacute;c Dịch vụ n&agrave;y, dịch vụ hoặc c&aacute;c sản phẩm nhận được th&ocirc;ng qua việc sử dụng c&aacute;c Dịch vụ n&agrave;y; (ii) bạn ph&aacute; vỡ hoặc vi phạm c&aacute;c Điều khoản n&agrave;y; (iii) TOHOP sử dụng Nội dung Người d&ugrave;ng; hoặc (iv) bạn vi phạm c&aacute;c quyền của bất kỳ b&ecirc;n thứ ba n&agrave;o, bao gồm Nh&agrave; cung cấp B&ecirc;n Thứ ba.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>6. C&aacute;c Quy Định Kh&aacute;c<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Y&ecirc;u cầu bồi thường Vi phạm Bản quyền.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Y&ecirc;u cầu bồi thường vi phạm bản quyền phải được gửi đến đại l&yacute; được chỉ định của TOHOP. Vui l&ograve;ng truy cập trang web của TOHOP tại&nbsp;<a href=\"https:\/\/www.tohop.vn\/lien-he\/\"><u>https:\/\/www.<\/u><u><span lang=\"en-US\">tohop.<\/span><\/u><u>vn\/lien-he\/<\/u><\/a> để biết địa chỉ được chỉ định v&agrave; th&ocirc;ng tin bổ sung.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Th&ocirc;ng B&aacute;o.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">TOHOP c&oacute; thể đưa ra th&ocirc;ng b&aacute;o bằng phương thức th&ocirc;ng b&aacute;o chung về c&aacute;c Dịch vụ, gửi thư điện tử đến địa chỉ email trong T&agrave;i khoản của bạn, hoặc th&ocirc;ng qua văn bản li&ecirc;n lạc được gửi qua đường bưu điện đến địa chỉ được ghi trong T&agrave;i khoản của bạn. Bạn c&oacute; thể th&ocirc;ng b&aacute;o cho TOHOP bằng văn bản li&ecirc;n lạc đến địa chỉ<span lang=\"en-US\">&nbsp;văn ph&ograve;ng&nbsp;<\/span>của TOHOP tại&nbsp;<span lang=\"en-US\">LK15, Phan Đ&igrave;nh Gi&oacute;t, Văn Kh&ecirc;, H&agrave; Đ&ocirc;ng, H&agrave; Nội<\/span>, Việt Nam, Việt Nam.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Điều Khoản Chung.<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Bạn kh&ocirc;ng thể chuyển nhượng hoặc chuyển giao c&aacute;c Điều khoản n&agrave;y, to&agrave;n bộ hoặc một phần, m&agrave; kh&ocirc;ng c&oacute; sự chấp thuận trước bằng văn bản của TOHOP. Bạn chấp thuận cho TOHOP quyền chuyển nhượng hoặc chuyển giao c&aacute;c Điều khoản n&agrave;y, to&agrave;n bộ hoặc một phần, cho: (i) một c&ocirc;ng ty con hoặc chi nh&aacute;nh; (ii) ng&acirc;n h&agrave;ng thanh to&aacute;n vốn chủ sở hữu, doanh nghiệp hoặc t&agrave;i sản của TOHOP; hoặc (iii) b&ecirc;n kế thừa do s&aacute;p nhập. Kh&ocirc;ng c&oacute; mối quan hệ li&ecirc;n doanh, hợp t&aacute;c, l&agrave;m việc hoặc đại l&yacute; tồn tại giữa bạn, TOHOP hoặc bất kỳ Nh&agrave; cung cấp B&ecirc;n Thứ ba n&agrave;o như l&agrave; kết quả của hợp đồng giữa bạn v&agrave; TOHOP hoặc việc sử dụng c&aacute;c Dịch vụ.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Nếu bất kỳ điều khoản n&agrave;o trong c&aacute;c Điều khoản n&agrave;y được coi l&agrave; phi ph&aacute;p, kh&ocirc;ng c&oacute; hiệu lực hoặc kh&ocirc;ng thể thực hiện, to&agrave;n bộ hoặc một phần, th&igrave; điều khoản hoặc phần đ&oacute;, theo bất kỳ quy định n&agrave;o của ph&aacute;p luật, trong phạm vi đ&oacute; sẽ kh&ocirc;ng được coi l&agrave; một phần của Điều khoản n&agrave;y nhưng t&iacute;nh hợp ph&aacute;p, t&iacute;nh hiệu lực v&agrave; khả năng thực thi của c&aacute;c điều khoản c&ograve;n lại trong c&aacute;c Điều khoản n&agrave;y sẽ kh&ocirc;ng bị ảnh hưởng. Trong trường hợp đ&oacute;, c&aacute;c b&ecirc;n sẽ thay thế điều khoản hoặc phần của điều khoản phi ph&aacute;p, kh&ocirc;ng c&oacute; hiệu lực hoặc kh&ocirc;ng thể thực hiện được bằng một điều khoản hoặc phần điều khoản hợp ph&aacute;p, c&oacute; hiệu lực v&agrave; c&oacute; thể thực thi ở mức tối đa nhất c&oacute; thể, c&oacute; hiệu lực tương tự như điều khoản hoặc phần của điều khoản phi ph&aacute;p, kh&ocirc;ng c&oacute; hiệu lực hoặc kh&ocirc;ng thể thực thi, bất kể nội dung v&agrave; mục đ&iacute;ch của c&aacute;c Điều khoản n&agrave;y l&agrave; g&igrave;. C&aacute;c Điều khoản n&agrave;y tạo th&agrave;nh to&agrave;n bộ thỏa thuận v&agrave; bi&ecirc;n bản ghi nhớ của c&aacute;c b&ecirc;n li&ecirc;n quan đến nội dung ch&iacute;nh v&agrave; c&aacute;c sửa đổi, thay thế đối với c&aacute;c thỏa thuận hoặc c&aacute;c cam kết hiện h&agrave;nh hoặc trước đ&oacute; li&ecirc;n quan tới nội dung ch&iacute;nh. Trong c&aacute;c Điều khoản n&agrave;y, từ &#39;&#39;bao gồm&#39;&#39; nghĩa l&agrave; &#39;&#39;bao gồm, nhưng kh&ocirc;ng giới hạn.&rdquo;<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>7. Ch&iacute;nh s&aacute;ch ho&agrave;n tiền<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Khi n&agrave;o t&ocirc;i sẽ được ho&agrave;n lại đầy đủ số tiền ?<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Hủy trước 10 ph&uacute;t đăng việc<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Người gi&uacute;p việc chủ động đề nghị hủy v&igrave; l&yacute; do ch&iacute;nh đ&aacute;ng<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Sau 1 giờ bạn đăng việc m&agrave; kh&ocirc;ng c&oacute; ai nhận (Chỉ &aacute;p dụng trong ng&agrave;y).<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Nếu đến giờ m&agrave; người gi&uacute;p việc kh&ocirc;ng đến, bạn phải b&aacute;o với TOHOP. Thời gian cho ph&eacute;p b&aacute;o hủy l&agrave; 30 ph&uacute;t sau thời gian bạn đ&atilde; đặt v&agrave; trước khi kết th&uacute;c c&ocirc;ng việc.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">V&iacute; dụ: Nếu bạn đăng việc l&uacute;c 15:00, c&ocirc;ng việc thực hiện trong 2h. Thời gian cho ph&eacute;p b&aacute;o hủy l&agrave; từ 15:30 đến 17:00 c&ugrave;ng ng&agrave;y. Bất cứ y&ecirc;u cầu hủy việc ngo&agrave;i khoảng thời gian sẽ kh&ocirc;ng c&oacute; hiệu lực.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Trong tất cả trường hợp tr&ecirc;n, bạn sẽ kh&ocirc;ng bị t&iacute;nh ph&iacute; cho y&ecirc;u cầu hủy.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">Nếu bạn thanh to&aacute;n bằng thẻ t&iacute;n dụng th&igrave; phần tiền ho&agrave;n lại sẽ được chuyển lại v&agrave;o t&agrave;i khoản của bạn trong v&ograve;ng 15&rsquo;.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Khi n&agrave;o t&ocirc;i c&oacute; thể được ho&agrave;n lại một phần tiền ?<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Hủy sau 10 ph&uacute;t đăng c&ocirc;ng việc (20.000 VND ph&iacute; lần hủy đầu ti&ecirc;n) - Khi bạn nhấn v&agrave;o n&uacute;t hủy, ch&uacute;ng t&ocirc;i sẽ b&aacute;o lại cho bạn về mức ph&iacute; 20.000 VND trước khi bạn x&aacute;c nhận hủy.<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>Khi n&agrave;o t&ocirc;i kh&ocirc;ng đủ điều kiện được ho&agrave;n tiền ?<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Khi người gi&uacute;p việc dọn dẹp kh&ocirc;ng đạt ti&ecirc;u chuẩn của bạn (Trong trường hợp n&agrave;y vui l&ograve;ng li&ecirc;n hệ với đường d&acirc;y hỗ trợ của ch&uacute;ng t&ocirc;i) - Khi bạn b&aacute;o hủy sau khi đ&atilde; qua giờ đăng l&agrave;m việc<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\"><strong>C&aacute;ch y&ecirc;u cầu ho&agrave;n lại tiền<\/strong><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\" lang=\"vi-VN\">- Để hủy bỏ lịch đăng việc, vui l&ograve;ng sử dụng t&iacute;nh năng hủy bỏ trong ứng dụng. - Đối với c&aacute;c t&igrave;nh huống kh&aacute;c, vui l&ograve;ng li&ecirc;n hệ với bộ phận hỗ trợ kh&aacute;ch h&agrave;ng của ch&uacute;ng t&ocirc;i qua email:&nbsp;<a href=\"mailto:tapdoanviet.vn@gmail.com\"><u><span lang=\"en-US\">tapdoanviet.vn<\/span><\/u><u>@<\/u><u><span lang=\"en-US\">gmail<\/span><\/u><u>.com<\/u><\/a><\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\">";
-        strVar += "	<br>";
-        strVar += "	<br>";
-        strVar += "<\/p>";
-        strVar += "";
-        strVar += "<p align=\"justify\">";
-        strVar += "	<br><\/p>";
-        strVar += "";
+        
         
         return (
             
-            
+            <View style={{flex:1}}>
             <WebView
-            source={{ html: strVar }}
+            source={{ html: this.state.dataDK.content }}
             // source={{ uri: "https://dayngheso1.vn/" }}
             style = {{flex: 1,}}
             // scrollEnabled={false}
             />
+            {this.state.isLoading?
+                    <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View>:null
+                }
+            </View>
             
         )
 

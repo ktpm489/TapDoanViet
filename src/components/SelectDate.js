@@ -170,7 +170,6 @@ export default class SelectDate extends Component {
                     horizontal={false}
                     
                     renderItem={( item ) => {
-                      console.log("aaaa",item)
                       return (
                         <TouchableOpacity
                         onPress={()=>{

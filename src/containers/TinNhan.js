@@ -186,7 +186,11 @@ export default class TinNhan extends Component {
                         borderRadius: 100,
                     }}
 
-                    onPress={() => this.refs.modal.open()}
+                    onPress={() => {
+                        navigation.navigate("SearchUser",{onReloadBack:this.onReloadBack});
+                        // this.refs.modal.open()
+                    }
+                    }
 
                 >
                     <Icon name="plus" size={30} color="#01a699"/>

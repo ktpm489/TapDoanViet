@@ -17,7 +17,7 @@ import images from "../components/images";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {LogoutReducers} from '../reducers'
-import {BASE_URL, DELETE_TOKEN_FIREBASE} from "../Constants";
+import {BASE_URL, DELETE_TOKEN_FIREBASE,GET_ADMIN} from "../Constants";
 class MenuLeft extends Component {
     constructor(props){
         super(props)
@@ -46,6 +46,15 @@ class MenuLeft extends Component {
             })
         })
     }
+
+    chatAdmin = ()=>{
+        if(this.props.admin && this.props.admin.adminInfo){
+            this.props.navigation.navigate('Chat', {dataUser: this.props.admin.adminInfo.data});
+        }else{
+            Alert.alert("Thông báo","Không tìm thấy admin");
+        }
+    }
+
     render (){
         const {InfoUser } = this.props
         if (InfoUser.length <= 0){
@@ -102,10 +111,14 @@ class MenuLeft extends Component {
                                   source = {images.vechungtoi}
                                   onPress = {()=> this.props.navigation.navigate('AboutUs')}
                     />
-                    {/* <ItemLeftMenu title ="Chia sẻ"
+                    <ItemLeftMenu title ="Chia sẻ"
                                   source = {images.chiase}
                                   onPress = {()=> alert("click chia sẻ")}
-                    /> */}
+                    />
+                    <ItemLeftMenu title ="Chat với Ban Quản Trị"
+                                  source = {images.admin}
+                                  onPress = {()=> this.chatAdmin()}
+                    />
                     <TouchableOpacity
                         onPress = {()=> {
                             this.DeteleTokenFirebase()
@@ -169,7 +182,8 @@ class MenuLeft extends Component {
 const mapStateToProps = (state) => {
     return {
         LogoutReducers: state.LogoutReducers,
-        InfoUser: state.ProfileReducers
+        InfoUser: state.ProfileReducers,
+        admin:state.GetAdminReducers
     }
 };
 

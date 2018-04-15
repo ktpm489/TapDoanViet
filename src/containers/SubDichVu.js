@@ -80,7 +80,7 @@ class SubDichVu extends Component {
         
         return (
             
-          <View>
+          <View style={{flex:1,backgroundColor:'#ffffff'}}>
             < FlatList
                     showsHorizontalScrollIndicator={false}
                     showVerticalScrollIndicator={false}

@@ -11,7 +11,7 @@ import GetPostReducers from './GetPostReducers'
 import CreateCmtReducers from './CreateCmtReducers'
 import DangKyReducers from "./DangKyReducers";
 import UpdateInfoReducers from "./UpdateInfoReducers";
-// import LogoutReducers from "./LogoutReducers";
+ import GetAdminReducers from "./GetAdminReducers";
 
 
 
@@ -28,6 +28,7 @@ const appStore = combineReducers({
     CreateCmtReducers,
     DangKyReducers,
     UpdateInfoReducers,
+    GetAdminReducers
     
 });
 

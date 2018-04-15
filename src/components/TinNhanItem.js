@@ -90,9 +90,9 @@ export default class TinNhanItem extends Component {
                         //    source={!item.avatar || item.avatar.length == 0?require("../images/logo.png"):{
                         //        uri:item.avatarUrl
                         //    }}
-                        source={!item.avatar || item.avatar.length == 0?require("../images/logo.png"):{
-                                   uri:item.avatarUrl
-                               }}
+                        source={item.avatar?{
+                            uri:item.avatarUrl
+                        }:require("../images/logo.png")}
                           
                            resizeMode="cover"
                     >

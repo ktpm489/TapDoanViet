@@ -6,7 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     Image, AsyncStorage,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -79,7 +80,9 @@ class BinhLuan extends Component {
     render (){
         return (
 
-            <KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={64}>
+            <KeyboardAvoidingView style={{flex:1}} 
+            behavior = {Platform.OS === 'ios'?"padding":null}
+            keyboardVerticalOffset={64}>
             <View style = {{flex:1, backgroundColor:'#ffffff'}}>
                 <FlatList
                     data={this.state.dataCmt}

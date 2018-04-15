@@ -8,7 +8,8 @@ import {
     TextInput,
     Image,
     KeyboardAvoidingView,
-    Keyboard, AsyncStorage
+    Keyboard, AsyncStorage,
+    Platform
     
 } from 'react-native';
 
@@ -31,7 +32,7 @@ class Chat extends Component {
         const { params = {} } = navigation.state
 
         return {
-            title:'Chat1',
+            title:'Chat',
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
             headerTintColor: 'white',
@@ -41,7 +42,7 @@ class Chat extends Component {
     constructor(props) {
         super(props);
         this.dataUser2 = this.props.navigation.state.params.dataUser;
-        // console.log("user",this.dataUser2);
+        console.log("user",this.dataUser2);
         // console.log("data pass", this.dataUser2);
         console.ignoredYellowBox = [
             'Setting a timer'
@@ -122,7 +123,8 @@ class Chat extends Component {
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
     componentWillUnmount(){
-        this.props.navigation.state.params.onReloadBack();
+        if(this.props.navigation.state.params.onReloadBack)
+            this.props.navigation.state.params.onReloadBack();
     }
 
     _keyboardDidShow() {
@@ -163,7 +165,11 @@ class Chat extends Component {
         if (this.props.SocketRef && this.props.SocketRef.userSocket)
             userName = this.props.SocketRef.userSocket.userName;
         return (
-<KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={64}>
+<KeyboardAvoidingView style={{flex:1}} 
+
+    behavior = {Platform.OS === 'ios'?"padding":null}
+    keyboardVerticalOffset={64}
+>
             {/* <View style={{flex: 1}}> */}
             
                 <FlatList

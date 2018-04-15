@@ -3,7 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention';
@@ -13,11 +13,11 @@ export default class SildeImage extends Component {
     constructor(props) {
         super(props);
 
-        // this.state = {
-        //     position: 0,
-        //     interval: null,
-        // }
+        this.state = {
+            firstPost: 0,
+        }
         // this.isRun = false;
+        this.currentPos = 0;
     }
 
 
@@ -59,6 +59,7 @@ export default class SildeImage extends Component {
 
 
     render() {
+        console.log("state",this.state);
         const { imageSlider } = this.props;
         var imgs = [];
         for (var i = 0; i < imageSlider.length; i++) {
@@ -76,10 +77,12 @@ export default class SildeImage extends Component {
                     style={{ height: 200 }}
                 >
                     <ImageSlider images={imgs}
-                        // position={this.state.position}
+                        
                         loopBothSides
+                        loop = {true}
                         autoPlayWithInterval={4000}
                          onPositionChanged={position => {
+                        
                             //   console.log("pos nhay",position)
                             // if(position !== this.state.position)
                             //     this.setState({ position:position })
