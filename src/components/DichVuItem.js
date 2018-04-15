@@ -86,7 +86,7 @@ export default class DichVuItem extends Component {
               resizeMode="cover"
               style={{width:Dimention.DEVICE_WIDTH/5-10,height:Dimention.DEVICE_WIDTH/5-10}}
          />
-              <Text style={{textAlign:'center',color:'black',fontWeight:'bold',marginLeft:5,marginRight:5}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+              <Text style={{textAlign:'center',color:'black',fontWeight:'bold',marginLeft:5,marginRight:5}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>
           </View>}
 
             </TouchableOpacity>)
