@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text,
@@ -13,61 +13,82 @@ export default class SildeImage extends Component {
     constructor(props) {
         super(props);
 
-        this.state ={
-            position: 1,
-            interval: null,
-        }
+        // this.state = {
+        //     position: 0,
+        //     interval: null,
+        // }
+        // this.isRun = false;
     }
 
 
     shouldComponentUpdate(nextProps, nextState) {
-       
+
         // if (JSON.stringify(nextProps.imageSlider) === JSON.stringify(this.props.imageSlider)) {
         //     return false;
         // }
 
         // else
-            return true;
+        return true;
     }
 
-    componentWillUnmount(){
-        clearInterval(this.state.interval);
+    componentWillUnmount() {
+        // clearInterval(this.state.interval);
     }
 
-    componentWillMount(){
-        this.setState({
-            interval: setInterval(() => {
-                this.setState({position: this.state.position === 2 ? 0 : this.state.position + 1});
-                
-            }, 4000)
-        });
+    componentWillMount() {
+
     }
-   
-    
+    componentWillReceiveProps(nextProps, nextState) {
+        console.log("props", nextProps);
+        // if (nextProps.imageSlider.length > 0) {
+        //     const  imageSlider  = nextProps.imageSlider;
+            
+        //     if (!this.isRun) {
+        //         this.isRun = true;
+        //         this.setState({
+        //             interval: setInterval(() => {
+        //                 this.setState({ position: this.state.position === imageSlider.length ? 0 : this.state.position + 1 });
+                        
+
+        //             }, 4000)
+        //         });
+
+        //     }
+        // }
+    }
+
+
     render() {
-        const {imageSlider} = this.props;
+        const { imageSlider } = this.props;
         var imgs = [];
-        for(var i = 0;i < imageSlider.length;i++){
+        for (var i = 0; i < imageSlider.length; i++) {
             imgs.push(imageSlider[i].thumbnail);
         }
-        
 
 
-        
+
+
         if (imageSlider.length <= 0) {
             return null;
-        }else{
+        } else {
             return (
-               <View
-               style={{height:200}}
-               >
+                <View
+                    style={{ height: 200 }}
+                >
                     <ImageSlider images={imgs}
-                    position={this.state.position}
-                    onPositionChanged={position => this.setState({position})}
-                    
+                        // position={this.state.position}
+                        loopBothSides
+                        autoPlayWithInterval={4000}
+                         onPositionChanged={position => {
+                            //   console.log("pos nhay",position)
+                            // if(position !== this.state.position)
+                            //     this.setState({ position:position })
+                            }
+                         }
+
                     />
                 </View>
-                
+
             )
         }
     }

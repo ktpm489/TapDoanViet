@@ -149,6 +149,7 @@ class DichVu extends Component {
                         imageSlider={this.state.imageSlider}
                        
                     />
+                    <View style={{flex:1,height:1,backgroundColor:'gray'}} />
                     <View style={{justifyContent:'center',alignItems:'center',marginTop:10,backgroundColor:'#ffffff'}}>
                     < FlatList
                          showsHorizontalScrollIndicator={false}

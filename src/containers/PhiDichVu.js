@@ -58,6 +58,7 @@ export default class PhiDichVu extends Component {
     callApiChiPhi = (year_select) => {
         // console.log("yearrrrrrrr=======", year_select);
         this.setState({ isLoading: true,dataSum:[],listDepartment:[],listCost:[] })
+        console.log('url',BASE_URL + COST + year_select);
         AsyncStorage.getItem('token').then((value) => {
             fetch(BASE_URL + COST + year_select, {
                 method: "GET",

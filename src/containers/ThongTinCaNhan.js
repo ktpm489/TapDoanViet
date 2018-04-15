@@ -6,7 +6,7 @@ import {
     StyleSheet,
     ImageBackground,
     TouchableOpacity,
-    TextInput,
+    TextInput,ScrollView
 } from 'react-native'
 import images from "../components/images";
 import Dimensions from 'Dimensions';
@@ -41,10 +41,12 @@ class ThongTinCaNhan extends Component {
             GioiTinh: '',
             NgaySinh: '',
             SoDienThoai: '',
+            DiaChi:'',
             Email: '',
             fileName: '',
             editable: false,
             check: true,
+
 
             dataProfile: '',
             avatarSource: null,
@@ -96,8 +98,9 @@ class ThongTinCaNhan extends Component {
                 this.setState({
                     FisrtName: this.state.dataProfile.firstName,
                     LastName: this.state.dataProfile.lastName,
-                    // NgaySinh: this.state.dataProfile.firstName,
+                    NgaySinh: this.state.dataProfile.birthDay,
                     SoDienThoai: this.state.dataProfile.phoneNumber,
+                    DiaChi:this.state.dataProfile.apartmentAddress,
                     Email: this.state.dataProfile.email,
                 }, () => {
                     this.state.dataProfile.gender == 1 ? this.setState ({
@@ -163,9 +166,10 @@ class ThongTinCaNhan extends Component {
                 style={styles.image_circle}
             />
         return (
+            <ScrollView  style={{flex:1,backgroundColor:'#ffffff'}} >
             <View style={{flex: 1}}>
-                <ImageBackground style={{flex: 3, alignItems: 'center', width: null, height: null}}
-                                 source={images.hieu}>
+                <ImageBackground style={{flex: 3, alignItems: 'center', width: null, height: DEVICE_HEIGHT/3}}
+                               source={images.hieu}>
                     {
                         this.state.isCheck ?
                         <TouchableOpacity onPress = {this.show.bind(this)}>
@@ -181,13 +185,15 @@ class ThongTinCaNhan extends Component {
                     }
 
                 </ImageBackground>
-                <View style={{backgroundColor: 'white', flex: 5}}></View>
+                <View style={{backgroundColor: '#ffffff', flex: 5}}></View>
                 <View style={{
-                    position: 'absolute', zIndex: 99,
-                    marginTop: DEVICE_WIDTH / 3 + 50,
-                    backgroundColor: 'white', marginLeft: 40,
-                    height: 350,
-                    width: 280,
+                    zIndex: 1,
+                    backgroundColor: '#ffffff',
+                    left:25,
+                    right:25,
+                    top:-50,
+                    paddingBottom:20,
+                    width: DEVICE_WIDTH - 50,
                     borderWidth: 1,
                     borderRadius: 10,
                     borderColor: '#ddd',
@@ -226,7 +232,18 @@ class ThongTinCaNhan extends Component {
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
-                    <Text style={{marginLeft: 10, color: 'black', fontSize: 15, marginTop: 20}}>Thông tin liên hệ</Text>
+                    {/* <Text style={{marginLeft: 10, color: 'black', fontSize: 15, marginTop: 20}}>Thông tin liên hệ</Text> */}
+                    <View style={styles.viewItem}>
+                        <Text style={{fontSize: 15, color: 'black'}}>Địa chỉ: </Text>
+                        <TextInput
+                            value = {this.state.DiaChi}
+                            onChangeText = {(DiaChi) => this.setState({DiaChi})}
+                            underlineColorAndroid={this.state.underline}
+                            editable={this.state.editable}
+                            selectTextOnFocus={false}
+                            style = {styles.textinput}/>
+                    </View>
+                    
                     <View style={{height: 1, marginHorizontal: 10, backgroundColor: '#9E9E9E', marginTop: 5}}/>
                     <View style={styles.viewItem}>
                         <Text style={{fontSize: 15, color: 'black'}}>Số điện thoại: </Text>
@@ -248,7 +265,7 @@ class ThongTinCaNhan extends Component {
                             style = {styles.textinput}/>
                     </View>
                     <TouchableOpacity>
-                        <Text style = {{marginTop: 10}}>Đổi mật khẩu</Text>
+                        <Text style = {{marginTop: 10,marginLeft:10,color:'blue',textDecorationLine:'underline'}}>Đổi mật khẩu</Text>
                     </TouchableOpacity>
                     { this.state.check ?
                     <TouchableOpacity onPress = {this.EditInfo}
@@ -289,6 +306,8 @@ class ThongTinCaNhan extends Component {
 
                 {/*</View>*/}
             </View>
+            {/* <View style={{height:1000,margin:20,backgroundColor:'blue'}} /> */}
+            </ScrollView>
         )
 
     }
