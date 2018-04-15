@@ -71,6 +71,13 @@ export default class App extends Component<{}> {
                 logout(AsyncStorage,this.props)
             }
             console.log("data push device token", data)
+            var temp =JSON.stringify({
+                token: device_token,
+                os: Platform.OS,
+                version: Platform.Version,
+                deviceName:  DeviceInfo.getBrand()
+            });
+            console.log("josn firebse push",temp);
 
         }).catch(err => {
             console.log("call api token firebase erro: " + err);
@@ -101,7 +108,22 @@ export default class App extends Component<{}> {
                 
                 return;
             }
-            
+            if(Platform.OS === 'ios' && notif._notificationType === "remote_notification"){
+                let data = notif.aps.alert;
+                console.log('ios-noti',data);
+                FCM.presentLocalNotification({
+                    vibrate: 500,
+                    title: data.title,
+                    body: data.body,
+                    priority: "high",
+                    sound: "default",
+                    icon: "logo.png",
+                    wake_screen: true,
+                    show_in_foreground: true,
+                    // click_action: notif.fcm.action,
+
+                });
+            }else if(Platform.OS === 'android'){
                 FCM.presentLocalNotification({
                     vibrate: 500,
                     title: notif.fcm.title,
@@ -114,6 +136,7 @@ export default class App extends Component<{}> {
                     // click_action: notif.fcm.action,
 
                 });
+            }
             
 
 
