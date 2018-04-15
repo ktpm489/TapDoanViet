@@ -17,7 +17,7 @@ import images from "../components/images";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {LogoutReducers} from '../reducers'
-import {BASE_URL, DELETE_TOKEN_FIREBASE,GET_ADMIN} from "../Constants";
+import {BASE_URL, DELETE_TOKEN_FIREBASE,GET_ADMIN,LOGOUT} from "../Constants";
 class MenuLeft extends Component {
     constructor(props){
         super(props)
@@ -47,8 +47,31 @@ class MenuLeft extends Component {
         })
     }
 
+
+    callApiLogout = () => {
+        
+        AsyncStorage.getItem("token").then(value => {
+            
+                fetch(BASE_URL + LOGOUT, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": value
+                    },
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    console.log('logout success', data)
+
+                }).catch(e => {
+                    console.log("exception", e);
+                });
+            })
+    
+    }
+
     chatAdmin = ()=>{
-        if(this.props.admin && this.props.admin.adminInfo){
+        if(this.props.admin && this.props.admin.adminInfo && this.props.admin.adminInfo.data && this.props.admin.adminInfo.data.id){
             this.props.navigation.navigate('Chat', {dataUser: this.props.admin.adminInfo.data});
         }else{
             Alert.alert("Thông báo","Không tìm thấy admin");
@@ -122,6 +145,7 @@ class MenuLeft extends Component {
                     <TouchableOpacity
                         onPress = {()=> {
                             this.DeteleTokenFirebase()
+                            this.callApiLogout();
                             this.setState({ visibleModal: 5 })
                         }}
                         style={{flexDirection: 'row',marginTop:20, marginBottom:20}}>

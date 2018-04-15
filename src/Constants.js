@@ -38,6 +38,7 @@ export const DELETE_TOKEN_FIREBASE = "/api/user/remove-token-firebase/"
 export const GET_ADMIN = "/api/chat/admin";
 export const GET_DIEU_KHOAN = "/api/page/policy";
 export const GET_ABOUT_US = "/api/page/about-us";
+export const LOGOUT = "/api/user/logout";
 export const GET_DETAIL_NOTI = "";
 
 
