@@ -69,7 +69,7 @@ export default class DichVuItem extends Component {
                     style={{width:'100%',height:'70%'}}
                />
                <View style ={{flex:1,justifyContent: 'center',alignItems:'center',marginLeft:5,marginRight:5}}>
-                    <Text style={{textAlign:'center',alignSelf:'center',color:'#ffffff',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName:item.name}</Text>
+                    <Text style={{textAlign:'center',alignSelf:'center',color:'#ffffff',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>
                 </View>
                 </View>
                 :<View key={item.index}
