@@ -25,14 +25,14 @@ export default class ChatItem extends Component {
 
     renderMsgForUser = () => {
        
-        console.log("gio: ", moment(this.props.dataItem.createdAt).format("DD-MM-YYYY HH:mm"))
+        console.log("gio: ", moment(this.props.dataItem.createdAt).format("HH:mm, DD-MM-YYYY "))
         var createdAt = moment(this.props.dataItem.createdAt).format("DD-MM-YYYY");
         var currentdate = new Date();
         var formatCurrent = moment(currentdate).format("DD-MM-YYYY");
         if(createdAt === formatCurrent){
             createdAt = moment(this.props.dataItem.createdAt).format("HH:mm");
         }else{
-            createdAt = moment(this.props.dataItem.createdAt).format("DD-MM-YYYY HH:mm");
+            createdAt = moment(this.props.dataItem.createdAt).format("HH:mm, DD-MM-YYYY");
         }
         if (this.props.dataItem && this.props.myName && this.props.dataItem.sender
             && this.props.dataItem.sender.userName) {
@@ -75,7 +75,9 @@ export default class ChatItem extends Component {
                         <Text style={{
                         justifyContent: 'center',
                         alignSelf: 'flex-end',
-                        marginRight: 10
+                        marginRight: 10,
+                        fontSize:10,
+                        marginTop:2
                         }}>{createdAt}</Text>
 
                     </View>
@@ -115,12 +117,13 @@ export default class ChatItem extends Component {
                                         paddingLeft: 10,
                                         paddingRight: 10,
                                         paddingTop: 10,
-                                        paddingBottom: 10
+                                        paddingBottom: 10,
+                                        
                                     }}>{this.props.dataItem.messageContent}</Text>
                                 </View>
 
                             </View>
-                            <Text style={{flex: 1, justifyContent: 'flex-start'}}>{createdAt}</Text>
+                            <Text style={{flex: 1,marginLeft:2, justifyContent: 'flex-start',fontSize:10,marginTop:2}}>{createdAt}</Text>
                         </View>
 
                     </View>

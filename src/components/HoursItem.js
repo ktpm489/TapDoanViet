@@ -46,11 +46,11 @@ export default class HoursItem extends Component {
                                 width:Dimention.DEVICE_WIDTH/3-40,
                                 height:Dimention.DEVICE_WIDTH/3-40,
                                 borderRadius:5,
-                                backgroundColor:item.select?'red':Const.COLOR_APP_GREEN,
+                                backgroundColor:item.select?'#fc9b03':Const.COLOR_APP_GREEN,
                                 flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                             
                                 <View style={{justifyContent:'center',alignContent:'center'}}>
-                                    <Text>{item.time}</Text>
+                                    <Text style={{fontSize:20}} >{item.time}</Text>
                                 </View>
 
                         

@@ -85,7 +85,7 @@ export default class ItemServiceHistory extends Component {
                         this.urlUpload = this.urlUpload + "," + data.data.fileName;
                     if (this.countImageUploadDone == this.countImageUpload) {
                         console.log("imag invoice",this.urlUpload)
-                        this.props.updateStateLoading(false);
+                        
                         this.updateStatus(this.props.dataItem.item.id);
                     }
                 }
@@ -98,6 +98,8 @@ export default class ItemServiceHistory extends Component {
 
             }).catch(e => {
                 console.log('exception', e)
+                this.props.updateStateLoading(false);
+               
             })
         });
     }
@@ -119,7 +121,7 @@ export default class ItemServiceHistory extends Component {
             }).then((response) => {
                 return response.json();
             }).then(data => {
-
+                this.props.updateStateLoading(false);
                 console.log("update history", data);
                 if (data && data.errorCode == 0) {
                     // this.props.navigation.goBack();
@@ -132,6 +134,7 @@ export default class ItemServiceHistory extends Component {
                 }
             }).catch(e => {
                 console.log("exception", e);
+                this.props.updateStateLoading(false);
             })
         });
     }
@@ -161,8 +164,18 @@ export default class ItemServiceHistory extends Component {
 
 
     deleteService = (id)=>{
+        Alert.alert("Thông báo","Bạn có muốn xoá dịch vụ yêu đã yêu cầu không ?",[
+            {text:'Có',onPress:()=>{this.callApiDeleteService(id)}},
+            {text:'Không',onPress:()=>{}}
+        ],{ cancelable: false })
+
+       
+    }
+
+    callApiDeleteService = (id)=>{
+
         AsyncStorage.getItem('token').then((value) => {
-            console.log("url",BASE_URL + DELETE_SERVICE_REQUEST+id);
+            this.props.updateStateLoading(true);
             fetch(BASE_URL + DELETE_SERVICE_REQUEST+id, {
                 method: "GET",
                 headers: {
@@ -174,7 +187,7 @@ export default class ItemServiceHistory extends Component {
             }).then((response) => {
                 return response.json();
             }).then(data => {
-
+                this.props.updateStateLoading(false);
                 console.log("delete item history", data);
                 if (data && data.errorCode == 0) {
                     // this.props.navigation.goBack();
@@ -187,15 +200,16 @@ export default class ItemServiceHistory extends Component {
                 }
             }).catch(e => {
                 console.log("exception", e);
+                this.props.updateStateLoading(false);
             })
         });
-    }
+        }
     render() {
 
         const { navigation } = this.props;
         const item = this.props.dataItem.item;
         const status = item.done;
-        var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:mm");
+        var orderAt = moment(item.orderAt.substring(0,16)).format("DD-MM-YYYY HH:mm");
         var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:mm");
         var updatedAt = moment(item.updatedAt).format("DD-MM-YYYY HH:mm");
 
@@ -268,6 +282,11 @@ export default class ItemServiceHistory extends Component {
                         <Text style={{ fontWeight: "bold" }}>Dịch vụ đăng ký: </Text>
                         <Text>{!item.service ? "Không xác định" : item.service.serviceName}</Text>
                     </Text>
+                    <Text>
+                        <Text style={{ fontWeight: "bold" }}>Ghi chú: </Text>
+                        <Text>{item.description}</Text>
+                    </Text>
+
                     <Text>
                         <Text style={{ fontWeight: "bold" }}>Trạng thái: </Text>
                         <Text style={{ color: 'red' }}>{status ? "Đã thanh toán số tiền như bên dưới" : "Chưa thanh toán"}</Text>

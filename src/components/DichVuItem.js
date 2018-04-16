@@ -68,8 +68,8 @@ export default class DichVuItem extends Component {
                     resizeMode="cover"
                     style={{width:'100%',height:'70%'}}
                />
-               <View style ={{flex:1,justifyContent: 'center',alignItems:'center',marginLeft:5,marginRight:5}}>
-                    <Text style={{textAlign:'center',alignSelf:'center',color:'#ffffff',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>
+               <View style ={{flex:1,justifyContent: 'center',alignItems:'center',marginLeft:2,marginRight:2}}>
+                    <Text style={{textAlign:'center',fontSize:12, alignSelf:'center',color:'#ffffff',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>
                 </View>
                 </View>
                 :<View key={item.index}
@@ -86,7 +86,7 @@ export default class DichVuItem extends Component {
               resizeMode="cover"
               style={{width:Dimention.DEVICE_WIDTH/5-10,height:Dimention.DEVICE_WIDTH/5-10}}
          />
-              <Text style={{textAlign:'center',color:'black',fontWeight:'bold',marginLeft:5,marginRight:5}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>
+              <Text style={{textAlign:'center',fontSize:12,color:'black',fontWeight:'bold',marginLeft:2,marginRight:2}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>
           </View>}
 
             </TouchableOpacity>)

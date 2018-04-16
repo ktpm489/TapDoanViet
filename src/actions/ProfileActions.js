@@ -10,7 +10,7 @@ export const callApiProfile = () => {
         return new Promise((resolve, reject) => {
             
             AsyncStorage.getItem('token').then((value)=> {
-                console.log("token",value);
+                console.log('token---call profile', value);
                 fetch(BASE_URL + GET_INFO, {
                     method: "GET",
                     headers: {
@@ -19,14 +19,15 @@ export const callApiProfile = () => {
                     },
 
                 }).then((response) => {
-                    console.log('res', response)
+                   
+
                     try{
                         return response.json();
                     } catch(e) {
                         console.log('eee', e);
                     }
                 }).then(data => {
-                    console.log('data response profile', data);
+                    
                     dispatch({
                         type: 'GET_INFO',
                         payload: data

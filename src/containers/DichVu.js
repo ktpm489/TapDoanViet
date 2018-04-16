@@ -100,7 +100,7 @@ class DichVu extends Component {
         getAdmin();
         
         callApiProfile().then(dataRes=> {
-            
+            console.log('data response profile', dataRes);
         })
         
     }

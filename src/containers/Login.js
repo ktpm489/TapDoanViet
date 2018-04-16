@@ -47,7 +47,9 @@ class Login extends Component {
 
         const { callApiLogin } = this.props;
         callApiLogin(this.state.SoDienThoai, this.state.MatKhau).then(data => {
-            console.log('data', data.token);
+            console.log('sdt---', this.state.SoDienThoai);
+            console.log('mk---', this.state.MatKhau);
+            console.log('token---', data.token);
             if (data.errorCode === 0) {
                 AsyncStorage.setItem('token', data.token);
                 this.props.navigation.navigate('LoadData')

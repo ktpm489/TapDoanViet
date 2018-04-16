@@ -70,7 +70,7 @@ class ModalDichVu extends Component {
         if (page_select) {
             return { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }
         } else {
-            return { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }
+            return { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fc9b03' }
         }
     }
 
@@ -151,7 +151,7 @@ class ModalDichVu extends Component {
 
                         }}
                     >
-                        <Text>Bước 1</Text>
+                        <Text style={{fontSize:16,color:'#000000' }}>Bước 1</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={this.styleButton(this.state.page2_sellect)}
                         onPress={() => {
@@ -160,7 +160,7 @@ class ModalDichVu extends Component {
 
                         }}
                     >
-                        <Text>Bước 2</Text>
+                        <Text style={{fontSize:16,color:'#000000'}} >Bước 2</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={this.styleButton(this.state.page3_sellect)}
                         onPress={() => {
@@ -169,7 +169,7 @@ class ModalDichVu extends Component {
 
                         }}
                     >
-                        <Text>Bước 3</Text>
+                        <Text style={{fontSize:16,color:'#000000'}}>Bước 3</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -182,7 +182,7 @@ class ModalDichVu extends Component {
 
                     }}>
                     <ScrollView style={{ flex: 1, }} >
-                        <Text style={{ alignSelf: 'center', color: 'red', margin: 10, fontSize: 20, fontWeight: '600' }}>Thông tin khách hàng</Text>
+                        <Text style={{ alignSelf: 'center', color: '#23b34c', margin: 10, fontSize: 20, fontWeight: '600' }}>Thông tin khách hàng</Text>
                         <View style={{
                             borderWidth: 1,
                             borderRadius: 5,
@@ -292,7 +292,7 @@ class ModalDichVu extends Component {
                                 placeholder={"Thêm thông tin mô tả rõ hơn yêu cầu của bạn..."}
 
                             />
-                            <Text style={{marginLeft:10,fontSize:16,fontWeight:'600'}}>Thêm ảnh mô tả</Text>
+                            <Text style={{marginLeft:10,fontSize:16,fontWeight:'600',color: "#23b34c",}}>Thêm ảnh mô tả</Text>
                             <View style={{marginTop:10,flexDirection:'row'}}>
                                 <TouchableOpacity
                                     style={{
@@ -343,7 +343,7 @@ class ModalDichVu extends Component {
                     </View>
                 </Pages>
                 <TouchableOpacity
-                    style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',backgroundColor:'green' }}
+                    style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',backgroundColor:'#fc9b03' }}
                     onPress={() => {
                         
                         if (this.refs.pages.progress < 2) {
@@ -355,9 +355,10 @@ class ModalDichVu extends Component {
                                 var objDate = this.refs.SelectDate.date;
                                 var objHour = this.refs.SelectDate.hourSelect;
                                 this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
-                                // console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
+                                //  console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
+                                //  console.log("full ",this.fullDate)
                                 
-                                // return;
+                                //  return;
                             }else{
                                 alert("Bạn chưa chọn thời gian đặt lịch");
                                 return 0;

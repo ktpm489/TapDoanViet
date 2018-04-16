@@ -13,6 +13,8 @@ let nextTodoId = 0
 // }
 
 export const callApiLogin = (sdt, mk) => {
+    console.log('sdt',sdt)
+    console.log('mk',mk)
     return dispatch => {
         return new Promise((resolve, reject) => {
             fetch(BASE_URL+LOGIN, {
@@ -27,7 +29,7 @@ export const callApiLogin = (sdt, mk) => {
             }).then((response) => {
                 return response.json();
             }).then(data => {
-                // console.log('data response', data);
+            
                 dispatch({
                     type: 'LOGIN',
                     id: nextTodoId++,

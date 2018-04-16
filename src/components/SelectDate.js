@@ -138,7 +138,7 @@ export default class SelectDate extends Component {
         <Text
           style={{
             
-            color: "red",
+            color: "#23b34c",
             flex:1,
             alignSelf:'center',
             textAlign:'center',
@@ -188,15 +188,15 @@ export default class SelectDate extends Component {
                           // console.log("pos",this.positionDateSelect);
                           console.log("date---",this.date);
                         }}
-                          style={{backgroundColor:item.item.selected?'red':'white',padding:10,justifyContent:'center',alignItems:'center'}}
+                          style={{backgroundColor:item.item.selected?'#fc9b03':'white',padding:10,justifyContent:'center',alignItems:'center'}}
                         >
-                          <Text style={{backgroundColor:item.item.selected?'red':'white',minWidth:70,alignSelf:'center',flex:1,}}>{item.item.nameDate + " " + item.item.date + "/" + item.item.month}</Text>
+                          <Text style={{backgroundColor:item.item.selected?'#fc9b03':'white',minWidth:70,fontSize:16, alignSelf:'center',flex:1,color:'#000000'}}>{item.item.nameDate + " " + item.item.date + "/" + item.item.month}</Text>
                         </TouchableOpacity>
                       );
                     }}
                     numColumns={1}
                     keyExtractor={(item, index) => index.toString()}
-                   style={{flex:1,height:100}}
+                   style={{flex:1,height:100,marginTop:5}}
 
                   />
         </View>
