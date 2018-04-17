@@ -1244,7 +1244,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigsgroup.tdv;
 				PRODUCT_NAME = TapDoanViet;
-				PROVISIONING_PROFILE = "0e70f70a-45f2-4c06-8e96-2d835d96411c";
+				PROVISIONING_PROFILE = "a0fb5ce6-08c2-418e-a98e-db1d556aa1bf";
 				PROVISIONING_PROFILE_SPECIFIER = Dev_TapDoanViet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1280,7 +1280,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigsgroup.tdv;
 				PRODUCT_NAME = TapDoanViet;
-				PROVISIONING_PROFILE = "0e70f70a-45f2-4c06-8e96-2d835d96411c";
+				PROVISIONING_PROFILE = "a0fb5ce6-08c2-418e-a98e-db1d556aa1bf";
 				PROVISIONING_PROFILE_SPECIFIER = Dev_TapDoanViet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
