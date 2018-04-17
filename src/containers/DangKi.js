@@ -4,7 +4,7 @@ import {
     Text,
     TextInput,
     StyleSheet,
-    TouchableOpacity,
+    TouchableOpacity, Alert,
 
 } from 'react-native';
 import Dimensions from 'Dimensions';
@@ -29,6 +29,21 @@ class DangKi extends Component {
             MatKhauConfirm: '',
         }
     }
+    checkPass = () => {
+        console.log("checkpass")
+        if (this.state.MatKhau != this.state.MatKhauConfirm) {
+            Alert.alert("Thông báo", "Mật khẩu không trùng khớp");
+        }
+        else {
+            this.props.navigation.navigate('NhapThongTin',
+                {
+                    SDT: this.state.SoDienThoai,
+                    MK: this.state.MatKhau,
+                    MKConfirm: this.state.MatKhauConfirm
+                })
+
+        }
+    }
     render (){
         return (
             <View>
@@ -46,6 +61,7 @@ class DangKi extends Component {
                         <TextInput
                             style = {{marginLeft: 10}}
                             placeholder = 'Mật khẩu'
+                            secureTextEntry={true}
                             underlineColorAndroid="transparent"
                             onChangeText = {(MatKhau) => this.setState({MatKhau})}/>
                     </View>
@@ -53,17 +69,13 @@ class DangKi extends Component {
                     <View style = {{flex:1, justifyContent:'center'}}>
                         <TextInput
                             style = {{marginLeft: 10}}
+                            secureTextEntry={true}
                             placeholder = 'Xác nhận mật khẩu'
                             underlineColorAndroid="transparent"
                             onChangeText = {(MatKhauConfirm) => this.setState({MatKhauConfirm})}/>
                     </View>
                 </View>
-                <TouchableOpacity onPress = {()=> this.props.navigation.navigate('NhapThongTin',
-                    {
-                        SDT: this.state.SoDienThoai,
-                        MK: this.state.MatKhau,
-                        MKConfirm: this.state.MatKhauConfirm
-                                })}>
+                <TouchableOpacity onPress = {this.checkPass}>
                     <View style = {styles.viewGui}>
                         <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>
                             TIẾP TỤC

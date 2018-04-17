@@ -11,6 +11,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Entypo'
+import Dimensions from 'Dimensions';
 import StatusItems from "../components/status/StatusItems";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -68,6 +69,10 @@ class TrangChu extends Component {
     
 
     render (){
+        const {navigation, InfoUser} = this.props;
+        if (InfoUser.length <= 0){
+            return null
+        }
         if (this.state.isLoading) {
             return (
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
@@ -75,13 +80,17 @@ class TrangChu extends Component {
                 </View>
             );
         }
-        const {navigation} = this.props;
         return (
-            <View>
+            <ScrollView>
                 <View>
                     <View style  = {{flexDirection:'row', marginTop: 15}}>
-                        <Image source={require('../images/chieu-cao-va-tieu-su-cua-phuong-ly-12-e1482887471940.jpg')}
-                               style = {{ resizeMode: 'cover',height: 40, width:30, marginLeft:10}}>
+                        <Image style={styles.image_circle}
+                               source={
+                                   ! InfoUser.userInfo.avatar ? require("../images/noavatar.png") : {
+                                       uri:InfoUser.userInfo.avatarUrl
+                                   }}
+                               resizeMode="cover"
+                        >
                         </Image>
                         <View style = {{marginLeft: 10, borderWidth: 1, borderColor: '#cccccc', borderRadius:20, flex:1,justifyContent:'center' ,alignItems:'center'}}>
                             <TouchableOpacity onPress = {()=>this.props.navigation.navigate('TaoBaiViet',{id_category:this.item.id,onReloadBack:this.onReloadBack, })}>
@@ -112,12 +121,13 @@ class TrangChu extends Component {
                 />
 
 
-            </View>
+            </ScrollView>
         );
     }
 }
 const mapStateToProps = (state) => {
     return {
+        InfoUser: state.ProfileReducers
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -128,6 +138,7 @@ const mapDispatchToProps = (dispatch) => {
 
 TrangChu = connect(mapStateToProps, mapDispatchToProps)(TrangChu);
 export default TrangChu;
+const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     viewItem: {
         flexDirection: 'row',
@@ -142,6 +153,14 @@ const styles = StyleSheet.create({
         iconTab: {
             height:25,
             width:25,
-        }
+        },
+    image_circle: {
+        height: DEVICE_WIDTH / 10,
+        width: DEVICE_WIDTH / 10,
+        borderRadius: DEVICE_WIDTH / 20,
+        marginLeft: 10,
+        // marginTop: 10
+
+    },
 
 })

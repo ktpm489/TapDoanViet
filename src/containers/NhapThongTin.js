@@ -9,6 +9,7 @@ import {
     Alert, AsyncStorage,
 } from 'react-native';
 import Dimensions from 'Dimensions';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from '../components/ButtonRadio/SimpleRadioButton';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {callApiDangKy} from "../actions/DangKyActions";
@@ -37,6 +38,9 @@ class NhapThongTin extends Component {
             Email: '',
             dataToa: [],
             NgaySinh: '',
+            types1: [{label: 'Nam', value: 1}, {label: 'Nữ', value: 2}, {label: 'Khác', value: 3}],
+            value1: 1,
+            value1Index: 0,
 
         }
     }
@@ -77,16 +81,16 @@ class NhapThongTin extends Component {
         const { params } = this.props.navigation.state
         console.log('params', params)
         const { callApiDangKy } = this.props
-        callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.GioiTinh, this.state.Toa, this.state.NgaySinh).then(dataRes => {
+        callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.value1, this.state.Toa, this.state.NgaySinh).then(dataRes => {
             console.log('data', dataRes)
             // let errors
             let errors = dataRes.errorCode !== 0 ? dataRes.errors : null
-            data = JSON.parse(errors)
+            let data = errors ? JSON.parse(errors) : null
             console.log('data1', data)
             if(dataRes.errorCode===0) {
                 Alert.alert(
                     'Thông báo',
-                    "Đăng kí thành công"
+                    dataRes.message
                     ,
                     [
                         {text: 'OK', onPress: () => {
@@ -107,7 +111,7 @@ class NhapThongTin extends Component {
             else {
                 Alert.alert(
                     'Thông báo',
-                    data[0].msg
+                    "fsdf"
                     ,
                     [
                         {text: 'OK', onPress: () => console.log('OK Pressed')},
@@ -154,14 +158,22 @@ class NhapThongTin extends Component {
                     onChangeText = {(Toa) => this.setState({Toa})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính</Text>
-                    <Picker
-                    style = {{ width: 100, marginLeft: 3}}
-                    selectedValue={this.state.GioiTinh}
-                    onValueChange={(value) => this.setState({GioiTinh: value})}>
-                    <Picker.Item label = {'Nam'} value ={'1'}/>
-                    <Picker.Item label = {'Nữ'} value ={'2'}/>
-                    <Picker.Item label = {'Khác'} value ={'3'}/>
-                </Picker>
+                <RadioForm
+                    ref="radioForm"
+                    radio_props={this.state.types1}
+                    initial={0}
+                    formHorizontal={false}
+                    labelHorizontal={true}
+                    buttonColor={'#2196f3'}
+                    labelColor={'#000'}
+                    animation={true}
+                    onPress={(value, index) => {
+                        this.setState({
+                            value1:value,
+                            value1Index:index
+                        })
+                    }}
+                />
                 <TouchableOpacity onPress = {this.DangKyTaiKhoan}>
                     <View style = {styles.viewGui}>
                         <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>

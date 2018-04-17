@@ -162,12 +162,12 @@ class Login extends Component {
                                     </TouchableOpacity>
                                     </View>
                                     <View style={{justifyContent:'flex-end',flexDirection:'column'}}>
-                                    <TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}
-                                        style={{ marginLeft: 20, }}>
+                                    {/*<TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}*/}
+                                        {/*style={{ marginLeft: 20, }}>*/}
                                         <Text style={styles.bottomText}>
                                             Website: tapdoanviet.vn/
                                         </Text>
-                                    </TouchableOpacity>
+                                    {/*</TouchableOpacity>*/}
                                     </View>
 
                         </View>
