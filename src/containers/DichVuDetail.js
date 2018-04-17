@@ -109,7 +109,7 @@ export default class DichVuDetail extends Component {
                                 <Text style={{
                                     textAlign: 'center',
                                     
-                                    color: 'white',
+                                    color: '#fc9b03',
                                     padding: 10,
                                     
                                 }}>Đặt lịch ngay</Text>

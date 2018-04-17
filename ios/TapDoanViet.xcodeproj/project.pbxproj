@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -1244,7 +1243,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigsgroup.tdv;
 				PRODUCT_NAME = TapDoanViet;
-				PROVISIONING_PROFILE = "0e70f70a-45f2-4c06-8e96-2d835d96411c";
+				PROVISIONING_PROFILE = "a0fb5ce6-08c2-418e-a98e-db1d556aa1bf";
 				PROVISIONING_PROFILE_SPECIFIER = Dev_TapDoanViet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1280,7 +1279,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigsgroup.tdv;
 				PRODUCT_NAME = TapDoanViet;
-				PROVISIONING_PROFILE = "0e70f70a-45f2-4c06-8e96-2d835d96411c";
+				PROVISIONING_PROFILE = "a0fb5ce6-08c2-418e-a98e-db1d556aa1bf";
 				PROVISIONING_PROFILE_SPECIFIER = Dev_TapDoanViet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
