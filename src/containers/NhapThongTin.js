@@ -140,35 +140,35 @@ class NhapThongTin extends Component {
         dataToaNha = this.state.dataToa;
         return (
             <View style = {{backgroundColor:'white', flex:1}}>
-                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15, marginTop: 10}}>Họ</Text>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15, marginTop: 10}}>Họ*</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
                     placeholder = 'Nhập họ'
                     underlineColorAndroid="transparent"
                     onChangeText = {(Ho) => this.setState({Ho})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
-                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tên</Text>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tên*</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
                     placeholder = 'Nhập tên'
                     underlineColorAndroid="transparent"
                     onChangeText = {(Ten) => this.setState({Ten})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
-                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Ngày sinh</Text>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Ngày sinh*</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
                     placeholder = 'DD/MM/YYYY'
                     underlineColorAndroid="transparent"
                     onChangeText = {(NgaySinh) => this.setState({NgaySinh})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
-                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tòa nhà</Text>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Địa chỉ*</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
                     placeholder = 'P101, Tòa nhà Victoria, Quận Hà Đông'
                     underlineColorAndroid="transparent"
                     onChangeText = {(Toa) => this.setState({Toa})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
-                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính</Text>
+                <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính*</Text>
                 <RadioForm
                     ref="radioForm"
                     radio_props={this.state.types1}

@@ -1,4 +1,7 @@
 import React from 'react'
+import {
+    Image
+} from 'react-native'
 import { StackNavigator, TabNavigator, DrawerNavigator }from 'react-navigation'
 import Login from "../containers/Login";
 import DichVu from "../containers/DichVu";
@@ -35,6 +38,7 @@ import FirstScreen from "../containers/FirstScreen";
 import ShowImage from "../containers/ShowImage"
 import CongDong from "../containers/CongDong"
 import ChangePass from "../containers/ChangePass";
+import Icons from 'react-native-vector-icons/FontAwesome';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -48,6 +52,14 @@ if (DEVICE_WIDTH >= 500) {
 const Tab = TabNavigator ({
     DichVu: {
         screen: DichVu,
+        // navigationOptions: {
+        //     tabBarIcon: ({tintColor}) => (
+        //         <Image
+        //             source={require('../images/test.png')}
+        //             style = {{color: tintColor}}
+        //         />
+        //     ),
+        // }
     },
     CongDong: {
         screen: CongDong,
