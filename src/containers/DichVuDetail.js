@@ -102,14 +102,14 @@ export default class DichVuDetail extends Component {
                             onPress={()=>this.refs.modal.open()}
                             style={{borderRadius: 5,
                                 borderWidth: 0.5,
-                                borderColor: 'red',
-                                backgroundColor: 'red',}}
+                                borderColor: '#fc9b03',
+                                backgroundColor: '#fc9b03',}}
 
                             >
                                 <Text style={{
                                     textAlign: 'center',
                                     
-                                    color: '#fc9b03',
+                                    color: '#ffffff',
                                     padding: 10,
                                     
                                 }}>Đặt lịch ngay</Text>

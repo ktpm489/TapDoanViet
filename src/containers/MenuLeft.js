@@ -7,6 +7,7 @@ import {
     AsyncStorage,
     StyleSheet,
     Image, Alert,
+    Share
 
 } from 'react-native';
 import Dimensions from 'Dimensions';
@@ -78,6 +79,17 @@ class MenuLeft extends Component {
         }
     }
 
+
+    ShareMessage=()=>
+    {
+            Share.share(
+            {
+                
+              message: "kien"
+            
+            }).then(result => console.log("share result",result)).catch(errorMsg => console.log("share error",errorMsg));
+    }
+
     render (){
         const {InfoUser } = this.props
         if (InfoUser.length <= 0){
@@ -136,7 +148,7 @@ class MenuLeft extends Component {
                     />
                     <ItemLeftMenu title ="Chia sẻ"
                                   source = {images.chiase}
-                                  onPress = {()=> alert("click chia sẻ")}
+                                  onPress = {()=> this.ShareMessage()}
                     />
                     <ItemLeftMenu title ="Chat với Ban Quản Trị"
                                   source = {images.admin}
