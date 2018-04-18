@@ -108,10 +108,21 @@ class NhapThongTin extends Component {
                     { cancelable: false }
                 )
             }
+            if (dataRes.errors) {
+                Alert.alert(
+                    'Thông báo',
+                    data[0].msg
+                    ,
+                    [
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                )
+            }
             else {
                 Alert.alert(
                     'Thông báo',
-                    "fsdf"
+                    dataRes.message
                     ,
                     [
                         {text: 'OK', onPress: () => console.log('OK Pressed')},
