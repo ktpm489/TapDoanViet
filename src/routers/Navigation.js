@@ -34,6 +34,7 @@ import AddMember from "../containers/AddMember";
 import FirstScreen from "../containers/FirstScreen";
 import ShowImage from "../containers/ShowImage"
 import CongDong from "../containers/CongDong"
+import ChangePass from "../containers/ChangePass";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -72,8 +73,8 @@ const Tab = TabNavigator ({
         tabBarOptions: {
             upperCaseLabel: false,
             showIcon: true,
-            activeTintColor: 'white',
-            inactiveTintColor: 'black',
+            activeTintColor: 'black',
+            inactiveTintColor: 'white',
             // activeBackgroundColor:'white',
             // inactiveBackgroundColor:'#eaa33f',
             // pressColor: 'white',
@@ -254,6 +255,9 @@ const Stack = StackNavigator ({
     },
     TrangChu:{
         screen:TrangChu
+    },
+    ChangePass: {
+        screen: ChangePass
     }
 
 

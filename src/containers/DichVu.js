@@ -34,7 +34,7 @@ class DichVu extends Component {
                 </TouchableOpacity>,
             tabBarIcon: () => (
                 <Image
-                    source={require('../images/icondichvu.png')}
+                    source={require('../images/dichvu1.png')}
                     style = {styles.iconTab}
                 />
             ),

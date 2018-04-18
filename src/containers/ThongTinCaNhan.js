@@ -6,7 +6,7 @@ import {
     StyleSheet,
     ImageBackground,
     TouchableOpacity,
-    TextInput,ScrollView
+    TextInput, ScrollView, AsyncStorage
 } from 'react-native'
 import images from "../components/images";
 import Dimensions from 'Dimensions';
@@ -16,8 +16,9 @@ import {callApiProfile} from "../actions/ProfileActions";
 import PickerImage from "../components/PickerImage";
 import {callApiUploadImg} from "../actions/TaoBaiVietActions";
 import {callApiUpdateInfo} from "../actions/UpdateInfoActions";
+import logout from "../components/TokenExpired";
+import {BASE_URL, UPDATE_INFO} from "../Constants";
 
-// import {callApiProfile} from "../actions/ProfileActions";
 
 class ThongTinCaNhan extends Component {
 
@@ -96,12 +97,12 @@ class ThongTinCaNhan extends Component {
                 dataProfile: dataRes.data[0]
             }, ()=> {
                 this.setState({
-                    FisrtName: this.state.dataProfile.firstName,
-                    LastName: this.state.dataProfile.lastName,
-                    NgaySinh: this.state.dataProfile.birthDay,
-                    SoDienThoai: this.state.dataProfile.phoneNumber,
-                    DiaChi:this.state.dataProfile.apartmentAddress,
-                    Email: this.state.dataProfile.email,
+                    FisrtName: this.state.dataProfile.firstName !==0 ? this.state.dataProfile.firstName : null,
+                    LastName: this.state.dataProfile.lastName !==0 ? this.state.dataProfile.lastName: null,
+                    NgaySinh: this.state.dataProfile.birthDay !==0 ? this.state.dataProfile.birthDay : null,
+                    SoDienThoai: this.state.dataProfile.phoneNumber !==0 ?  this.state.dataProfile.phoneNumber : null,
+                    DiaChi:this.state.dataProfile.apartmentAddress !==0 ? this.state.dataProfile.apartmentAddress: null,
+                    Email : this.state.dataProfile.email !== 0 ? this.state.dataProfile.email : null,
                 }, () => {
                     this.state.dataProfile.gender == 1 ? this.setState ({
                         GioiTinh: "Nam"
@@ -131,20 +132,63 @@ class ThongTinCaNhan extends Component {
             editable: false,
             check: true,
         })
-        const { callApiUpdateInfo } = this.props
-        callApiUpdateInfo(this.state.dataProfile.gender, this.state.Email, this.state.LastName).then(dataRes => {
-            console.log('dataRes', dataRes)
-        })
+        const { callApiProfile } = this.props
+        // callApiUpdateInfo(this.state.dataProfile.gender, this.state.Email, this.state.LastName).then(dataRes => {
+        //     console.log('dataRes', dataRes)
+        // })
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(BASE_URL + UPDATE_INFO, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                body: JSON.stringify({
+                    email: this.state.Email,
+                    lastName: this.state.LastName,
+                    birthDay: this.state.NgaySinh,
+                    apartmentAddress: this.state.DiaChi
+                })
+
+            }).then((response) => {
+                return response.json();
+            }).then(dataRes => {
+                if (dataRes.errorCode === 0) {
+                    callApiProfile().then(dataRes => {
+                        console.log('dataResProfile', dataRes)
+                    })
+                }
+            }).catch(e => {
+                console.log('exception', e)
+            })
+        });
     }
     UpdateAvt () {
 
-        const { callApiUpdateInfo, InfoUser } = this.props
-        if (InfoUser.length <=0) {
-            return null
-        }
-        callApiUpdateInfo(InfoUser.userInfo.gender, InfoUser.userInfo.Email, InfoUser.userInfo.firstName, this.state.fileName).then(dataRes => {
-            console.log('dataRes', dataRes)
-        })
+        const { callApiProfile } = this.props
+        AsyncStorage.getItem('token').then((value)=> {
+            fetch(BASE_URL + UPDATE_INFO, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+                body: JSON.stringify({
+                    avatar: this.state.fileName
+                })
+
+            }).then((response) => {
+                return response.json();
+            }).then(dataRes => {
+                if (dataRes.errorCode === 0) {
+                    callApiProfile().then(dataRes => {
+                        console.log('dataResProfile', dataRes)
+                    })
+                }
+            }).catch(e => {
+                console.log('exception', e)
+            })
+        });
     }
     ChangPass = () => {
         const { callApiUpdateInfo, InfoUser } = this.props
@@ -218,7 +262,7 @@ class ThongTinCaNhan extends Component {
                         <TextInput
                             value = {this.state.GioiTinh}
                             underlineColorAndroid={this.state.underline}
-                            editable={this.state.editable}
+                            editable={false}
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
@@ -264,7 +308,7 @@ class ThongTinCaNhan extends Component {
                             selectTextOnFocus={false}
                             style = {styles.textinput}/>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress = {() => this.props.navigation.navigate('ChangePass')}>
                         <Text style = {{marginTop: 10,marginLeft:10,color:'blue',textDecorationLine:'underline'}}>Đổi mật khẩu</Text>
                     </TouchableOpacity>
                     { this.state.check ?

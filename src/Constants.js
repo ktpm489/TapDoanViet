@@ -40,6 +40,7 @@ export const GET_DIEU_KHOAN = "/api/page/policy";
 export const GET_ABOUT_US = "/api/page/about-us";
 export const LOGOUT = "/api/user/logout";
 export const GET_DETAIL_NOTI = "";
+export const CHANGE_PASS = "/api/user/change-password";
 
 
 export const COLOR_APP_GREEN = '#23b34c';
