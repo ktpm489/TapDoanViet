@@ -480,11 +480,10 @@ class ModalDichVu extends Component {
                 this.props.onCallApiDone();
                 if(data && data.errorCode == 0){
                     alert("Gửi yêu cầu thành công")
-                    console.log("data-----------",JSON.stringify( data.data));
-                    // if (this.props.SocketRef && this.props.SocketRef.socket && this.props.SocketRef.socket.connected ) {
-                    //    console.log("data-----------",JSON.stringify( data.data));
-                    //     this.props.SocketRef.socket.emit('new_service_request',JSON.stringify( data.data) );
-                    // }
+                    if (this.props.SocketRef && this.props.SocketRef.socket && this.props.SocketRef.socket.connected ) {
+                       console.log("data-----------", data.data);
+                        this.props.SocketRef.socket.emit('new_service_request', data.data );
+                    }
                 }else if(data.errorCode && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
