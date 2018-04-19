@@ -139,6 +139,7 @@ export default class TinNhan extends Component {
                     data={this.state.dataGroupChat}
                     renderItem={(item) => {
                         return (
+                            
                             <GroupChatItem
                                 dataItem={item}
                                 navigation={navigation}
