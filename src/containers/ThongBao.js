@@ -23,12 +23,12 @@ export default class ThongBao extends Component {
                 }}>
                     <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
                 </TouchableOpacity>,
-            tabBarIcon: () => (
-                <Image
-                    source={require('../images/iconthongbao.png')}
-                    style = {styles.iconTab}
-                />
-            ),
+            // tabBarIcon: () => (
+            //     <Image
+            //         source={require('../images/iconthongbao.png')}
+            //         style = {styles.iconTab}
+            //     />
+            // ),
             headerStyle: { backgroundColor: '#23b34c' },
             headerTitleStyle:{ color: 'white'},
             title: 'Thông báo'

@@ -97,8 +97,8 @@ class ThongTinCaNhan extends Component {
                 dataProfile: dataRes.data[0]
             }, ()=> {
                 this.setState({
-                    FisrtName: this.state.dataProfile.firstName !==0 ? this.state.dataProfile.firstName : null,
-                    LastName: this.state.dataProfile.lastName !==0 ? this.state.dataProfile.lastName: null,
+                    // FisrtName: this.state.dataProfile.firstName !==0 ? this.state.dataProfile.firstName : null,
+                    Name: this.state.dataProfile.firstName + this.state.dataProfile.lastName,
                     NgaySinh: this.state.dataProfile.birthDay !==0 ? this.state.dataProfile.birthDay : null,
                     SoDienThoai: this.state.dataProfile.phoneNumber !==0 ?  this.state.dataProfile.phoneNumber : null,
                     DiaChi:this.state.dataProfile.apartmentAddress !==0 ? this.state.dataProfile.apartmentAddress: null,
@@ -120,6 +120,7 @@ class ThongTinCaNhan extends Component {
 
     }
     EditInfo = () => {
+        console.log("lastname", this.state.LastName.split(" ",)[1])
         console.log('edit info')
         this.setState({
             editable: true,
@@ -250,7 +251,7 @@ class ThongTinCaNhan extends Component {
                     <View style={styles.viewItem}>
                         <Text style={{fontSize: 15, color: 'black'}}>Tên: </Text>
                         <TextInput
-                            value = {this.state.LastName}
+                            value = {this.state.Name}
                             underlineColorAndroid={this.state.underline}
                             editable={this.state.editable}
                             onChangeText = {(LastName) => this.setState({LastName})}

@@ -38,7 +38,10 @@ import FirstScreen from "../containers/FirstScreen";
 import ShowImage from "../containers/ShowImage"
 import CongDong from "../containers/CongDong"
 import ChangePass from "../containers/ChangePass";
-import Icons from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon1 from 'react-native-vector-icons/SimpleLineIcons';
+import Icon2 from 'react-native-vector-icons/Entypo';
+
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var widthMenu = 0;
@@ -52,30 +55,45 @@ if (DEVICE_WIDTH >= 500) {
 const Tab = TabNavigator ({
     DichVu: {
         screen: DichVu,
-        // navigationOptions: {
-        //     tabBarIcon: ({tintColor}) => (
-        //         <Image
-        //             source={require('../images/test.png')}
-        //             style = {{color: tintColor}}
-        //         />
-        //     ),
-        // }
+        navigationOptions: {
+            // headerBackTitle: 'Back',
+            tabBarIcon: ({tintColor}) => (
+                <Icon1 name="earphones-alt" size={23}
+                      style={{ color: tintColor }}/>
+            ),
+        },
     },
     CongDong: {
         screen: CongDong,
         navigationOptions: {
             headerBackTitle: 'Back',
+            tabBarIcon: ({tintColor}) => (
+                <Icon name="people" size={23}
+                      style={{ color: tintColor }}/>
+            ),
           },
     },
+
     Message: {
         screen: TinNhan,
         navigationOptions: {
             headerBackTitle: '',
+            tabBarIcon: ({tintColor}) => (
+                <Icon1 name="bubbles" size={23}
+                       style={{ color: tintColor }}/>
+                ),
           },
     },
 
     ThongBao: {
         screen: ThongBao,
+        navigationOptions: {
+            headerBackTitle: '',
+            tabBarIcon: ({tintColor}) => (
+                <Icon1 name="bell" size={23}
+                       style={{ color: tintColor }}/>
+            ),
+        },
     }
 },
     {
