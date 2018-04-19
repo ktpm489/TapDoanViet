@@ -3,6 +3,8 @@ import * as ActionType from '../actions/ActionTypes';
 export const connectToSocket = (socket) => {
     return (dispatch) => {
 
+        console.log("socket----",socket);
+
 
         return new Promise((resolve,reject)=>{
             socket.on('connect', () => {

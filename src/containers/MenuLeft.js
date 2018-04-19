@@ -85,7 +85,9 @@ class MenuLeft extends Component {
             Share.share(
             {
                 
-              message: "kien"
+                title: "chia sẻ",
+                message: "Tập đoàn việt",
+                url:'https://facebook.com'
             
             }).then(result => console.log("share result",result)).catch(errorMsg => console.log("share error",errorMsg));
     }

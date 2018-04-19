@@ -11,7 +11,8 @@ import {
     ImageBackground,
     Image,
     TextInput,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    ActivityIndicator
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Communications from 'react-native-communications';
@@ -29,6 +30,7 @@ class Login extends Component {
             MatKhau: '',
             showPass: true,
             press: false,
+            isLoading:false
         }
         this.showPass = this.showPass.bind(this);
     }
@@ -46,10 +48,12 @@ class Login extends Component {
     Login() {
 
         const { callApiLogin } = this.props;
+        this.setState({isLoading:true})
         callApiLogin(this.state.SoDienThoai, this.state.MatKhau).then(data => {
             console.log('sdt---', this.state.SoDienThoai);
             console.log('mk---', this.state.MatKhau);
             console.log('token---', data.token);
+            this.setState({isLoading:false})
             if (data.errorCode === 0) {
                 AsyncStorage.setItem('token', data.token);
                 this.props.navigation.navigate('LoadData')
@@ -177,6 +181,11 @@ class Login extends Component {
                        
                     </View>
                 </ImageBackground>
+                {this.state.isLoading?
+                <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                    <ActivityIndicator size="large" color="green"/>
+                </View>:null
+            }
             </KeyboardAwareScrollView>
         );
     }

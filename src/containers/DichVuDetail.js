@@ -80,7 +80,7 @@ export default class DichVuDetail extends Component {
                 </Modal>
 
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <Image style={{flex: 1, height: 180, width: "100%", alignSelf: 'stretch',}}
+                    <Image style={{flex: 1, height: 200, width: "100%", alignSelf: 'stretch',}}
                            resizeMode="cover"
                            source={{uri: item.imageUrl}}/>
 
