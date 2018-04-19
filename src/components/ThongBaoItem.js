@@ -84,7 +84,7 @@ export default class ThongBaoItem extends Component {
                     <View style={{flex: 4, flexDirection: 'column', marginLeft: 10, marginTop: 10, marginBottom: 10}}>
                     <Text style={{flex: 2,fontWeight:'600'}} numberOfLines={1}
                                   ellipsizeMode={'tail'}>{item.title}</Text>
-                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{item.content}</Text>
+                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{item.description}</Text>
                         <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{convertTime}</Text>
                     </View>
                 </View>

@@ -52,9 +52,7 @@ export default class App extends Component<{}> {
 
 
     pushDeviceToken = (token_APP, device_token) => {
-        console.log("os", Platform);
-        // console.log("version",  DeviceInfo);
-
+        
         fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
             method: 'POST',
             headers: {
@@ -64,20 +62,13 @@ export default class App extends Component<{}> {
                 token: device_token,
                 os: Platform.OS,
                 version: Platform.Version,
-                deviceName:  DeviceInfo.getBrand()
+                deviceName:  Platform.os === "android"?DeviceInfo.getBrand(): "Iphone"
             })
         }).then(data => data.json()).then(data => {
             if(data.errorCode && data.errorCode === "401"){
                 logout(AsyncStorage,this.props)
             }
             console.log("data push device token", data)
-            var temp =JSON.stringify({
-                token: device_token,
-                os: Platform.OS,
-                version: Platform.Version,
-                deviceName:  DeviceInfo.getBrand()
-            });
-            console.log("josn firebse push",temp);
 
         }).catch(err => {
             console.log("call api token firebase erro: " + err);
@@ -91,11 +82,13 @@ export default class App extends Component<{}> {
         FCM.requestPermissions().then(() => console.log('granted')).catch(() => console.log('notification permission rejected'));
 
         FCM.getFCMToken().then(token => {
+            
             console.log("firebase_token",token);
-            AsyncStorage.setItem('token_firebase', token);
             AsyncStorage.getItem("token").then(token_APP => {
-
+                if(token_APP && token_APP !== null){
+                    console.log("push token call");
                 this.pushDeviceToken(token_APP, token);
+                }
             })
             // store fcm token in your server
         });

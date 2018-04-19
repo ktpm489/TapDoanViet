@@ -140,6 +140,7 @@ class Chat extends Component {
         if (this.input_msg === "")
             return;
         this.textInput.clear();
+        this.textInput.setNativeProps({text: ''})
         // console.log("msg:", this.input_msg);
         // console.log("user:", this.dataUser2._id);
 
