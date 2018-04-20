@@ -9,21 +9,25 @@ import {
     Picker,
     AsyncStorage, ActivityIndicator,
     Platform,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native';
+
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import Icon from 'react-native-vector-icons/dist/Entypo'
 import TinNhanItem from '../components/TinNhanItem';
 import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
 import Modal from 'react-native-modalbox';
 import {BASE_URL} from "../Constants";
-import {SEARCH_USER} from "../Constants";
+import {SEARCH_USER,ADD_MEMBER} from "../Constants";
 import {GET_GROUPCHAT} from "../Constants";
 import GroupChatItem from "../components/GroupChatItem";
 import logout from '../components/TokenExpired'
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
-export default class TinNhan extends Component {
+ class TinNhan extends Component {
     static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
         return {
@@ -113,6 +117,10 @@ export default class TinNhan extends Component {
         this.getListMessage();
     }
 
+    onLoading = (isLoading)=>{
+        this.setState({isLoading:isLoading});
+    }
+    
 
     render() {
         const {navigation} = this.props;
@@ -145,6 +153,8 @@ export default class TinNhan extends Component {
                                 navigation={navigation}
                                 onReloadBack ={this.onReloadBack}
                                 fromTinNhan={true}
+                                userInfo={this.props.userInfo}
+                                onLoading = {this.onLoading}
                             />
                         )
                     }}
@@ -154,21 +164,7 @@ export default class TinNhan extends Component {
                 
 
                 
-                {this.state.isLoading ?
-                    <View style={{
-                        top: -10,
-                        bottom: -10,
-                        left: -10,
-                        right: -10,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        position: 'absolute',
-                        zIndex: 1,
-                        backgroundColor: 'rgba(52, 52, 52, 0.3)'
-                    }}>
-                        <ActivityIndicator size="large" color="green"/>
-                    </View> : null
-                }
+               
 
 
             </ScrollView>
@@ -246,11 +242,46 @@ export default class TinNhan extends Component {
                         <Text style={{color: 'black'}}>Nhóm mới</Text>
                     </TouchableOpacity>
                 </Modal>
+                {this.state.isLoading ?
+                    <View style={{
+                        top: -10,
+                        bottom: -10,
+                        left: -10,
+                        right: -10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        zIndex: 1,
+                        backgroundColor: 'rgba(52, 52, 52, 0.3)'
+                    }}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View> : null
+                }
             </View>
         );
     }
 
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.ProfileReducers.userInfo,
+        SocketRef: state.SocketRef
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        
+
+    }
+};
+
+TinNhan = connect(mapStateToProps, mapDispatchToProps)(TinNhan);
+export default TinNhan;
+
 const styles = StyleSheet.create({
     iconTab: {
         height:24,

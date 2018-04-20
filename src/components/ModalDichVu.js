@@ -57,6 +57,17 @@ class ModalDichVu extends Component {
         this.countImageUpload = 0;
         this.countImageUploadDone = 0;
         this.urlUpload = "";
+
+
+        if(this.props.userInfo && this.props.userInfo.userInfo){
+            const userInfo = this.props.userInfo.userInfo;
+            this.name = userInfo.firstName +" "+ userInfo.lastName;
+            this.phone = userInfo.phoneNumber;
+            this.email = userInfo.email;
+            if(userInfo.apartmentAddress)
+             this.address = userInfo.apartmentAddress;
+            console.log("userInfo",userInfo);
+        }
        
         
     }
@@ -133,15 +144,7 @@ class ModalDichVu extends Component {
 
     render() {
         const { navigation } = this.props;
-        if(this.props.userInfo && this.props.userInfo.userInfo){
-            const userInfo = this.props.userInfo.userInfo;
-            this.name = userInfo.firstName +" "+ userInfo.lastName;
-            this.phone = userInfo.phoneNumber;
-            this.email = userInfo.email;
-            if(userInfo.apartmentAddress)
-             this.address = userInfo.apartmentAddress;
-            console.log("userInfo",userInfo);
-        }
+        console.log("render");
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ height: 50, flexDirection: 'row',borderBottomColor:'gray',borderBottomWidth:1 }} >
@@ -198,10 +201,10 @@ class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,paddingRight:2, alignSelf:'stretch' }}
+                            <TextInput style={{ color: "#000000", backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,paddingRight:2, alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
-                                value={this.name}
+                                defaultValue={this.name}
                                 onChangeText={(text)=>this.name = text}
                             />
 
@@ -226,7 +229,8 @@ class ModalDichVu extends Component {
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
                                 keyboardType='numeric'
-                                value={this.phone}
+                                editable={false}
+                                defaultValue={this.phone}
                                 onChangeText={(text)=>this.phone = text}
                             />
 
@@ -251,7 +255,7 @@ class ModalDichVu extends Component {
                             <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Địa chỉ"}
-                                value={this.address}
+                                defaultValue={this.address}
                                 onChangeText={(text)=>this.address = text}
                             />
 
@@ -373,6 +377,25 @@ class ModalDichVu extends Component {
                                 alert("Bạn phải nhập mô tả");
                                 return 0;
                             }
+                            if(this.state.dataImage1 != null){
+                                this.countImageUpload = this.countImageUpload+1;
+                                
+                                
+                            }
+                            if(this.state.dataImage2 != null){
+                                this.countImageUpload = this.countImageUpload+1;
+                                
+                                
+                            }
+                            if(this.state.dataImage3 != null){
+                                this.countImageUpload = this.countImageUpload+1;
+                                
+                            }
+
+                            if(this.countImageUpload <= 0){
+                                alert("Bạn phải gửi ít nhất một ảnh");
+                                return 0;
+                            }
                            this.callApiRegister();
                            this.props.closeModal();
                         }
@@ -407,13 +430,16 @@ class ModalDichVu extends Component {
                 return response.json();
             }).then(data => {
                 console.log('upload image response', data);
-                if(data && data.errorCode == 0){
+                if(data && data.errorCode === 0){
+                    
                     this.countImageUploadDone++;
                     if(this.urlUpload === "")
                         this.urlUpload = data.data.fileName;
                     else
                         this.urlUpload = this.urlUpload +","+data.data.fileName;
-                    if(this.countImageUploadDone == this.countImageUpload){
+                    console.log("1111",this.countImageUploadDone)
+                    console.log("1111",this.countImageUpload)
+                    if(this.countImageUploadDone === this.countImageUpload){
                         this.sendInfoToServer();
                     }
                 }else if(data.errorCode && data.errorCode === "401"){
@@ -433,17 +459,15 @@ class ModalDichVu extends Component {
         console.log('call upload image',this.state)
         console.log('count img',this.countImageUpload)
         if(this.state.dataImage1 != null){
-            this.countImageUpload = this.countImageUpload+1;
             this.uploadImage(this.state.dataImage1);
             
         }
         if(this.state.dataImage2 != null){
-            this.countImageUpload = this.countImageUpload+1;
+            
             this.uploadImage(this.state.dataImage2);
             
         }
         if(this.state.dataImage3 != null){
-            this.countImageUpload = this.countImageUpload+1;
             this.uploadImage(this.state.dataImage3);
             
         }
@@ -453,6 +477,18 @@ class ModalDichVu extends Component {
     sendInfoToServer=()=>{
 
         console.log("url_image",this.urlUpload);
+        let d = {
+                    
+            fullName: this.name,
+            phoneNumber: this.phone,
+            address: this.address,
+            images: this.urlUpload,
+            description: this.description,
+            serviceId: this.props.id_dichvu,
+            orderAt: this.fullDate
+            
+    };
+        console.log("data upload",d)
         
         AsyncStorage.getItem('token').then((value)=> {
             fetch(BASE_URL + CREATE_REQUEST, {
@@ -493,7 +529,10 @@ class ModalDichVu extends Component {
                
 
             }).catch(e => {
+                alert("Gửi yêu cầu thất bại")
+                this.props.onCallApiDone();
                 console.log('exception',e)
+              
             })
         });
 

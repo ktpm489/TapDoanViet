@@ -100,6 +100,7 @@ export default class ServiceHistory extends Component {
         this.setState({isLoading:state})
     }
     reloadData = ()=>{
+        this.setState({listHistory:[]})
         this.getServiceHistory();
     }
     render() {
