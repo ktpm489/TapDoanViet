@@ -260,7 +260,7 @@ export default class ItemServiceHistory extends Component {
                 >
                     <Text >
                         <Text style={{ fontWeight: "bold" }}>Mã đơn hàng: </Text>
-                        <Text>0000{this.props.dataItem.index + 1}</Text>
+                        <Text>#{item.code}</Text>
                     </Text>
                     {/* <Text>
                         <Text style={{ fontWeight: "bold" }}>Số điện thoại: </Text>

@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+    Alert
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -47,14 +48,61 @@ export default class GroupChatItem extends Component {
                 }
                 console.log('update read message: ', data);
                 
-
-
-               
             }).catch(e => {
                 console.log('exception',e)
             })
         });
        
+    }
+
+    AddMember = (item) => {
+        console.log("item---",item);
+        console.log("user---",this.props.userInfo);
+        if(this.props.userInfo && this.props.userInfo.id){
+            AsyncStorage.getItem("token").then(value => {
+
+                this.props.onLoading(true)
+                fetch(URL.BASE_URL + URL.ADD_MEMBER +item._id , {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": value
+                    },
+                    body: JSON.stringify({
+                        memberIds: [this.props.userInfo.id]
+    
+    
+                    })
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    console.log('add member', data)
+                    this.props.onLoading(false)
+    
+                    if(data.errorCode && data.errorCode === "401"){
+                        logout(AsyncStorage,this.props)
+                        return;
+                    }
+
+                    if(data && data.errorCode === 0){
+                        this.props.navigation.navigate('ChatGroup', {groupname: item.groupName, IdGroup: item._id,onReloadBack:this.props.onReloadBack});
+
+                    }else{
+                        Alert.alert("Có lỗi sảy ra",data.message)
+                    }
+                    
+    
+                }).catch(e => {
+                    console.log("exception", e);
+                    this.props.onLoading(false)
+                    Alert.alert("Lỗi kết nối","Vui lòng thử lại sau !")
+                });
+            });
+
+        }else{
+            Alert.alert("Thông báo","Có lỗi sảy ra, vui lòng thử lại sau !")
+        }
+        
     }
 
     render() {
@@ -79,8 +127,10 @@ export default class GroupChatItem extends Component {
                     if(fromSearch){
 
                         this.props.sendDataClick(item,index);
-                    }else
-                        navigation.navigate('ChatGroup', {groupname: item.groupName, IdGroup: item._id,onReloadBack:this.props.onReloadBack});
+                    }else{
+                        this.AddMember(item);
+                    }
+                       
                 }}
             >
                 <View key={index}

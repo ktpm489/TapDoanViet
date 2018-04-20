@@ -143,6 +143,7 @@ class DichVu extends Component {
         const {navigation} = this.props;
 
         return (
+            <View>
             <ScrollView
                 showsHorizontalScrollIndicator={true}
                 showVerticalScrollIndicator={true}
@@ -179,6 +180,7 @@ class DichVu extends Component {
                         </View>:null
                     }
             </ScrollView>
+            </View>
 
         );
     }

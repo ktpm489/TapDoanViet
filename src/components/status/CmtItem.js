@@ -31,7 +31,7 @@ class CmtItem extends Component {
                 <View style = {styles.viewCmt}>
                     <Text style = {styles.textCmt}>{item.content}</Text>
                     <View style = {{flexDirection:'row'}}>
-                        <Text>{moment(item.createdAt).format("DD-MM-YYYY HH:MM")}</Text>
+                        <Text>{moment(item.createdAt).format("DD-MM-YYYY HH:mm")}</Text>
                     </View>
 
                 </View>
