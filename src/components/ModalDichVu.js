@@ -393,10 +393,10 @@ class ModalDichVu extends Component {
                                 
                             }
 
-                            if(this.countImageUpload <= 0){
-                                Alert.alert("Thông báo","Bạn phải gửi ít nhất một ảnh");
-                                return 0;
-                            }
+                            // if(this.countImageUpload <= 0){
+                            //     Alert.alert("Thông báo","Bạn phải gửi ít nhất một ảnh");
+                            //     return 0;
+                            // }
                            this.callApiRegister();
                            this.props.closeModal();
                         }
@@ -471,6 +471,9 @@ class ModalDichVu extends Component {
         if(this.state.dataImage3 != null){
             this.uploadImage(this.state.dataImage3);
             
+        }
+        if(this.state.dataImage1 === null && this.state.dataImage2 === null&&this.state.dataImage3 === null){
+            this.sendInfoToServer();
         }
 
     }
