@@ -148,7 +148,7 @@ class StatusItems extends Component {
                                resizeMode="cover"
                         >
                         </Image>
-                        <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id})}
+                        <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id, onReloadBack:this.props.onReloadBack})}
                                           style={{
                                               marginLeft: 10, flex: 1,
                                               backgroundColor: '#F5F5F5', borderRadius: 50,

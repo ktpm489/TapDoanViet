@@ -137,7 +137,8 @@ class Login extends Component {
                                     </View>
                                 </TouchableOpacity>
                                 <View style={{ marginTop: 15, flexDirection: 'row', marginHorizontal: 20 }}>
-                                    <TouchableOpacity style={{ flex: 1 }}>
+                                    <TouchableOpacity style={{ flex: 1 }}
+                                    onPress = {()=> this.props.navigation.navigate('QuenMatKhau')}>
                                         <Text
                                             style={{
                                                 color: '#23b34c',
@@ -165,7 +166,7 @@ class Login extends Component {
                                         </Text>
                                     </TouchableOpacity>
                                     </View>
-                                    <View style={{justifyContent:'flex-end',flexDirection:'column'}}>
+                                    <View style={{justifyContent:'flex-end',flexDirection:'column',  marginLeft: 20}}>
                                     {/*<TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}*/}
                                         {/*style={{ marginLeft: 20, }}>*/}
                                         <Text style={styles.bottomText}>

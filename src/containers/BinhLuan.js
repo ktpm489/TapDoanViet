@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Image, AsyncStorage,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    BackHandler
 } from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -60,6 +61,21 @@ class BinhLuan extends Component {
         });
 
     }
+    // componentWillMount() {
+    //     BackHandler.addEventListener('hardwareBackPress', function() {
+    //         console.log('hihi')
+    //     }.bind(this));
+    // }
+    //
+    // componentWillUnmount() {
+    //     BackHandler.removeEventListener('hardwareBackPress');
+    // }
+    componentWillUnmount(){
+        if(this.props.navigation.state.params.onReloadBack)
+            this.props.navigation.state.params.onReloadBack();
+    }
+
+
 
     sendCmt = (postId) => {
 
