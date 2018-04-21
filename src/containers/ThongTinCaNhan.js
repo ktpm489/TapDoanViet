@@ -47,6 +47,7 @@ class ThongTinCaNhan extends Component {
             fileName: '',
             editable: false,
             check: true,
+            Name: '',
 
 
             dataProfile: '',
@@ -98,7 +99,7 @@ class ThongTinCaNhan extends Component {
             }, ()=> {
                 this.setState({
                     // FisrtName: this.state.dataProfile.firstName !==0 ? this.state.dataProfile.firstName : null,
-                    Name: this.state.dataProfile.firstName + this.state.dataProfile.lastName,
+                    Name: this.state.dataProfile.firstName +" " + this.state.dataProfile.lastName,
                     NgaySinh: this.state.dataProfile.birthDay !==0 ? this.state.dataProfile.birthDay : null,
                     SoDienThoai: this.state.dataProfile.phoneNumber !==0 ?  this.state.dataProfile.phoneNumber : null,
                     DiaChi:this.state.dataProfile.apartmentAddress !==0 ? this.state.dataProfile.apartmentAddress: null,
@@ -120,8 +121,8 @@ class ThongTinCaNhan extends Component {
 
     }
     EditInfo = () => {
-        console.log("lastname", this.state.LastName.split(" ",)[1])
-        console.log('edit info')
+        
+
         this.setState({
             editable: true,
             check: false ,
@@ -129,6 +130,23 @@ class ThongTinCaNhan extends Component {
 
     }
     ok = ()=> {
+        name = this.state.Name;
+        console.log('name', name)
+        let ArrName = name.split(" ")
+        let FirstName ="";
+        for (let i=0; i<= ArrName.length-2; i++){
+            FirstName = FirstName + " "+ ArrName[i];
+        }
+
+
+
+        LastName =  ArrName[ArrName.length-1]
+        console.log('FirstName', FirstName)
+        console.log('LastName', LastName)
+
+
+
+
         this.setState({
             editable: false,
             check: true,
@@ -146,7 +164,8 @@ class ThongTinCaNhan extends Component {
                 },
                 body: JSON.stringify({
                     email: this.state.Email,
-                    lastName: this.state.LastName,
+                    lastName: LastName,
+                    firstName: FirstName,
                     birthDay: this.state.NgaySinh,
                     apartmentAddress: this.state.DiaChi
                 })
@@ -254,7 +273,7 @@ class ThongTinCaNhan extends Component {
                             value = {this.state.Name}
                             underlineColorAndroid={this.state.underline}
                             editable={this.state.editable}
-                            onChangeText = {(LastName) => this.setState({LastName})}
+                            onChangeText = {(Name) => this.setState({Name})}
                             selectTextOnFocus={false}
                                 style = {styles.textinput}/>
                     </View>

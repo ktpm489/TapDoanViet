@@ -112,6 +112,7 @@ class TrangChu extends Component {
                         return (
                             <StatusItems
                                 dataItem={item}
+                                onReloadBack ={this.onReloadBack}
                                 navigation={navigation}/>
                         )
                     }

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {
     View,
     Text,
@@ -17,9 +17,9 @@ import {
 import Dimensions from 'Dimensions';
 import Communications from 'react-native-communications';
 import UserInput from "../components/Login/UserInput";
-import { addTodo, callApiLogin } from "../actions/LoginActions";
+import {addTodo, callApiLogin} from "../actions/LoginActions";
 import images from "../components/images";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 
 class Login extends Component {
@@ -30,7 +30,7 @@ class Login extends Component {
             MatKhau: '',
             showPass: true,
             press: false,
-            isLoading:false
+            isLoading: false
         }
         this.showPass = this.showPass.bind(this);
     }
@@ -39,7 +39,7 @@ class Login extends Component {
     }
 
     showPass() {
-        this.state.press === false ? this.setState({ showPass: false, press: true }) : this.setState({
+        this.state.press === false ? this.setState({showPass: false, press: true}) : this.setState({
             showPass: true,
             press: false
         });
@@ -47,13 +47,13 @@ class Login extends Component {
 
     Login() {
 
-        const { callApiLogin } = this.props;
-        this.setState({isLoading:true})
+        const {callApiLogin} = this.props;
+        this.setState({isLoading: true})
         callApiLogin(this.state.SoDienThoai, this.state.MatKhau).then(data => {
             console.log('sdt---', this.state.SoDienThoai);
             console.log('mk---', this.state.MatKhau);
             console.log('token---', data.token);
-            this.setState({isLoading:false})
+            this.setState({isLoading: false})
             if (data.errorCode === 0) {
                 AsyncStorage.setItem('token', data.token);
                 this.props.navigation.navigate('LoadData')
@@ -69,18 +69,18 @@ class Login extends Component {
                     'Thông báo',
                     data.message,
                     [
-                        { text: 'OK', onPress: () => console.log('OK Pressed') },
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
                     ],
-                    { cancelable: false }
+                    {cancelable: false}
                 )
             }
         }).catch(exception => {
-            
+
             this.setState({
                 isLoading: false,
                 error: true
             })
-            Alert.alert("Có lỗi","Vui lòng thử lại sau");
+            Alert.alert("Có lỗi", "Vui lòng thử lại sau");
         });
     }
 
@@ -90,41 +90,41 @@ class Login extends Component {
                 // style={{ backgroundColor: '#4c69a5' }}
                 // resetScrollToCoords={{ x: 0, y: 0 }}
                 contentContainerStyle={styles.container}
-            // scrollEnabled={false}
+                // scrollEnabled={false}
             >
                 <ImageBackground style={styles.picture}
-                    source={require('../images/wallpaper.png')}
+                                 source={require('../images/wallpaper.png')}
                 >
-                    <View style={{ flex: 1, justifyContent: 'space-between', }}>
-                        <View style={{ flex: 1 }}>
-                            <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                <Image source={images.logo} />
+                    <View style={{flex: 1, justifyContent: 'space-between',}}>
+                        <View style={{flex: 1}}>
+                            <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={images.logo}/>
                             </View>
-                            <View style={{ flex: 5, alignItems: 'center', marginTop: 40 }}>
+                            <View style={{flex: 5, alignItems: 'center', marginTop: 40}}>
                                 <UserInput nameIcon="user-circle"
                                     // keyboardType={'numeric'}
-                                    placeholder={'Nhập số điện thoại'}
-                                    keyboardType={'numeric'}
-                                    autoCapitalize={'none'}
-                                    returnKeyType={'done'}
-                                    autoCorrect={false}
-                                    style={{ marginTop: 20 }}
-                                    onChangeText={(SoDienThoai) => this.setState({ SoDienThoai })}
+                                           placeholder={'Nhập số điện thoại'}
+                                           keyboardType={'numeric'}
+                                           autoCapitalize={'none'}
+                                           returnKeyType={'done'}
+                                           autoCorrect={false}
+                                           style={{marginTop: 20}}
+                                           onChangeText={(SoDienThoai) => this.setState({SoDienThoai})}
                                 />
                                 <UserInput nameIcon="lock"
-                                    secureTextEntry={this.state.showPass}
-                                    placeholder='Nhập mật khẩu'
-                                    returnKeyType={'done'}
-                                    autoCapitalize={'none'}
-                                    autoCorrect={false}
-                                    style={{ marginTop: 20 }}
-                                    onChangeText={(MatKhau) => {
-                                        this.setState({ MatKhau })
-                                    }}
+                                           secureTextEntry={this.state.showPass}
+                                           placeholder='Nhập mật khẩu'
+                                           returnKeyType={'done'}
+                                           autoCapitalize={'none'}
+                                           autoCorrect={false}
+                                           style={{marginTop: 20}}
+                                           onChangeText={(MatKhau) => {
+                                               this.setState({MatKhau})
+                                           }}
                                 />
-                                <TouchableOpacity onPress={()=>this.showPass}
-                                    style={{ marginTop: 10 }}>
-                                    <Text style={{ color: '#23b34c' }}>Hiển thị mật khẩu</Text>
+                                <TouchableOpacity onPress={() => this.showPass}
+                                                  style={{marginTop: 10}}>
+                                    <Text style={{color: '#23b34c'}}>Hiển thị mật khẩu</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.Login()}>
                                     <View style={{
@@ -138,11 +138,12 @@ class Login extends Component {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                        <Text style={{ color: 'white', fontWeight: 'bold' }}>ĐĂNG NHẬP</Text>
+                                        <Text style={{color: 'white', fontWeight: 'bold'}}>ĐĂNG NHẬP</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <View style={{ marginTop: 15, flexDirection: 'row', marginHorizontal: 20 }}>
-                                    <TouchableOpacity style={{ flex: 1 }}>
+                                <View style={{marginTop: 15, flexDirection: 'row', marginHorizontal: 20}}>
+                                    <TouchableOpacity style={{flex: 1}}
+                                                      onPress={() => this.props.navigation.navigate('QuenMatKhau')}>
                                         <Text
                                             style={{
                                                 color: '#23b34c',
@@ -151,8 +152,8 @@ class Login extends Component {
                                             }}>Quên
                                             mật khẩu?</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ flex: 1 }}
-                                        onPress={() => this.props.navigation.navigate('DangKi')}>
+                                    <TouchableOpacity style={{flex: 1}}
+                                                      onPress={() => this.props.navigation.navigate('DangKi')}>
                                         <Text
                                             style={{
                                                 color: '#23b34c',
@@ -162,35 +163,45 @@ class Login extends Component {
                                             kí</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ flexDirection: 'row',flex:1, marginHorizontal: 20 }}>
-                                    <View style={{justifyContent:'flex-end',flexDirection:'column'}}>
-                                    <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
-                                        <Text style={styles.bottomText}>
-                                            Hotline: 0902703073
-                                        </Text>
-                                    </TouchableOpacity>
+                                <View style={{flexDirection: 'row', flex: 1, marginHorizontal: 20}}>
+                                    <View style={{justifyContent: 'flex-end', flexDirection: 'column'}}>
+                                        <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
+                                            <Text style={styles.bottomText}>
+                                                Hotline: 0902703073
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <View style={{justifyContent:'flex-end',flexDirection:'column'}}>
-                                    {/*<TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}*/}
+                                    <View style={{justifyContent: 'flex-end', flexDirection: 'column', marginLeft: 20}}>
+                                        {/*<TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}*/}
                                         {/*style={{ marginLeft: 20, }}>*/}
                                         <Text style={styles.bottomText}>
                                             Website: tapdoanviet.vn/
                                         </Text>
-                                    {/*</TouchableOpacity>*/}
+                                        {/*</TouchableOpacity>*/}
                                     </View>
 
-                        </View>
+                                </View>
                             </View>
-                            
+
                         </View>
-                       
+
                     </View>
                 </ImageBackground>
-                {this.state.isLoading?
-                <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
-                    <ActivityIndicator size="large" color="green"/>
-                </View>:null
-            }
+                {this.state.isLoading ?
+                    <View style={{
+                        top: -10,
+                        bottom: -10,
+                        left: -10,
+                        right: -10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        zIndex: 1,
+                        backgroundColor: 'rgba(52, 52, 52, 0.3)'
+                    }}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View> : null
+                }
             </KeyboardAwareScrollView>
         );
     }
@@ -211,7 +222,7 @@ const styles = StyleSheet.create({
     bottomText: {
         fontWeight: 'bold',
         color: '#23b34c',
-        
+
 
     },
     container: {

@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Image, AsyncStorage,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    BackHandler
 } from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -59,6 +60,13 @@ class BinhLuan extends Component {
 
     }
 
+    componentWillUnmount(){
+        if(this.props.navigation.state.params.onReloadBack)
+            this.props.navigation.state.params.onReloadBack();
+    }
+
+
+
     sendCmt = (postId) => {
 
         this.props.SocketRef.socket.emit("new_comment", postId);
@@ -78,7 +86,8 @@ class BinhLuan extends Component {
     }
 
     componentWillUnmount(){
-        this.props.navigation.state.params.onbackReload(this.state.dataCmt)
+        if(this.props.navigation.state.params.onReloadBack)
+            this.props.navigation.state.params.onReloadBack();
     }
 
     render (){
