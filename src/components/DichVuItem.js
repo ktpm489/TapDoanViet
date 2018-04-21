@@ -46,20 +46,20 @@ export default class DichVuItem extends Component {
                 <View key={item.index}
                       style={{flex: 1,
 
-                        borderRadius: 1,
-                        borderWidth:1,
-                        borderColor: '#cac6c6',
-                        shadowColor: '#cac6c6',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.8,
-                        backgroundColor:'#ffffff',
+                        // borderRadius: 1,
+                        // borderWidth:1,
+                        // borderColor: '#cac6c6',
+                        // shadowColor: '#cac6c6',
+                        // shadowOffset: { width: 0, height: 2 },
+                        // shadowOpacity: 0.8,
+                        // backgroundColor:'#ffffff',
                           marginLeft:1,
                           marginRight:1,
                           marginTop:1,
                           marginBottom:1,
                           
                           width:Dimention.DEVICE_WIDTH/3-9,
-                           height:Dimention.DEVICE_WIDTH/3,
+                           height:Dimention.DEVICE_WIDTH/3+20,
                           flexDirection: 'column', justifyContent: 'flex-start',alignItems:'center' }}>
                     
                 
@@ -67,7 +67,7 @@ export default class DichVuItem extends Component {
                         
                     source={{uri:item.iconUrl}}
                     resizeMode="cover"
-                    style={{width:'100%',height:'70%'}}
+                    style={{width:Dimention.DEVICE_WIDTH/3-9,height:Dimention.DEVICE_WIDTH/3-9}}
                />
                <View style ={{flex:1,justifyContent: 'center',alignItems:'center',marginLeft:2,marginRight:2}}>
                     <Text style={{ textAlign:'center',fontSize:10, alignSelf:'center',color:'#000000',fontWeight:'bold',}}>{fromSubDichVu? item.serviceName.toUpperCase():item.name.toUpperCase()}</Text>

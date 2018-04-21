@@ -3,24 +3,41 @@ import {
     View,
     Text,
     Image,
-    AsyncStorage
+    AsyncStorage,
+    NetInfo,
+    TouchableOpacity
 } from 'react-native';
+import Communications from 'react-native-communications';
 import { NavigationActions } from 'react-navigation'
 
 export default class Launcher extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            isTime: false
+            isTime: false,
+            isNetWork:null
         }
+
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+            if(connectionInfo.type === "none" || connectionInfo.type ==="unknown"){
+                this.setState({isNetWork:false});
+
+            }else{
+                this.setState({isNetWork:true});
+                setTimeout(()=> {
+                    this.setState({
+                        isTime: true
+                    })
+                    this.pushScreen();
+                },500)
+                
+            }
+          });
+        
     }
     componentWillMount(){
-        setTimeout(()=> {
-            this.setState({
-                isTime: true
-            })
-            this.pushScreen();
-        },500)
+        
     }
     pushScreen(){
         AsyncStorage.getItem('isFirstLogin').then((isFirstLogin)=>{
@@ -69,11 +86,23 @@ export default class Launcher extends Component{
         
     }
     render (){
+
         return (
             <View style = {{ flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
                 <Image
                     source={require('../../src/images/logo.png')}
                 />
+                {this.state.isNetWork !== null && this.state.isNetWork===false?
+                        <View>
+                        <Text style={{color:'red',textAlign:'center',alignSelf:'center',fontWeight:'400',fontSize:20}}>Không có kết nối Internet</Text>
+                        <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
+                            <Text style={{color:'red',textAlign:'center',alignSelf:'center',fontWeight:'400',fontSize:20}}>
+                                Hotline: 0902.703.073
+                            </Text>
+                        </TouchableOpacity>
+                        </View>
+                    :null
+                }
             </View>
         )
 

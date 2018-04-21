@@ -60,15 +60,15 @@ class Chat extends Component {
             // console.log("token", this.token)
 
 
-            if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
-                this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
-                this.props.SocketRef.socket.on('message', (dataMessage) => {
-                    console.log("receiev msg", dataMessage);
-                    let newMsg = this.state.dataChat;
-                    newMsg.push(dataMessage);
-                    this.setState({dataChat: newMsg});
-                });
-                this.props.SocketRef.socket.on('owner_message', (dataMessage) => {
+                if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
+                    this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
+                    this.props.SocketRef.socket.on('message', (dataMessage) => {
+                        console.log("receiev msg", dataMessage);
+                        let newMsg = this.state.dataChat;
+                        newMsg.push(dataMessage);
+                        this.setState({dataChat: newMsg});
+                    });
+                    this.props.SocketRef.socket.on('owner_message', (dataMessage) => {
                     console.log("receiev owner_message", dataMessage);
                     let newMsg2 = this.state.dataChat;
                     newMsg2.push(dataMessage);

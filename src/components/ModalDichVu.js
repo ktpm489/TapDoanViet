@@ -206,6 +206,7 @@ class ModalDichVu extends Component {
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
                                 defaultValue={this.name}
+                                returnKeyType={"next"}
                                 onChangeText={(text)=>this.name = text}
                             />
 
@@ -255,8 +256,9 @@ class ModalDichVu extends Component {
                             />
                             <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
-                                placeholder={"Địa chỉ"}
+                                placeholder={"P101, Tòa nhà Victoria, Quận Hà Đông"}
                                 defaultValue={this.address}
+                                returnKeyType={"done"}
                                 onChangeText={(text)=>this.address = text}
                             />
 
@@ -292,8 +294,10 @@ class ModalDichVu extends Component {
                                     alignSelf:'stretch'
                                 }}
                                 onChangeText={(text)=>this.description = text}
-                                multiline={true}
+                                returnKeyType={"done"}
+                                // multiline={true}
                                 numberOfLines={5}
+                                
                                 placeholder={"Thêm thông tin mô tả rõ hơn yêu cầu của bạn..."}
 
                             />

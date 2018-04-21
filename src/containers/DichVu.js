@@ -7,7 +7,8 @@ import {
     FlatList,ScrollView,
     ActivityIndicator,
     Image,
-    StyleSheet
+    StyleSheet,
+    NetInfo
 } from 'react-native';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -53,10 +54,12 @@ class DichVu extends Component {
           
             listDichVu: [],
             imageSlider:[],
-            isLoading:false
+            isLoading:false,
+            isNetWork:true
 
         };
 
+        
 
         console.ignoredYellowBox = [
             'Setting a timer'
@@ -138,6 +141,7 @@ class DichVu extends Component {
     }
 
     componentWillUnmount() {
+        
     
     }
 
@@ -183,6 +187,7 @@ class DichVu extends Component {
                             <ActivityIndicator size="large" color="green"/>
                         </View>:null
                     }
+                    
             </ScrollView>
             </View>
 

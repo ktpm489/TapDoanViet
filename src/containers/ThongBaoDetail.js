@@ -6,7 +6,8 @@ import {
     Image,
     TouchableOpacity,
     AsyncStorage,
-    ActivityIndicator
+    ActivityIndicator,
+    WebView
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -115,33 +116,33 @@ callApiDetailNoti = ()=>{
         return (
 
         
-                <View 
-                      style={{flex: 1, flexDirection: 'column',margin:10 , alignItems: 'center'}}>
-                    <Image style={myStyle.image_circle}
-                        source={require('../../src/images/logo.png')}
-                           resizeMode="cover"
-                    >
-                    </Image>
+                // <View 
+                //       style={{flex: 1, flexDirection: 'column',margin:10 , alignItems: 'center'}}>
+                //     <Image style={myStyle.image_circle}
+                //         source={require('../../src/images/logo.png')}
+                //            resizeMode="cover"
+                //     >
+                //     </Image>
                    
-                    <Text style={{fontWeight: '600',fontSize:16}} >{item.title}</Text>
-                        <Text>{item.content}</Text>
-                        <Text>{convertTime}</Text>
+                //     <Text style={{fontWeight: '600',fontSize:16}} >{item.title}</Text>
+                //         <Text>{item.content}</Text>
+                //         <Text>{convertTime}</Text>
                    
-                </View>
+                // </View>
                 
 
-        //     <View style={{flex:1}}>
-        //     <WebView
-        //    // source={{ html: item.content }}
+            <View style={{flex:1}}>
+            <WebView
+           source={{ html: item.content }}
         //    source={{ uri: "https://dayngheso1.vn/" }}
-        //    style = {{flex: 1,}}
-        //    />
-        //    {this.state.isLoading?
-        //            <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
-        //                <ActivityIndicator size="large" color="green"/>
-        //            </View>:null
-        //        }
-        //    </View>
+           style = {{flex: 1,}}
+           />
+           {this.state.isLoading?
+                   <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                       <ActivityIndicator size="large" color="green"/>
+                   </View>:null
+               }
+           </View>
             
             
             )

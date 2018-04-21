@@ -91,13 +91,14 @@ class TienIch extends Component {
         return (
             
             
-           <View>
+           <View style = {{flex:1}}>
                 <FlatList 
                     data={this.state.listTienIch}
                     renderItem={
                         this.itemTienIch
                     }
                     keyExtractor={(item, index) => index.toString()}
+                    style={{flex:1}}
                 />
                 {this.state.isLoading?
                     <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>

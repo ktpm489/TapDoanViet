@@ -41,6 +41,7 @@ export default class ServiceHistory extends Component {
             listHistory: [],
             isLoading:false
         };
+        console.log("goto constructer");
        
     }
 

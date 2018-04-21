@@ -12,7 +12,8 @@ import {
     Image,
     TextInput,
     KeyboardAvoidingView,
-    ActivityIndicator
+    ActivityIndicator,
+    Linking
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Communications from 'react-native-communications';
@@ -167,17 +168,25 @@ class Login extends Component {
                                     <View style={{justifyContent: 'flex-end', flexDirection: 'column'}}>
                                         <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
                                             <Text style={styles.bottomText}>
-                                                Hotline: 0902703073
+                                                Hotline: 0902.703.073
                                             </Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={{justifyContent: 'flex-end', flexDirection: 'column', marginLeft: 20}}>
-                                        {/*<TouchableOpacity onPress={() => Communications.phonecall('0963250395', true)}*/}
-                                        {/*style={{ marginLeft: 20, }}>*/}
+                                        <TouchableOpacity onPress={() => {
+                                            let url = "homesun.vn";
+                                            console.log("url",url);
+                                            Linking.getInitialURL().then((url) => {
+                                                if (url) {
+                                                  console.log('Initial url is: ' + url);
+                                                }
+                                              }).catch(err => console.error('An error occurred', err));
+                                        }}
+                                        style={{ marginLeft: 20, }}>
                                         <Text style={styles.bottomText}>
-                                            Website: tapdoanviet.vn/
+                                            Website: Homesun.vn
                                         </Text>
-                                        {/*</TouchableOpacity>*/}
+                                        </TouchableOpacity>
                                     </View>
 
                                 </View>
@@ -202,6 +211,7 @@ class Login extends Component {
                         <ActivityIndicator size="large" color="green"/>
                     </View> : null
                 }
+                
             </KeyboardAwareScrollView>
         );
     }
@@ -221,7 +231,8 @@ const styles = StyleSheet.create({
     },
     bottomText: {
         fontWeight: 'bold',
-        color: '#23b34c',
+        color: '#000000',
+        fontSize: 16,
 
 
     },
