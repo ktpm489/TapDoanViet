@@ -286,7 +286,7 @@ class ThongTinCaNhan extends Component {
                             nhân</Text>
                         <View style={{height: 1, marginHorizontal: 10, backgroundColor: '#9E9E9E', marginTop: 5}}/>
                         <View style={[styles.viewItem, {flexDirection: "row"}]}>
-                            <Text style={{fontSize: 15, color: 'black'}}>Họ*: </Text>
+                            <Text style={{fontSize: 15, color: 'black'}}>Họ: </Text>
                             <TextInput
                                 value={this.state.FisrtName}
                                 underlineColorAndroid={this.state.underline}
@@ -294,7 +294,7 @@ class ThongTinCaNhan extends Component {
                                 onChangeText={(FisrtName) => this.setState({FisrtName})}
                                 selectTextOnFocus={false}
                                 style={[styles.textinput, {flex:1}]}/>
-                            <Text style={{fontSize: 15, color: 'black'}}>Tên*: </Text>
+                            <Text style={{fontSize: 15, color: 'black'}}>Tên: </Text>
                             <TextInput
                                 value={this.state.LastName}
                                 underlineColorAndroid={this.state.underline}
