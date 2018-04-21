@@ -63,52 +63,59 @@ class GopYPhanHoi extends Component {
     }
     BaoCaoSaiPham =  ()=> {
         this.textInput.clear();
-        AsyncStorage.getItem("token").then(value => {
+        if (this.state.MoTa == "") {
+            Alert.alert("Thông báo", "Nhập nội dung báo cáo sai phạm");
+        }
+        else {
+            AsyncStorage.getItem("token").then(value => {
 
-            fetch(BASE_URL + FEEDBACK, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": value
-                },
-                body: JSON.stringify({
-                    content: this.state.MoTa ,
-                    image: this.state.fileName
+                fetch(BASE_URL + FEEDBACK, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": value
+                    },
+                    body: JSON.stringify({
+                        content: this.state.MoTa ,
+                        image: this.state.fileName
 
 
-                })
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                if(data.errorCode===0) {
-                    Alert.alert(
-                        'Alert',
-                        data.message,
-                        [
-                            {text: 'OK', onPress: () => console.log('OK Pressed')},
-                        ],
-                        { cancelable: false }
-                    )
-                }
-                else if(data.errorCode && data.errorCode === "401"){
-                    logout(AsyncStorage,this.props)
-                    return;
-                }
-                else {
-                    Alert.alert(
-                        'Thông báo',
-                        data.message,
-                        [
-                            {text: 'OK', onPress: () => console.log('OK Pressed')},
-                        ],
-                        { cancelable: false }
-                    )
-                }
+                    })
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    console.log('data', data)
+                    if(data.errorCode===0) {
+                        Alert.alert(
+                            'Alert',
+                            data.message,
+                            [
+                                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                    else if(data.errorCode && data.errorCode === "401"){
+                        logout(AsyncStorage,this.props)
+                        return;
+                    }
+                    else {
+                        Alert.alert(
+                            'Thông báo',
+                            data.message,
+                            [
+                                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                            ],
+                            { cancelable: false }
+                        )
+                    }
 
-            }).catch(e => {
-                console.log("exception", e);
+                }).catch(e => {
+                    console.log("exception", e);
+                });
             });
-        });
+        }
+
     }
     render (){
         let img = this.state.avatarSource == null? null:

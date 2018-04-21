@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     Picker,
+    ScrollView,
     Alert, AsyncStorage,
 } from 'react-native';
 import Dimensions from 'Dimensions';
@@ -139,7 +140,7 @@ class NhapThongTin extends Component {
     render() {
         dataToaNha = this.state.dataToa;
         return (
-            <View style = {{backgroundColor:'white', flex:1}}>
+            <ScrollView style = {{backgroundColor:'white', flex:1}}>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15, marginTop: 10}}>Họ*</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
@@ -195,7 +196,7 @@ class NhapThongTin extends Component {
                     </View>
                 </TouchableOpacity>
 
-            </View>
+            </ScrollView>
         )
     }
 }
