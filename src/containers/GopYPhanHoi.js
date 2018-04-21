@@ -87,7 +87,7 @@ class GopYPhanHoi extends Component {
                     console.log('data', data)
                     if(data.errorCode===0) {
                         Alert.alert(
-                            'Alert',
+                            'Thông báo',
                             data.message,
                             [
                                 {text: 'OK', onPress: () => console.log('OK Pressed')},
