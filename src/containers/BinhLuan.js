@@ -37,17 +37,15 @@ class BinhLuan extends Component {
             dataCmt: params.itemCmt
 
         }
+
         AsyncStorage.getItem('token').then((token) => {
             this.token = token;
-            // console.log("token", this.token)
 
 
-            if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
-                // this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
+            if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected ) {
+                
                 this.props.SocketRef.socket.on('comment', (newCmt) => {
                     console.log("receiev msg", newCmt);
-                    // let newCmt = this.state.dataCmt;
-                    // newCmt.push(dataCmt);
                     this.setState({dataCmt: newCmt});
                 });
 
@@ -77,6 +75,11 @@ class BinhLuan extends Component {
             this.sendCmt(params.idRoom)
         })
     }
+
+    componentWillUnmount(){
+        this.props.navigation.state.params.onbackReload(this.state.dataCmt)
+    }
+
     render (){
         return (
 
@@ -135,7 +138,7 @@ class BinhLuan extends Component {
 
                     />
                     <TouchableOpacity
-                        onPress={this.Comment}
+                        onPress={()=>this.Comment}
                     >
                         <Image
                             style={{

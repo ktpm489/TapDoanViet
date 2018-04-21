@@ -117,7 +117,7 @@ class Login extends Component {
                                         this.setState({ MatKhau })
                                     }}
                                 />
-                                <TouchableOpacity onPress={this.showPass}
+                                <TouchableOpacity onPress={()=>this.showPass}
                                     style={{ marginTop: 10 }}>
                                     <Text style={{ color: '#23b34c' }}>Hiển thị mật khẩu</Text>
                                 </TouchableOpacity>

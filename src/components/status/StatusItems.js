@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Image,
     StyleSheet, AsyncStorage,
+    Alert
 
 } from 'react-native'
 import Dimensions from 'Dimensions';
@@ -15,7 +16,34 @@ import {BASE_URL, CREATE_GROUP, LIKE} from "../../Constants";
 import logout from '../TokenExpired'
 import {connect} from "react-redux";
 class StatusItems extends Component {
-    likePost = () => {
+
+    constructor(props){
+        super(props)
+    
+        
+        this.state = {
+            reload: 0,
+            liked:false
+
+        }
+        this.arrUserLike = this.props.dataItem.item.likes;
+        if(this.arrUserLike && this.arrUserLike.length > 0 && this.props.InfoUser && this.props.InfoUser.userInfo && this.props.InfoUser.userInfo.id){
+            console.log("arr user like",this.arrUserLike)
+            console.log("user",this.props.InfoUser.userInfo)
+            if(this.arrUserLike.indexOf(this.props.InfoUser.userInfo.id) > -1){
+                this.setState({liked:true})
+            }
+            
+            
+
+        }
+    }
+
+
+
+    likePost = (postId) => {
+       
+        console.log("postId",postId);
         AsyncStorage.getItem("token").then(value => {
 
             fetch(BASE_URL + LIKE, {
@@ -25,7 +53,7 @@ class StatusItems extends Component {
                     "x-access-token": value
                 },
                 body: JSON.stringify({
-                    postId: "",
+                    postId: postId,
                     action: 1
 
 
@@ -33,17 +61,26 @@ class StatusItems extends Component {
             }).then(response => {
                 return response.json()
             }).then(data => {
+                console.log("data like",data);
                 if(data.errorCode && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
+                }else if(data.errorCode && data.errorCode === 0){
+                    this.setState({liked:true});
+                }else{
+                    Alert.alert("Thông báo",data.message);
                 }
             }).catch(e => {
                 console.log("exception", e);
+                Alert.alert("Thông báo","Có lỗi khi like");
             });
         });
+    
+
+        
 
     }
-    unlikePost = () => {
+    unlikePost = (postId) => {
         AsyncStorage.getItem("token").then(value => {
 
             fetch(BASE_URL + LIKE, {
@@ -53,7 +90,7 @@ class StatusItems extends Component {
                     "x-access-token": value
                 },
                 body: JSON.stringify({
-                    postId: "",
+                    postId: postId,
                     action: 0
 
 
@@ -61,18 +98,33 @@ class StatusItems extends Component {
             }).then(response => {
                 return response.json()
             }).then(data => {
+                console.log("data unlike",data)
                 if(data.errorCode && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
+                }else if(data.errorCode && data.errorCode === 0){
+                        this.setState({liked:false});
+                }else{
+                    Alert.alert("Thông báo",data.message);
                 }
             }).catch(e => {
                 console.log("exception", e);
+                Alert.alert("Thông báo","Có lỗi khi unlike");
             });
         });
 
     }
+
+    onbackReload = (dataNewComment)=>{
+        // console.log("dataNewComment",dataNewComment);
+        this.props.dataItem.item.comments = dataNewComment;
+        this.setState({reload:this.state.reload++});
+        // console.log("state-cmt",this.state.reload);
+    }
+
     render (){
         const {item} = this.props.dataItem;
+        
         const {navigation, InfoUser} = this.props;
         if (InfoUser.length <= 0){
             return null
@@ -115,8 +167,10 @@ class StatusItems extends Component {
                     }
                     <View style = {{flexDirection:'row', marginTop:20, justifyContent:'space-between'}}>
                         <View style = {{flexDirection:'row', marginLeft:10}}>
-                            <Icon1 name="like" size={25} color="#424242" />
-                            <Text>1</Text>
+                            <Icon1 name="like" size={25} color={this.state.liked?'blue':"#424242"} />
+                            <Text style={{
+                                color:this.state.liked?'blue':null
+                            }} >Thích</Text>
                         </View>
                         <View style = {{flexDirection:'row', marginRight:10}}>
                             {/*<Icon1 name="comment" size={25} color="#424242" />*/}
@@ -128,7 +182,9 @@ class StatusItems extends Component {
                     <View style ={{flexDirection:'row', marginTop:5, justifyContent:'space-between'}}>
                         <View style = {{flexDirection:'row', marginLeft:20 }}>
                             <Icon1 name="like" size={25} color="#424242" />
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={()=>this.state.liked?this.unlikePost(item.id):this.likePost(item.id)}
+                            >
                                 <Text style = {{color : '#424242'}}>Thích</Text>
                             </TouchableOpacity>
                         </View>
@@ -148,7 +204,7 @@ class StatusItems extends Component {
                                resizeMode="cover"
                         >
                         </Image>
-                        <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id})}
+                        <TouchableOpacity onPress = {() => navigation.navigate('BinhLuan', {itemCmt: item.comments, idRoom: item.id,onbackReload:this.onbackReload})}
                                           style={{
                                               marginLeft: 10, flex: 1,
                                               backgroundColor: '#F5F5F5', borderRadius: 50,

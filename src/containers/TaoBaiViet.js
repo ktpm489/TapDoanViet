@@ -148,7 +148,7 @@ class TaoBaiViet extends Component {
                                    placeholderTextSize = "20"/>
                     </View>
                 </View>
-                {/*<TouchableOpacity onPress={this.upload.bind(this)}>*/}
+                {/*<TouchableOpacity onPress={()=>this.upload.bind(this)}>*/}
                 {/*<Text style = {{fontSize: 30}}>Upload</Text>*/}
                 {/*</TouchableOpacity>*/}
 
@@ -156,7 +156,7 @@ class TaoBaiViet extends Component {
 
                 <View style = {{flexDirection:'row', marginTop:50, minHeight:30,  justifyContent: 'space-between', alignItems:'center'}}>
                     <Text>Thêm vào bài viết của bạn</Text>
-                    <TouchableOpacity onPress={this.show.bind(this)}>
+                    <TouchableOpacity onPress={()=>this.show.bind(this)}>
                         <Icon name="md-images" size={30} color="#900"
                               style = {{flex:1}}/>
                     </TouchableOpacity>
