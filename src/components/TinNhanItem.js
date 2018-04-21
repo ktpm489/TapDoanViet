@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'

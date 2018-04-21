@@ -12,7 +12,7 @@ export default class ItemLeftMenu extends Component {
     render(){
         return(
             <TouchableOpacity
-                onPress={()=>this.props.onPress}
+                onPress={this.props.onPress}
                 style={{flexDirection: 'row',marginTop:20}}>
                 <View style = {{marginLeft: 5, flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Image style = {styles.img}

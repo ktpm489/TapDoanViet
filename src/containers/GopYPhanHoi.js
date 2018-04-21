@@ -121,7 +121,7 @@ class GopYPhanHoi extends Component {
                 {
                     this.state.isCheck ?
                     <View style={styles.viewImage}>
-                        <TouchableOpacity onPress={()=>this.show.bind(this)}>
+                        <TouchableOpacity onPress={this.show.bind(this)}>
                             <Image
                                 source={require('../images/camera.png')}
                                 style={styles.imagePost}

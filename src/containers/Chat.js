@@ -137,10 +137,11 @@ class Chat extends Component {
 
 
     sendMessage = () => {
+       
         if (this.input_msg === "")
             return;
         this.textInput.clear();
-        this.textInput.setNativeProps({text: ''})
+        // this.textInput.setNativeProps({text: ''})
         // console.log("msg:", this.input_msg);
         // console.log("user:", this.dataUser2._id);
 
@@ -246,7 +247,7 @@ class Chat extends Component {
 
                     />
                     <TouchableOpacity
-                        onPress={()=>this.sendMessage}
+                        onPress={this.sendMessage()}
                         style={{justifyContent:'center',alignItems:'center'}}
                     >
                         <Image
