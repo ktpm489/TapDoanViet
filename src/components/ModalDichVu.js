@@ -8,7 +8,8 @@ import {
     TextInput,
     TouchableOpacity,
     AsyncStorage,
-    FlatList
+    FlatList,
+    Alert
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -364,17 +365,17 @@ class ModalDichVu extends Component {
                                 
                                 //  return;
                             }else{
-                                alert("Bạn chưa chọn thời gian đặt lịch");
+                                Alert.alert("Thông báo","Bạn chưa chọn thời gian đặt lịch");
                                 return 0;
                             }
 
                             if(this.name === "" || this.phone === "" || this.address === "" ){
-                                alert("Bạn phải nhập đầy đủ thông tin");
+                                Alert.alert("Thông báo","Bạn phải nhập đầy đủ thông tin");
                                 return 0;
                             }
 
                             if(this.description === ""){
-                                alert("Bạn phải nhập mô tả");
+                                Alert.alert("Thông báo","Bạn phải nhập mô tả");
                                 return 0;
                             }
                             if(this.state.dataImage1 != null){
@@ -393,7 +394,7 @@ class ModalDichVu extends Component {
                             }
 
                             if(this.countImageUpload <= 0){
-                                alert("Bạn phải gửi ít nhất một ảnh");
+                                Alert.alert("Thông báo","Bạn phải gửi ít nhất một ảnh");
                                 return 0;
                             }
                            this.callApiRegister();
@@ -524,12 +525,12 @@ class ModalDichVu extends Component {
                     logout(AsyncStorage,this.props)
                     return;
                 }else{
-                    alert(data.message);
+                    Alert.alert("Có lỗi",data.message);
                 }
                
 
             }).catch(e => {
-                alert("Gửi yêu cầu thất bại")
+                Alert.alert("Có lỗi","Gửi yêu cầu thất bại")
                 this.props.onCallApiDone();
                 console.log('exception',e)
               

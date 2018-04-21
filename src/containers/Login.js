@@ -62,7 +62,7 @@ class Login extends Component {
             }
             else {
                 this.setState({
-                    loading: false,
+                    isLoading: false,
                     error: true
                 })
                 Alert.alert(
@@ -75,7 +75,12 @@ class Login extends Component {
                 )
             }
         }).catch(exception => {
-            console.log("exception", exception);
+            
+            this.setState({
+                isLoading: false,
+                error: true
+            })
+            Alert.alert("Có lỗi","Vui lòng thử lại sau");
         });
     }
 
@@ -117,7 +122,7 @@ class Login extends Component {
                                         this.setState({ MatKhau })
                                     }}
                                 />
-                                <TouchableOpacity onPress={this.showPass}
+                                <TouchableOpacity onPress={()=>this.showPass}
                                     style={{ marginTop: 10 }}>
                                     <Text style={{ color: '#23b34c' }}>Hiển thị mật khẩu</Text>
                                 </TouchableOpacity>
