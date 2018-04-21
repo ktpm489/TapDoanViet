@@ -247,7 +247,7 @@ class Chat extends Component {
 
                     />
                     <TouchableOpacity
-                        onPress={this.sendMessage()}
+                        onPress={this.sendMessage}
                         style={{justifyContent:'center',alignItems:'center'}}
                     >
                         <Image

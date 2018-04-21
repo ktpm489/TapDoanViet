@@ -66,6 +66,7 @@ class BinhLuan extends Component {
     }
     Comment =() => {
         const { params } = this.props.navigation.state
+        console.log("this.textInput",this.textInput)
         this.textInput.clear();
         let SendCMT = this.input_msg;
         // console.log('sendcmt', s)
@@ -138,7 +139,8 @@ class BinhLuan extends Component {
 
                     />
                     <TouchableOpacity
-                        onPress={()=>this.Comment}
+                        onPress={this.Comment}
+                    
                     >
                         <Image
                             style={{

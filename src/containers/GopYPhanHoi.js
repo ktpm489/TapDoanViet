@@ -96,7 +96,7 @@ class GopYPhanHoi extends Component {
                 }
                 else {
                     Alert.alert(
-                        'Alert',
+                        'Thông báo',
                         data.message,
                         [
                             {text: 'OK', onPress: () => console.log('OK Pressed')},

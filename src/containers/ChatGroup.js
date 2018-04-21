@@ -247,7 +247,7 @@ class ChatGroup extends Component {
 
                     />
                     <TouchableOpacity
-                        onPress={this.sendMessage()}
+                        onPress={this.sendMessage}
                     >
                         <Image
                             style={{
