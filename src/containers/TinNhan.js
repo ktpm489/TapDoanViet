@@ -121,8 +121,17 @@ import logout from '../components/TokenExpired'
         this.setState({isLoading:isLoading});
     }
     
-    
+    componentWillMount(){
+        console.log("will mount");
+    }
 
+    componentDidMount(){
+        console.log("didmount")
+    }
+
+    componentWillReceiveProps(){
+        this.getListMessage();
+    }
     render() {
         const {navigation} = this.props;
         return (
