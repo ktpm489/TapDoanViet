@@ -28,6 +28,7 @@ export const callApiDichVu = () => {
                     })
                     resolve(data);
                 }).catch(e => {
+                    reject(e);
                     console.log('exception')
                 })
             });

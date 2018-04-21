@@ -62,7 +62,7 @@ class Login extends Component {
             }
             else {
                 this.setState({
-                    loading: false,
+                    isLoading: false,
                     error: true
                 })
                 Alert.alert(
@@ -75,7 +75,12 @@ class Login extends Component {
                 )
             }
         }).catch(exception => {
-            console.log("exception", exception);
+            
+            this.setState({
+                isLoading: false,
+                error: true
+            })
+            Alert.alert("Có lỗi","Vui lòng thử lại sau");
         });
     }
 

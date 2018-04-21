@@ -68,7 +68,7 @@ class StatusItems extends Component {
                 }else if(data.errorCode && data.errorCode === 0){
                     this.setState({liked:true});
                 }else{
-                    Alert.alert("Thông báo",data.message);
+                    Alert.alert("Thông báo","có lỗi sảy ra");
                 }
             }).catch(e => {
                 console.log("exception", e);

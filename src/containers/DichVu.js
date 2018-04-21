@@ -129,6 +129,10 @@ class DichVu extends Component {
                
             }).catch(e => {
                 console.log('exception',e)
+                this.setState({
+                    isLoading: false
+                })
+                Alert.alert("Có lỗi","Vui lòng thử lại sau");
             })
         });
     }
