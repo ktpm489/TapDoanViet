@@ -41,6 +41,7 @@ import ChangePass from "../containers/ChangePass";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon1 from 'react-native-vector-icons/SimpleLineIcons';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import QuenMatKhau from "../containers/QuenMatKhau";
 
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -58,7 +59,7 @@ const Tab = TabNavigator ({
         navigationOptions: {
             // headerBackTitle: 'Back',
             tabBarIcon: ({tintColor}) => (
-                <Icon1 name="earphones-alt" size={23}
+                <Icon1 name="call-out" size={23}
                       style={{ color: tintColor }}/>
             ),
         },
@@ -288,6 +289,9 @@ const Stack = StackNavigator ({
     },
     ChangePass: {
         screen: ChangePass
+    },
+    QuenMatKhau: {
+        screen: QuenMatKhau
     }
 
 

@@ -29,6 +29,7 @@ export default class GroupChatItem extends Component {
 
     callApiUpdateReaded = (chatId)=>{
         console.log("group id",chatId);
+        console.log("url",URL.BASE_URL + URL.UPDATE_READ+chatId+"?isGroup=true");
         AsyncStorage.getItem('token').then((value)=> {
             fetch(URL.BASE_URL + URL.UPDATE_READ+chatId+"?isGroup=true", {
                 method: "GET",
@@ -56,8 +57,6 @@ export default class GroupChatItem extends Component {
     }
 
     AddMember = (item) => {
-        console.log("item---",item);
-        console.log("user---",this.props.userInfo);
         if(this.props.userInfo && this.props.userInfo.id){
             AsyncStorage.getItem("token").then(value => {
 
@@ -108,7 +107,7 @@ export default class GroupChatItem extends Component {
     render() {
         const {navigation} = this.props;
         const {item,index} = this.props.dataItem;
-        console.log("item groups",item)
+        console.log("item groups----",item)
 
        
         const{fromDachSach,fromSearch,fromTinNhan} = this.props;
@@ -117,9 +116,9 @@ export default class GroupChatItem extends Component {
 
             <TouchableOpacity
                 onPress={() => {
-
+                    
                     if(fromTinNhan && item.messUnread&&item.messUnread>0 ){
-                       
+                        
                         this.callApiUpdateReaded(item._id)
                      }
                     if(fromDachSach)

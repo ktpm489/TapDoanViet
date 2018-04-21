@@ -8,7 +8,8 @@ import {
     TextInput,
     TouchableOpacity,
     AsyncStorage,
-    FlatList
+    FlatList,
+    Alert
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -205,6 +206,7 @@ class ModalDichVu extends Component {
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
                                 defaultValue={this.name}
+                                returnKeyType={"next"}
                                 onChangeText={(text)=>this.name = text}
                             />
 
@@ -254,8 +256,9 @@ class ModalDichVu extends Component {
                             />
                             <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
-                                placeholder={"Địa chỉ"}
+                                placeholder={"P101, Tòa nhà Victoria, Quận Hà Đông"}
                                 defaultValue={this.address}
+                                returnKeyType={"done"}
                                 onChangeText={(text)=>this.address = text}
                             />
 
@@ -291,8 +294,10 @@ class ModalDichVu extends Component {
                                     alignSelf:'stretch'
                                 }}
                                 onChangeText={(text)=>this.description = text}
-                                multiline={true}
+                                returnKeyType={"done"}
+                                // multiline={true}
                                 numberOfLines={5}
+                                
                                 placeholder={"Thêm thông tin mô tả rõ hơn yêu cầu của bạn..."}
 
                             />
@@ -364,17 +369,17 @@ class ModalDichVu extends Component {
                                 
                                 //  return;
                             }else{
-                                alert("Bạn chưa chọn thời gian đặt lịch");
+                                Alert.alert("Thông báo","Bạn chưa chọn thời gian đặt lịch");
                                 return 0;
                             }
 
                             if(this.name === "" || this.phone === "" || this.address === "" ){
-                                alert("Bạn phải nhập đầy đủ thông tin");
+                                Alert.alert("Thông báo","Bạn phải nhập đầy đủ thông tin");
                                 return 0;
                             }
 
                             if(this.description === ""){
-                                alert("Bạn phải nhập mô tả");
+                                Alert.alert("Thông báo","Bạn phải nhập mô tả");
                                 return 0;
                             }
                             if(this.state.dataImage1 != null){
@@ -392,10 +397,10 @@ class ModalDichVu extends Component {
                                 
                             }
 
-                            if(this.countImageUpload <= 0){
-                                alert("Bạn phải gửi ít nhất một ảnh");
-                                return 0;
-                            }
+                            // if(this.countImageUpload <= 0){
+                            //     Alert.alert("Thông báo","Bạn phải gửi ít nhất một ảnh");
+                            //     return 0;
+                            // }
                            this.callApiRegister();
                            this.props.closeModal();
                         }
@@ -471,6 +476,9 @@ class ModalDichVu extends Component {
             this.uploadImage(this.state.dataImage3);
             
         }
+        if(this.state.dataImage1 === null && this.state.dataImage2 === null&&this.state.dataImage3 === null){
+            this.sendInfoToServer();
+        }
 
     }
 
@@ -524,12 +532,12 @@ class ModalDichVu extends Component {
                     logout(AsyncStorage,this.props)
                     return;
                 }else{
-                    alert(data.message);
+                    Alert.alert("Có lỗi",data.message);
                 }
                
 
             }).catch(e => {
-                alert("Gửi yêu cầu thất bại")
+                Alert.alert("Có lỗi","Gửi yêu cầu thất bại")
                 this.props.onCallApiDone();
                 console.log('exception',e)
               

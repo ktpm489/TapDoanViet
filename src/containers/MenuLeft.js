@@ -122,7 +122,10 @@ class MenuLeft extends Component {
                     />
                     <ItemLeftMenu title ="Lịch sử yêu cầu dịch vụ"
                                   source = {images.lichsu}
-                                  onPress = {()=>this.props.navigation.navigate('ServiceHistory')}
+                                  onPress = {()=>{
+                                      console.log("click navigate");
+                                      this.props.navigation.navigate('ServiceHistory')
+                                    }}
                     />
                     <ItemLeftMenu title ="Tiện ích"
                                   source = {images.tienich}

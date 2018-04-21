@@ -6,7 +6,8 @@ import {
     Alert,
     TouchableOpacity,
     AsyncStorage,
-    Image
+    Image,
+    NetInfo
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -14,6 +15,11 @@ import { NavigationActions } from 'react-navigation'
 class FirstScreen extends Component {
     constructor(props){
         super(props)
+
+        
+
+        
+
         
     }
     
@@ -31,7 +37,7 @@ class FirstScreen extends Component {
                         });
                         this.props.navigation.dispatch(resetAction)
                      
-        },500)
+        },500);
     }
 
     render (){
@@ -42,6 +48,7 @@ class FirstScreen extends Component {
                 <Image
                     source={require('../../src/images/logo.png')}
                 />
+            
             </View>
              
          )

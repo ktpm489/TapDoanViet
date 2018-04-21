@@ -15,7 +15,9 @@ import {
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import Icon from 'react-native-vector-icons/dist/Entypo'
+import Icon from 'react-native-vector-icons/Ionicons'
+import Icon2 from 'react-native-vector-icons/dist/Entypo'
+
 import TinNhanItem from '../components/TinNhanItem';
 import * as URL from '../Constants'
 import * as Dimention from '../configs/Dimention'
@@ -28,13 +30,23 @@ import logout from '../components/TokenExpired'
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
  class TinNhan extends Component {
+     
     static navigationOptions = ({ navigation}) => {
         const {state} = navigation;
+        // console.log("state navigation",state);
+        // let isCall = false;
+        
+        // if(state.routeName === "Message"  && !isCall){
+        //     console.log("mmmmmmmmmmmmm");
+        //     isCall = true;
+            
+
+        // }
         return {
             headerLeft: <TouchableOpacity onPress={() => {
                     navigation.navigate('DrawerOpen')
                 }}>
-                    <Icon name="menu" size={30} style={{marginLeft: 7}} color="white"/>
+                    <Icon2 name="menu" size={30} style={{marginLeft: 7}} color="white"/>
                 </TouchableOpacity>,
             tabBarIcon: () => (
                 <Image
@@ -59,6 +71,8 @@ import logout from '../components/TokenExpired'
             dataGroupChat: [],
 
         }
+
+        
     }
 
     getListMessage = async () => {
@@ -83,6 +97,7 @@ import logout from '../components/TokenExpired'
 
 
     componentWillMount() {
+        console.log("will mount");
         AsyncStorage.getItem('token').then((value) => {
             this.token = value;
 
@@ -93,10 +108,24 @@ import logout from '../components/TokenExpired'
 
     }
 
-    
-
+    componentDidCatch(){
+        console.log("did cat ");
+    }
+    componentWillFocus(){
+        console.log("focus ");
+    }
     shouldComponentUpdate() {
+        console.log("shout update ");
         return true;
+    }
+    componentDidFocus(){
+        console.log("dif focus ");
+    }
+    componentWillBlur(){
+        console.log("will bluer ");
+    }
+    componentDidBlur(){
+        console.log("dif bluer ");
     }
 
 
@@ -121,7 +150,16 @@ import logout from '../components/TokenExpired'
         this.setState({isLoading:isLoading});
     }
     
+    
+    componentDidMount(){
+        console.log("didmount")
+        
+    }
 
+    componentWillReceiveProps(){
+        console.log("receive")
+        
+    }
     render() {
         const {navigation} = this.props;
         return (
@@ -143,6 +181,7 @@ import logout from '../components/TokenExpired'
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={this.renderSeparator}
                 />
+                {this.renderSeparator()}
                 <FlatList
                     data={this.state.dataGroupChat}
                     renderItem={(item) => {
@@ -190,7 +229,7 @@ import logout from '../components/TokenExpired'
                     }
 
                 >
-                    <Icon name="plus" size={30} color="#01a699"/>
+                    <Icon name="ios-search" size={30} color="#01a699"/>
                 </TouchableOpacity>
                 <Modal style={{
                     height: 100,

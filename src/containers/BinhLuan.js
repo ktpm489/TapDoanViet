@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Image, AsyncStorage,
     KeyboardAvoidingView,
-    Platform
+    Platform,
+    BackHandler
 } from 'react-native';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -37,17 +38,15 @@ class BinhLuan extends Component {
             dataCmt: params.itemCmt
 
         }
+
         AsyncStorage.getItem('token').then((token) => {
             this.token = token;
-            // console.log("token", this.token)
 
 
-            if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected && this.props.SocketRef.isJoinChat && this.props.SocketRef.userSocket && this.props.SocketRef.userSocket.room) {
-                // this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
+            if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected ) {
+                
                 this.props.SocketRef.socket.on('comment', (newCmt) => {
                     console.log("receiev msg", newCmt);
-                    // let newCmt = this.state.dataCmt;
-                    // newCmt.push(dataCmt);
                     this.setState({dataCmt: newCmt});
                 });
 
@@ -61,6 +60,13 @@ class BinhLuan extends Component {
 
     }
 
+    componentWillUnmount(){
+        if(this.props.navigation.state.params.onReloadBack)
+            this.props.navigation.state.params.onReloadBack();
+    }
+
+
+
     sendCmt = (postId) => {
 
         this.props.SocketRef.socket.emit("new_comment", postId);
@@ -68,6 +74,7 @@ class BinhLuan extends Component {
     }
     Comment =() => {
         const { params } = this.props.navigation.state
+        console.log("this.textInput",this.textInput)
         this.textInput.clear();
         let SendCMT = this.input_msg;
         // console.log('sendcmt', s)
@@ -77,6 +84,12 @@ class BinhLuan extends Component {
             this.sendCmt(params.idRoom)
         })
     }
+
+    componentWillUnmount(){
+        if(this.props.navigation.state.params.onReloadBack)
+            this.props.navigation.state.params.onReloadBack();
+    }
+
     render (){
         return (
 
@@ -136,6 +149,7 @@ class BinhLuan extends Component {
                     />
                     <TouchableOpacity
                         onPress={this.Comment}
+                    
                     >
                         <Image
                             style={{

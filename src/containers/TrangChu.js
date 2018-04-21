@@ -53,7 +53,7 @@ class TrangChu extends Component {
         
        this.GetPost()
     }
-    GetPost = ()=> {                                                                                                                                                                                                                                                                                            
+    GetPost = ()=> {                                                                                                                                                                                                                                                                                          
         const { callApiGetPost } = this.props
         callApiGetPost(this.item.id).then(dataRes => {
             console.log('dataRes trang chu', dataRes)
@@ -112,6 +112,7 @@ class TrangChu extends Component {
                         return (
                             <StatusItems
                                 dataItem={item}
+                                onReloadBack ={this.onReloadBack}
                                 navigation={navigation}/>
                         )
                     }
