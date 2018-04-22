@@ -120,14 +120,14 @@ class MenuLeft extends Component {
 
                                     }}
                     />
-                    <ItemLeftMenu title ="Chi Phí"
+                    <ItemLeftMenu title ="Thông báo chi Phí"
                                   source = {images.chiphi}
                                   onPress = {() => {
                                     this.props.navigation.navigate('DrawerClose')
                                       this.props.navigation.navigate('PhiDichVu')
                                     }}
                     />
-                    <ItemLeftMenu title ="Lịch sử yêu cầu dịch vụ"
+                    <ItemLeftMenu title ="Đã đặt - Thanh toán dịch vụ"
                                   source = {images.lichsu}
                                   onPress = {()=>{
                                         this.props.navigation.navigate('DrawerClose')
