@@ -18,6 +18,7 @@ import { Pages } from 'react-native-pages';
 import PickerImage from "../components/PickerImage"
 import SelectDate from'../components/SelectDate';
 import {BASE_URL, CREATE_REQUEST, UPLOAD_IMAGE} from "../Constants";
+import moment from 'moment';
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -364,6 +365,20 @@ class ModalDichVu extends Component {
                                 var objDate = this.refs.SelectDate.date;
                                 var objHour = this.refs.SelectDate.hourSelect;
                                 this.fullDate = objDate.year+"-"+objDate.month+"-"+objDate.date+" "+objHour.time;
+                                let index = (objHour.time).indexOf(':');
+                                let tempHour = objHour.time.substring(0,index);
+                                console.log("111111---",objDate)
+                                console.log("222222---",objHour)
+                                console.log("33333---",tempHour);
+                                console.log("44444---",index);
+                                var selectDate = new Date(parseInt(objDate.year),parseInt(objDate.month)-1,parseInt(objDate.date),parseInt(tempHour));
+                                var currentDate = new Date();
+                                console.log("select date",selectDate);
+                                console.log("current date",currentDate);
+                                if(selectDate < currentDate){
+                                    Alert.alert("Thông báo","Ngày giờ phải lớn hơn ngày giờ hiện tại");
+                                    return;
+                                }
                                 //  console.log("this.refs.SelectDate.date: ",this.refs.SelectDate)
                                 //  console.log("full ",this.fullDate)
                                 
@@ -382,6 +397,7 @@ class ModalDichVu extends Component {
                                 Alert.alert("Thông báo","Bạn phải nhập mô tả");
                                 return 0;
                             }
+                            
                             if(this.state.dataImage1 != null){
                                 this.countImageUpload = this.countImageUpload+1;
                                 
@@ -523,7 +539,7 @@ class ModalDichVu extends Component {
                 console.log('create service response', data);
                 this.props.onCallApiDone();
                 if(data && data.errorCode == 0){
-                    alert("Gửi yêu cầu thành công")
+                    Alert.alert("Thông báo","Gửi yêu cầu thành công")
                     if (this.props.SocketRef && this.props.SocketRef.socket && this.props.SocketRef.socket.connected ) {
                        console.log("data-----------", data.data);
                         this.props.SocketRef.socket.emit('new_service_request', data.data );
