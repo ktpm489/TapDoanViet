@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     KeyboardAvoidingView,
     Button,
-    Alert, StyleSheet
+    Alert, StyleSheet,
+    Platform
 } from 'react-native';
 // import stylesContainer from "../../components/style";
 import PickerImage from "../components/PickerImage"
@@ -125,6 +126,12 @@ class TaoBaiViet extends Component {
                 style={{height: 200, width: 200}}
             />
         return (
+            <KeyboardAvoidingView
+            style={{flex:1}}
+            behavior = {Platform.OS === 'ios'?"padding":null}
+            keyboardVerticalOffset={64}
+
+            >
             <View style = {{justifyContent: 'space-between', flex:1, backgroundColor:'white'}}>
                 <View>
                     <View style  = {{flexDirection:'row', marginTop: 15}}>
@@ -163,6 +170,7 @@ class TaoBaiViet extends Component {
 
                 </View>
             </View>
+            </KeyboardAvoidingView>
         );
     }
 

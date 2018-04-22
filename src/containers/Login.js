@@ -174,13 +174,9 @@ class Login extends Component {
                                     </View>
                                     <View style={{justifyContent: 'flex-end', flexDirection: 'column', marginLeft: 20}}>
                                         <TouchableOpacity onPress={() => {
-                                            let url = "homesun.vn";
+                                            let url = "http://homesun.vn";
                                             console.log("url",url);
-                                            Linking.getInitialURL().then((url) => {
-                                                if (url) {
-                                                  console.log('Initial url is: ' + url);
-                                                }
-                                              }).catch(err => console.error('An error occurred', err));
+                                            Communications.web(url);
                                         }}
                                         style={{ marginLeft: 20, }}>
                                         <Text style={styles.bottomText}>

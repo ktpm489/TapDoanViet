@@ -10,7 +10,8 @@ import {
     AsyncStorage, ActivityIndicator,
     Platform,
     ScrollView,
-    Alert
+    Alert,
+    RefreshControl
 } from 'react-native';
 
 import {bindActionCreators} from 'redux'
@@ -68,6 +69,7 @@ import logout from '../components/TokenExpired'
         this.state = {
             dataUsers: [],
             isLoading: false,
+            isFetching: false,
             dataGroupChat: [],
 
         }
@@ -76,22 +78,25 @@ import logout from '../components/TokenExpired'
     }
 
     getListMessage = async () => {
-        this.setState({isLoading: true})
+        this.setState({isLoading: true,isFetching:true})
 
         var data = await fetch(URL.BASE_URL + URL.PAHT_GET_MESSAGE, {
             headers: {
                 'Authorization': 'Bearer ' + this.token,
                 'Content-Type': 'application/json'
             }
-        }).then((data) => data.json());
+        }).then((data) => data.json()).catch((e)=>{
+            console.log("exception",e)
+            this.setState({isLoading: false,isFetching:false})
+        });
          console.log("list client",data);
         if (data.errorCode === 0) {
-            this.setState({dataGroupChat: data.data.groups, dataUsers:data.data.users,isLoading: false});
+            this.setState({dataGroupChat: data.data.groups, dataUsers:data.data.users,isLoading: false,isFetching:false});
         }else if(data.errorCode && data.errorCode === "401"){
             logout(AsyncStorage,this.props)
             return;
         } else {
-            this.setState({isLoading: false})
+            this.setState({isLoading: false,isFetching:false})
         }
     }
 
@@ -165,8 +170,16 @@ import logout from '../components/TokenExpired'
         return (
 
             <View style={{flex:1}}>
-            <ScrollView style={{flex: 1, flexDirection: 'column'}}>
+            <ScrollView 
+                
+                refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.isFetching}
+                      onRefresh={()=>this.getListMessage()}
+                    />}
+            style={{flex: 1, flexDirection: 'column'}}>
                 <FlatList
+
                     data={this.state.dataUsers}
                     renderItem={(item) => {
                         return (

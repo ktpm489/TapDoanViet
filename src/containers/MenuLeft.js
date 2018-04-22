@@ -114,22 +114,33 @@ class MenuLeft extends Component {
                 <View style = {{backgroundColor:'#fc9b03', flex:5, marginTop: 10}}>
                     <ItemLeftMenu title ="Thông tin cá nhân"
                                   source = {images.info}
-                                  onPress = {()=> this.props.navigation.navigate('ThongTinCaNhan')}
+                                  onPress = {()=> {
+                                        this.props.navigation.navigate('DrawerClose')
+                                        this.props.navigation.navigate('ThongTinCaNhan')
+
+                                    }}
                     />
                     <ItemLeftMenu title ="Chi Phí"
                                   source = {images.chiphi}
-                                  onPress = {() => this.props.navigation.navigate('PhiDichVu')}
+                                  onPress = {() => {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.props.navigation.navigate('PhiDichVu')
+                                    }}
                     />
                     <ItemLeftMenu title ="Lịch sử yêu cầu dịch vụ"
                                   source = {images.lichsu}
                                   onPress = {()=>{
-                                      console.log("click navigate");
+                                        this.props.navigation.navigate('DrawerClose')
                                       this.props.navigation.navigate('ServiceHistory')
                                     }}
                     />
                     <ItemLeftMenu title ="Tiện ích"
                                   source = {images.tienich}
-                                  onPress = {()=>this.props.navigation.navigate('TienIch')}
+                                  onPress = {()=>{
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.props.navigation.navigate('TienIch')
+                                    
+                                    }}
                     />
 
                     {/*<ItemLeftMenu title ="Báo cáo khẩn cấp"*/}
@@ -139,30 +150,49 @@ class MenuLeft extends Component {
 
                     <ItemLeftMenu title ="Báo cáo sai phạm"
                                   source = {images.gopy}
-                                  onPress = {()=> this.props.navigation.navigate('GopYPhanHoi')}
+                                  onPress = {()=> {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.props.navigation.navigate('GopYPhanHoi')
+                                    }}
                     />
 
 
                     <ItemLeftMenu title ="Điều khoản"
                                   source = {images.baocao}
-                                  onPress = {()=> this.props.navigation.navigate('DieuKhoan')}
+                                  onPress = {()=> {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.props.navigation.navigate('DieuKhoan')
+                                  }
+                                    }
                     />
                     <ItemLeftMenu title ="Về chúng tôi"
                                   source = {images.vechungtoi}
-                                  onPress = {()=> this.props.navigation.navigate('AboutUs')}
+                                  onPress = {()=> {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.props.navigation.navigate('AboutUs')
+                                    }}
                     />
                     <ItemLeftMenu title ="Chia sẻ"
                                   source = {images.chiase}
-                                  onPress = {()=> this.ShareMessage()}
+                                  onPress = {()=> {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.ShareMessage()
+                                    
+                                    }}
                     />
                     <ItemLeftMenu title ="Chat với Ban Quản Trị"
                                   source = {images.admin}
-                                  onPress = {()=> this.chatAdmin()}
+                                  onPress = {()=> {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.chatAdmin()
+                                    }}
                     />
                     <TouchableOpacity
                         onPress = {()=> {
+
                             this.DeteleTokenFirebase()
                             this.callApiLogout();
+                            this.props.navigation.navigate('DrawerClose')
                             this.setState({ visibleModal: 5 })
                         }}
                         style={{flexDirection: 'row',marginTop:20, marginBottom:20}}>

@@ -8,7 +8,8 @@ import {
     ActivityIndicator,
     Image,
     StyleSheet,
-    NetInfo
+    NetInfo,
+    WebView
 } from 'react-native';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -149,7 +150,7 @@ class DichVu extends Component {
    
     render() {
         const {navigation} = this.props;
-
+        
         return (
             <View>
             <ScrollView

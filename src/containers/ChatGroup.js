@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     Text,
@@ -8,20 +8,22 @@ import {
     TextInput,
     Image,
     KeyboardAvoidingView,
-    Keyboard, AsyncStorage
+    Keyboard, AsyncStorage,
+    Alert
 } from 'react-native';
 
 
 import * as URL from '../Constants';
 import * as Dimention from '../configs/Dimention'
 
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 
 import ChatItem from '../components/ChatItem'
-import {callApiDichVu} from "../actions/DichvuActions";
-import {connectToSocket, disConnectToSocket, joinToChat} from "../actions/SocketActions";
+import { callApiDichVu } from "../actions/DichvuActions";
+import { connectToSocket, disConnectToSocket, joinToChat } from "../actions/SocketActions";
 import logout from '../components/TokenExpired'
+import TextInputChat from '../components/TextInputChat'
 
 class ChatGroup extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -34,18 +36,18 @@ class ChatGroup extends Component {
             //            source={require('../images/more.png')}
             //     />
             // </TouchableOpacity>,
-            title:params.title,
-            headerStyle: {backgroundColor: '#23b34c'},
-            headerTitleStyle: {color: 'white'},
+            title: params.title,
+            headerStyle: { backgroundColor: '#23b34c' },
+            headerTitleStyle: { color: 'white' },
             headerTintColor: 'white',
         }
     }
     constructor(props) {
         super(props);
         this.groupname = this.props.navigation.state.params.groupname;
-        this.props.navigation.setParams({title:this.groupname})
-        // console.log("user",this.dataUser2);
-        // console.log("data pass", this.dataUser2);
+        this.IdGroup = this.props.navigation.state.params.IdGroup;
+        this.props.navigation.setParams({ title: this.groupname })
+        
         console.ignoredYellowBox = [
             'Setting a timer'
         ];
@@ -53,9 +55,7 @@ class ChatGroup extends Component {
         this.state = {
             dataChat: []
         };
-        this.input_msg = '';
-
-        // console.log('scoket', this.props.SocketRef)
+        
 
         AsyncStorage.getItem('token').then((token) => {
             this.token = token;
@@ -66,23 +66,28 @@ class ChatGroup extends Component {
                 this.getOldMSG(this.props.SocketRef.userSocket.room, 1, 10);
                 this.props.SocketRef.socket.on('message', (dataMessage) => {
 
-                    if(dataMessage.sender.id === this.props.SocketRef.userSocket.id)
+                    if (dataMessage.sender.id === this.props.SocketRef.userSocket.id || dataMessage.to.room !== this.IdGroup)
                         return;
+
                     console.log("receiev msg", dataMessage);
                     let newMsg = this.state.dataChat;
                     newMsg.push(dataMessage);
-                    this.setState({dataChat: newMsg});
+                    this.setState({ dataChat: newMsg });
                 });
                 this.props.SocketRef.socket.on('owner_message', (dataMessage) => {
+
+                    if (dataMessage.to.room !== this.IdGroup)
+                        return;
                     console.log("receiev owner_message", dataMessage);
+
                     let newMsg2 = this.state.dataChat;
                     newMsg2.push(dataMessage);
-                    this.setState({dataChat: newMsg2});
+                    this.setState({ dataChat: newMsg2 });
                 });
 
 
             } else {
-                alert("socket not connect");
+                Alert.alert("Có lỗi","Không thể kết nối server chat");
             }
 
         });
@@ -101,8 +106,8 @@ class ChatGroup extends Component {
             }
         }).then((data) => data.json()).then((data) => {
 
-            if(data.errorCode && data.errorCode === "401"){
-                logout(AsyncStorage,this.props)
+            if (data.errorCode && data.errorCode === "401") {
+                logout(AsyncStorage, this.props)
                 return;
             }
             let tempFilter = data.data.filter((item) => {
@@ -110,7 +115,7 @@ class ChatGroup extends Component {
             });
             console.log("filter", tempFilter);
             let newDataChat = this.state.dataChat.concat(tempFilter);
-            this.setState({dataChat: newDataChat});
+            this.setState({ dataChat: newDataChat });
             console.log("old message", data);
             console.log("new message", this.state.dataChat);
         }).catch((err) => {
@@ -118,7 +123,36 @@ class ChatGroup extends Component {
         })
     }
 
+    callApiUpdateReaded = (chatId) => {
+        console.log("group id", chatId);
+        console.log("url", URL.BASE_URL + URL.UPDATE_READ + chatId + "?isGroup=true");
+        AsyncStorage.getItem('token').then((value) => {
+            fetch(URL.BASE_URL + URL.UPDATE_READ + chatId + "?isGroup=true", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
 
+
+            }).then((response) => {
+
+                return response.json();
+            }).then(data => {
+                this.props.navigation.state.params.onReloadBack();
+                if (data.errorCode && data.errorCode === "401") {
+                    logout(AsyncStorage, this.props)
+                    return;
+                }
+                console.log('update read message: ', data);
+
+            }).catch(e => {
+                this.props.navigation.state.params.onReloadBack();
+                console.log('exception', e)
+            })
+        });
+
+    }
     shouldComponentUpdate(nextProps, nextState) {
         return true;
 
@@ -129,8 +163,9 @@ class ChatGroup extends Component {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
-    componentWillUnmount(){
-        this.props.navigation.state.params.onReloadBack();
+    componentWillUnmount() {
+        this.callApiUpdateReaded(this.IdGroup)
+
     }
 
     _keyboardDidShow() {
@@ -141,31 +176,24 @@ class ChatGroup extends Component {
         // console.log('Keyboard Hidden');
     }
 
-
-    sendMessage = () => {
-        const { params } = this.props.navigation.state
-        console.log('paramsIdGroup', params.IdGroup)
-        if (this.input_msg === "")
+    onReceiveTextInputClick = (text) => {
+        if (text === "")
             return;
-        this.textInput.clear();
-        // console.log("msg:", this.input_msg);
-        // console.log("user:", this.dataUser2._id);
 
         var sendTo = {
-            room: params.IdGroup,
-            userName: params.groupname,
+            room: this.IdGroup,
+            userName: this.groupname,
             isGroup: true
 
         };
-        // console.log("room", this.props.SocketRef.userSocket.room);
+        
         let dataSend = {
             sender: this.props.SocketRef.userSocket,
             to: sendTo,
-            messageContent: this.input_msg
+            messageContent: text
         };
         this.props.SocketRef.socket.emit("send_message", dataSend);
-
-    };
+    }
 
     render() {
         let userName;
@@ -173,13 +201,13 @@ class ChatGroup extends Component {
             userName = this.props.SocketRef.userSocket.userName;
         return (
 
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <FlatList
-                    style={{backgroundColor: "#E0E0E0", flex: 1}}
+                    style={{ backgroundColor: "#E0E0E0", flex: 1 }}
                     data={this.state.dataChat}
                     extraData={this.state.dataChat}
 
-                    renderItem={({item}) => {
+                    renderItem={({ item }) => {
                         return (
                             <ChatItem
                                 dataItem={item}
@@ -193,75 +221,19 @@ class ChatGroup extends Component {
                     ref={ref => this.flatList = ref}
                     onContentSizeChange={() => {
                         console.log("on size change");
-                        this.flatList.scrollToEnd({animated: true})
+                        this.flatList.scrollToEnd({ animated: true })
                     }}
                     onLayout={() => {
                         console.log("got to onlayout");
-                        this.flatList.scrollToEnd({animated: true})
+                        this.flatList.scrollToEnd({ animated: true })
                     }
                     }
 
 
                 />
-                <View style={{
-                    flexWrap: 'wrap',
-                    flexDirection: 'row',
-                    paddingBottom: 5,
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    {/* <TouchableOpacity>
-                        <Image
-                            style={{
-                                width: 40,
-                                aspectRatio: 1,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                paddingTop: 10,
-                            }}
-                            source={require('../../src/images/camera.png')}
-                        />
-                    </TouchableOpacity> */}
-                    <TextInput
-                        style={{
-                            flex: 1,
-                            borderWidth: 1,
-                            borderRadius: 4,
-                            marginLeft:1,
-                            borderColor: "#000",
-                            shadowColor: "#000",
-                            paddingLeft: 5,
-                            marginTop:5,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-                            minHeight: 50
-                        }}
-                        underlineColorAndroid="transparent"
-                        placeholder={"Nhập vào đây..."}
-                        onChangeText={
-                            (text) => this.input_msg = text}
-                        ref={input => {
-                            this.textInput = input
-                        }}
-
-
-                    />
-                    <TouchableOpacity
-                        onPress={this.sendMessage}
-                    >
-                        <Image
-                            style={{
-                                width: 40,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                                paddingTop: 10,
-                                aspectRatio: 1
-                            }}
-                            source={require('../../src/images/send.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
+                <TextInputChat
+                    onReceiveTextInputClick={this.onReceiveTextInputClick}
+                />
             </View>
 
         );

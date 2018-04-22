@@ -15,29 +15,50 @@ export default class Launcher extends Component{
         super(props)
         this.state = {
             isTime: false,
-            isNetWork:null
+            isNetWork:null,
+            status:null
         }
 
-        NetInfo.getConnectionInfo().then((connectionInfo) => {
-            console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
-            if(connectionInfo.type === "none" || connectionInfo.type ==="unknown"){
-                this.setState({isNetWork:false});
+        // NetInfo.getConnectionInfo().then((connectionInfo) => {
+        //     console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+        //     if(connectionInfo.type === "none" || connectionInfo.type ==="unknown"){
+        //         this.setState({isNetWork:false});
 
-            }else{
-                this.setState({isNetWork:true});
-                setTimeout(()=> {
-                    this.setState({
-                        isTime: true
-                    })
-                    this.pushScreen();
-                },500)
+        //     }else{
+        //         this.setState({isNetWork:true});
+        //         setTimeout(()=> {
+        //             this.setState({
+        //                 isTime: true
+        //             })
+        //             this.pushScreen();
+        //         },500)
                 
-            }
-          });
+        //     }
+        //   });
         
     }
     componentWillMount(){
         
+    }
+
+    componentDidMount() {
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectionChange);
+    
+        NetInfo.isConnected.fetch().done(
+          (isConnected) => { this.setState({ status: isConnected }); 
+          console.log("push---",this.state)
+                            this.pushScreen();
+        
+        }
+        );
+    }
+    componentWillUnmount() {
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
+    }
+    
+    handleConnectionChange = (isConnected) => {
+            this.setState({ status: isConnected });
+            console.log(`is connected: ${this.state.status}`);
     }
     pushScreen(){
         AsyncStorage.getItem('isFirstLogin').then((isFirstLogin)=>{
@@ -92,7 +113,7 @@ export default class Launcher extends Component{
                 <Image
                     source={require('../../src/images/logo.png')}
                 />
-                {this.state.isNetWork !== null && this.state.isNetWork===false?
+                {this.state.status !== null && this.state.status===false?
                         <View>
                         <Text style={{color:'red',textAlign:'center',alignSelf:'center',fontWeight:'400',fontSize:20}}>Không có kết nối Internet</Text>
                         <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>

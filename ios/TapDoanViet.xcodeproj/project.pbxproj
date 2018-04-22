@@ -1221,7 +1221,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapDoanViet/TapDoanViet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Pham (E9Y2J54ZH3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1244,8 +1244,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigsgroup.tdv;
 				PRODUCT_NAME = TapDoanViet;
-				PROVISIONING_PROFILE = "f5569443-0192-4b74-a603-ca56441e5723";
-				PROVISIONING_PROFILE_SPECIFIER = profile_product;
+				PROVISIONING_PROFILE = "80fa8a18-6751-45a6-b75c-0864c200d2bb";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_TapDoanViet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1258,7 +1258,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapDoanViet/TapDoanViet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tien Pham (E9Y2J54ZH3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QC5854PVMQ;
@@ -1280,8 +1280,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigsgroup.tdv;
 				PRODUCT_NAME = TapDoanViet;
-				PROVISIONING_PROFILE = "f5569443-0192-4b74-a603-ca56441e5723";
-				PROVISIONING_PROFILE_SPECIFIER = profile_product;
+				PROVISIONING_PROFILE = "80fa8a18-6751-45a6-b75c-0864c200d2bb";
+				PROVISIONING_PROFILE_SPECIFIER = Dev_TapDoanViet;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

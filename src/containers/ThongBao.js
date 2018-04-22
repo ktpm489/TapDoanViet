@@ -45,7 +45,8 @@ export default class ThongBao extends Component {
 
         this.state = {
             listNoti:[],
-            isLoading:false
+            isLoading:false,
+            isFetching:false
         }
 
     }
@@ -54,7 +55,7 @@ export default class ThongBao extends Component {
          
 
         AsyncStorage.getItem('token').then((value)=> {
-            this.setState({isLoading:true})
+            this.setState({isLoading:true,isFetching:true})
             fetch(URL.BASE_URL + URL.GET_NOTI, {
                 method: "GET",
                 headers: {
@@ -68,7 +69,7 @@ export default class ThongBao extends Component {
             }).then(data => {
                 console.log('get list noti ', data);
                 if(data && data.errorCode == 0){
-                    this.setState({listNoti:data.data,isLoading:false})
+                    this.setState({listNoti:data.data,isLoading:false,isFetching:false})
                 }else if(data.errorCode && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
@@ -79,6 +80,7 @@ export default class ThongBao extends Component {
                
             }).catch(e => {
                 console.log('exception',e)
+                this.setState({isLoading:false,isFetching:false})
             })
         });
     }
@@ -96,6 +98,9 @@ export default class ThongBao extends Component {
         return (
             <View style={{flex:1}}>
                <FlatList
+
+                refreshing={this.state.isFetching}
+                onRefresh={()=>this.callApi()}
                 data={this.state.listNoti}
                 renderItem={(item) => {
                     return (
