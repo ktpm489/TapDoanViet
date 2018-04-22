@@ -51,30 +51,31 @@ export default class TextInputChat extends Component {
         console.log("render---",this.state.textSubmit)
         return (
             <View style={{
-                flexWrap: 'wrap',
+                height:42,
+                // flexWrap: 'wrap',
                 flexDirection: 'row',
-                paddingBottom: 1,
-                alignSelf: 'center',
+                // alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop:2
+                borderTopColor:'gray',
+                borderTopWidth:1
+                
+            
                 // backgroundColor:'gray'
             }}>
                 
                 <TextInput
                     style={{
                         flex: 1,
-                        borderWidth: 1,
+                        // borderWidth: 1,
                         // borderRadius: 4,
-                        borderBottomLeftRadius:4,
-                        borderTopLeftRadius:4,
-                        marginLeft: 1,
-                        borderColor: "#000",
-                        shadowColor: "#000",
-                        paddingLeft: 1,
-                        marginTop: 1,
-                        marginBottom:1,
-                        minHeight: 42
+                        // borderBottomLeftRadius:4,
+                        // borderTopLeftRadius:4,
+                        // marginLeft: 1,
+                        // borderColor: "#000",
+                        // shadowColor: "#000",
+                        paddingLeft: 5,
+                        minHeight: 42,
                     }}
                     placeholder={"Nhập vào đây..."}
                     underlineColorAndroid="transparent"
@@ -96,10 +97,12 @@ export default class TextInputChat extends Component {
                 />
                 <TouchableOpacity
                     onPress={this.onClickSend}
-                    style={{ justifyContent: 'center', alignItems: 'center',backgroundColor:'gray',width:42,marginBottom:1 }}
+                    style={{justifyContent: 'center', alignItems: 'center',width:50,height:42, backgroundColor:'gray'}}
                 >
 
-                <Icon name="ios-send" size={40} color="#33ccff"/>
+                <Icon name="ios-send" size={40} color="#33ccff"
+                    style={{flex:1}}
+                />
                     
                 </TouchableOpacity>
             </View>

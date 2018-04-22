@@ -18,7 +18,7 @@ export default class Launcher extends Component{
             isNetWork:null,
             status:null
         }
-
+        this.isCallPush = false;
         // NetInfo.getConnectionInfo().then((connectionInfo) => {
         //     console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
         //     if(connectionInfo.type === "none" || connectionInfo.type ==="unknown"){
@@ -52,6 +52,7 @@ export default class Launcher extends Component{
         );
     }
     componentWillUnmount() {
+        
         NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectionChange);
     }
     
@@ -59,10 +60,10 @@ export default class Launcher extends Component{
             this.setState({ status: isConnected });
             console.log(`is connected: ${this.state.status}`);
             // console.log("push---",this.state)
-            if(this.state.status !== null && this.state.status===true)
-                this.pushScreen();
+            
     }
     pushScreen(){
+        this.isCallPush = true;
         AsyncStorage.getItem('isFirstLogin').then((isFirstLogin)=>{
             
             if(isFirstLogin){
@@ -109,6 +110,11 @@ export default class Launcher extends Component{
         
     }
     render (){
+        
+        if(this.state.status !== null && this.state.status===true && this.isCallPush === false){
+           
+                this.pushScreen();
+        }
 
         return (
             <View style = {{ flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>

@@ -240,6 +240,7 @@ class Chat extends Component {
 
                 />
                 <TextInputChat
+                    style={{marginTop:5}}
                     onReceiveTextInputClick={this.onReceiveTextInputClick}
                 />
             </KeyboardAvoidingView>

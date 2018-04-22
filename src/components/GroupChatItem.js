@@ -8,11 +8,12 @@ import {
     AsyncStorage,
     Alert
 } from 'react-native';
-
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import * as Dimention from '../configs/Dimention'
 import * as URL from '../Constants'
 import logout from './TokenExpired'
-export default class GroupChatItem extends Component {
+ class GroupChatItem extends Component {
 
     constructor(props) {
         super(props);
@@ -84,6 +85,9 @@ export default class GroupChatItem extends Component {
                     }
 
                     if(data && data.errorCode === 0){
+                        if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected){
+                            this.props.SocketRef.socket.emit("join_group", data);
+                        }
                         this.props.navigation.navigate('ChatGroup', {groupname: item.groupName, IdGroup: item._id,onReloadBack:this.props.onReloadBack});
 
                     }else{
@@ -163,6 +167,25 @@ export default class GroupChatItem extends Component {
             </TouchableOpacity>)
     }
 };
+
+
+
+const mapStateToProps = (state) => {
+    return {
+        
+         SocketRef: state.SocketRef
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        
+    };
+}
+
+GroupChatItem = connect(mapStateToProps, mapDispatchToProps)(GroupChatItem);
+
+export default GroupChatItem
 const myStyle = StyleSheet.create({
     image_circle: {
         height: Dimention.DEVICE_WIDTH / 6,

@@ -86,6 +86,9 @@ class GopYPhanHoi extends Component {
                 }).then(data => {
                     console.log('data', data)
                     if(data.errorCode===0) {
+                        if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected){
+                            this.props.SocketRef.socket.emit("new_report", data);
+                        }
                         Alert.alert(
                             'Thông báo',
                             data.message,
@@ -167,7 +170,8 @@ class GopYPhanHoi extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        // imageGet: state.TaoBaiVietReducers
+         imageGet: state.TaoBaiVietReducers,
+         SocketRef: state.SocketRef
     };
 }
 

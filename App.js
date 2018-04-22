@@ -40,6 +40,7 @@ export default class App extends Component<{}> {
     }
 
     render() {
+        console.log("go to app");
         return (
 
 
@@ -99,7 +100,7 @@ export default class App extends Component<{}> {
             // optional, do some component related stuff
             if (notif && notif.opened_from_tray && notif.opened_from_tray === 1) {
                 
-                return;
+                return ;
             }
             if(Platform.OS === 'ios' && notif._notificationType === "remote_notification"){
                 let data = notif.aps.alert;
