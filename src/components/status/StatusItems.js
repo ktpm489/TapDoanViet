@@ -20,23 +20,14 @@ class StatusItems extends Component {
     constructor(props){
         super(props)
     
-        
+        this.arrUserLike = this.props.dataItem.item.likes;
         this.state = {
             reload: 0,
-            liked:false
+            liked:false,
+            countLike:this.arrUserLike.length
 
         }
-        this.arrUserLike = this.props.dataItem.item.likes;
-        if(this.arrUserLike && this.arrUserLike.length > 0 && this.props.InfoUser && this.props.InfoUser.userInfo && this.props.InfoUser.userInfo.id){
-            console.log("arr user like",this.arrUserLike)
-            console.log("user",this.props.InfoUser.userInfo)
-            if(this.arrUserLike.indexOf(this.props.InfoUser.userInfo.id) > -1){
-                this.setState({liked:true})
-            }
-            
-            
-
-        }
+        
     }
 
 
@@ -62,11 +53,14 @@ class StatusItems extends Component {
                 return response.json()
             }).then(data => {
                 console.log("data like",data);
-                if(data.errorCode && data.errorCode === "401"){
+                if(data && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
-                }else if(data.errorCode && data.errorCode === 0){
-                    this.setState({liked:true});
+                }else if(data && data.errorCode === 0){
+                    let currentLike = this.state.countLike;
+                        currentLike++;
+                    
+                    this.setState({liked:true,countLike:currentLike});
                 }else{
                     Alert.alert("Thông báo","có lỗi sảy ra");
                 }
@@ -81,6 +75,7 @@ class StatusItems extends Component {
 
     }
     unlikePost = (postId) => {
+        console.log("call unlike")
         AsyncStorage.getItem("token").then(value => {
 
             fetch(BASE_URL + LIKE, {
@@ -99,13 +94,17 @@ class StatusItems extends Component {
                 return response.json()
             }).then(data => {
                 console.log("data unlike",data)
-                if(data.errorCode && data.errorCode === "401"){
+                if(data && data.errorCode === "401"){
                     logout(AsyncStorage,this.props)
                     return;
-                }else if(data.errorCode && data.errorCode === 0){
-                        this.setState({liked:false});
+                }else if(data && data.errorCode === 0){
+                    let currentLike = this.state.countLike;
+                    if(currentLike > 0){
+                        currentLike--;
+                    }
+                        this.setState({liked:false,countLike:currentLike});
                 }else{
-                    Alert.alert("Thông báo",data.message);
+                    Alert.alert("Thông báo","có lỗi sảy ra");
                 }
             }).catch(e => {
                 console.log("exception", e);
@@ -120,6 +119,21 @@ class StatusItems extends Component {
         this.props.dataItem.item.comments = dataNewComment;
         this.setState({reload:this.state.reload++});
         // console.log("state-cmt",this.state.reload);
+    }
+
+    componentWillMount(){
+        // this.setState({countLike:this.arrUserLike})
+        if(this.arrUserLike && this.arrUserLike.length > 0 && this.props.InfoUser && this.props.InfoUser.userInfo && this.props.InfoUser.userInfo.id){
+            // console.log("arr user like",this.arrUserLike)
+            // console.log("user",this.props.InfoUser.userInfo)
+            if(this.arrUserLike.indexOf(this.props.InfoUser.userInfo.id) > -1){
+                console.log("post da like",this.props.dataItem.item)
+                this.setState({liked:true})
+            }
+            
+            
+
+        }
     }
 
     render (){
@@ -167,10 +181,8 @@ class StatusItems extends Component {
                     }
                     <View style = {{flexDirection:'row', marginTop:20, justifyContent:'space-between'}}>
                         <View style = {{flexDirection:'row', marginLeft:10}}>
-                            <Icon1 name="like" size={25} color={this.state.liked?'blue':"#424242"} />
-                            <Text style={{
-                                color:this.state.liked?'blue':null
-                            }} >Thích</Text>
+                            {/* <Icon1 name="like" size={25} color="#424242" /> */}
+                            <Text style = {{color: '#424242'}} >{this.state.countLike > 0?this.state.countLike:null} Thích</Text>
                         </View>
                         <View style = {{flexDirection:'row', marginRight:10}}>
                             {/*<Icon1 name="comment" size={25} color="#424242" />*/}
@@ -181,11 +193,11 @@ class StatusItems extends Component {
                     <View style={{height: 1, backgroundColor: '#cccccc', marginTop: 5}}/>
                     <View style ={{flexDirection:'row', marginTop:5, justifyContent:'space-between'}}>
                         <View style = {{flexDirection:'row', marginLeft:20 }}>
-                            <Icon1 name="like" size={25} color="#424242" />
+                            <Icon1 name="like" size={25} color={this.state.liked?"blue":"#424242"} />
                             <TouchableOpacity
                                 onPress={()=>this.state.liked?this.unlikePost(item.id):this.likePost(item.id)}
                             >
-                                <Text style = {{color : '#424242'}}>Thích</Text>
+                                <Text style = {{color:this.state.liked?'blue':null}}>Thích</Text>
                             </TouchableOpacity>
                         </View>
                         <View style = {{flexDirection:'row', marginRight:20}}>

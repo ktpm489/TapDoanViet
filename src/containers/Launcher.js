@@ -46,8 +46,7 @@ export default class Launcher extends Component{
     
         NetInfo.isConnected.fetch().done(
           (isConnected) => { this.setState({ status: isConnected }); 
-          console.log("push---",this.state)
-                            this.pushScreen();
+          
         
         }
         );
@@ -59,6 +58,9 @@ export default class Launcher extends Component{
     handleConnectionChange = (isConnected) => {
             this.setState({ status: isConnected });
             console.log(`is connected: ${this.state.status}`);
+            // console.log("push---",this.state)
+            if(this.state.status !== null && this.state.status===true)
+                this.pushScreen();
     }
     pushScreen(){
         AsyncStorage.getItem('isFirstLogin').then((isFirstLogin)=>{
