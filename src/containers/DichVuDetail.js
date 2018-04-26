@@ -79,13 +79,12 @@ export default class DichVuDetail extends Component {
                    />
                 </Modal>
 
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <Image style={{flex: 1, height: 200, width: "100%", alignSelf: 'stretch',}}
+                <View style ={{flex:1}}>
+                    <Image style={{flex: 1, height: Dimention.DEVICE_WIDTH*(450/800), width: "100%", alignSelf: 'stretch',}}
                            resizeMode="cover"
                            source={{uri: item.imageUrl}}/>
 
                     <View style={{
-                        flex: 1,
                         flexDirection: 'row',
                         padding: 10,
                         alignItems: 'center',
@@ -117,15 +116,14 @@ export default class DichVuDetail extends Component {
                         </View>
 
                     </View>
-                    <View style = {{flex:1}}>
+                
                     <WebView
-                        source={{ html: item.content }}
-                        style = {{flex:1,height:500}}
+                        source={{ html: item.content,baseUrl:'' }}
+                        style = {{flex:1}}
                     />
-                    </View>
                     
                        
-                </ScrollView>
+                </View>
 
                 {this.state.isLoading?
                     <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>

@@ -17,6 +17,7 @@ import ThongTinCaNhan from "../containers/ThongTinCaNhan";
 import TienIch from "../containers/TienIch";
 import BaoCaoKhanCap from "../containers/BaoCaoKhanCap";
 import GopYPhanHoi from "../containers/GopYPhanHoi";
+import BaoChay from "../containers/BaoChay";
 import DichVuDetail from "../containers/DichVuDetail";
 import LoadData from "../containers/LoadData";
 import BinhLuan from "../containers/BinhLuan";
@@ -224,6 +225,10 @@ const Stack = StackNavigator ({
     },
     GopYPhanHoi: {
         screen: GopYPhanHoi,
+
+    },
+    BaoChay: {
+        screen: BaoChay,
 
     },
     DichVuDetail:{

@@ -24,6 +24,7 @@ export default class ChatItem extends Component {
     }
 
     renderMsgForUser = () => {
+         
        
         console.log("gio: ", moment(this.props.dataItem.createdAt).format("HH:mm, DD-MM-YYYY "))
         var createdAt = moment(this.props.dataItem.createdAt).format("DD-MM-YYYY");
@@ -99,7 +100,7 @@ export default class ChatItem extends Component {
                         <View>
                             <View style={{ marginRight: Dimention.DEVICE_WIDTH / 3 }}>
                                 {this.props.fromGroupChat ?
-                                    <Text style={{ marginLeft: 2 }}>{this.props.dataItem.sender.userName}</Text> : null
+                                    <Text style={{ marginLeft: 2 }}>{this.props.dataItem.sender.firstName} { this.props.dataItem.sender.lastName}</Text> : null
                                 }
                                 <View style={{
                                     borderRadius: 10,

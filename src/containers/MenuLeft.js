@@ -155,6 +155,13 @@ class MenuLeft extends Component {
                                       this.props.navigation.navigate('GopYPhanHoi')
                                     }}
                     />
+                    <ItemLeftMenu title ="Báo Cháy"
+                                  source = {images.gopy}
+                                  onPress = {()=> {
+                                    this.props.navigation.navigate('DrawerClose')
+                                      this.props.navigation.navigate('BaoChay')
+                                    }}
+                    />
 
 
                     <ItemLeftMenu title ="Điều khoản"

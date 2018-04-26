@@ -107,7 +107,7 @@ export default class ServiceHistory extends Component {
     render() {
         const {navigation} = this.props;
         return (
-            <View style={{flex:1,flexDirection:'column',margin:10}}>
+            <View style={{flex:1,flexDirection:'column',padding:10}}>
         
                     <FlatList
                         data={this.state.listHistory}

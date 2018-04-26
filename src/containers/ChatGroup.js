@@ -212,6 +212,7 @@ class ChatGroup extends Component {
                             <ChatItem
                                 dataItem={item}
                                 myName={userName ? userName : ""}
+                                fromGroupChat = {true}
                             />
                         )
                     }}

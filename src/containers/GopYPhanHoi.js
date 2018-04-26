@@ -93,7 +93,7 @@ class GopYPhanHoi extends Component {
                             'Thông báo',
                             data.message,
                             [
-                                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                                {text: 'OK', onPress: () => this.props.navigation.goBack()},
                             ],
                             { cancelable: false }
                         )

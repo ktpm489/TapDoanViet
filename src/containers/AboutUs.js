@@ -88,7 +88,7 @@ callApiAboutUs = ()=>{
             
             <View style={{flex:1}}>
              <WebView
-            source={{ html: this.state.dataAboutUs.content }}
+            source={{ html: this.state.dataAboutUs.content,baseUrl:'' }}
             // source={{ uri: "https://dayngheso1.vn/" }}
             style = {{flex: 1,}}
             />

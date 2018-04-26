@@ -133,7 +133,7 @@ callApiDetailNoti = ()=>{
 
             <View style={{flex:1}}>
             <WebView
-           source={{ html: item.content }}
+           source={{ html: item.content,baseUrl:'' }}
         //    source={{ uri: "https://dayngheso1.vn/" }}
            style = {{flex: 1,}}
            />

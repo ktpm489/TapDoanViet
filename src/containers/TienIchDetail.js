@@ -9,6 +9,7 @@ import {
     ScrollView
 } from 'react-native'
 import { BASE_URL, GET_SERVICE } from "../Constants";
+import * as Dimention from '../configs/Dimention'
 
 export default class TienIchDetail extends Component {
 
@@ -37,22 +38,22 @@ export default class TienIchDetail extends Component {
         return (
 
 
-            <ScrollView style = {{flex:1}}>
-                <View  style = {{flex:1}}>
-                    <Image style={{height: 180, width: "100%", alignSelf: 'stretch', }}
+            <View style = {{flex:1}}>
+                
+                    <Image style={{height: Dimention.DEVICE_WIDTH*(450/800), width: "100%", alignSelf: 'stretch', }}
                            resizeMode="cover"
                            source={{ uri: item.imageUrl }}
                     />
-                </View>
+                
                 <Text style={{color:'black',fontWeight:'bold',fontSize:20,marginLeft:5}}>{item.utilityName}</Text>
                 <View style = {{flex:1}}>
                     <WebView
-                        source={{ html: item.content }}
-                        style = {{height: 500, width: "100%"}}
+                        source={{ html: item.content,baseUrl:'' }}
+                        style = {{flex:1, width: "100%"}}
                         // scrollEnabled={false}
                     />
                 </View>
-            </ScrollView>
+            </View>
 
         )
 

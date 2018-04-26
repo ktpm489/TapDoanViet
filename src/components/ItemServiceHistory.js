@@ -209,7 +209,7 @@ export default class ItemServiceHistory extends Component {
         const { navigation } = this.props;
         const item = this.props.dataItem.item;
         const status = item.done;
-        var orderAt = moment(item.orderAt.substring(0,16)).format("DD-MM-YYYY HH:mm");
+        var orderAt = moment(item.orderAt).format("DD-MM-YYYY HH:mm");
         var createdAt = moment(item.createdAt).format("DD-MM-YYYY HH:mm");
         var updatedAt = moment(item.updatedAt).format("DD-MM-YYYY HH:mm");
 

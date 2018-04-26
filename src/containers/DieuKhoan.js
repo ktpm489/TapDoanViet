@@ -93,7 +93,7 @@ class DieuKhoan extends Component {
             
             <View style={{flex:1}}>
             <WebView
-            source={{ html: this.state.dataDK.content }}
+            source={{ html: this.state.dataDK.content,baseUrl:'' }}
             // source={{ uri: "https://dayngheso1.vn/" }}
             style = {{flex: 1,}}
             // scrollEnabled={false}

@@ -74,7 +74,7 @@ export default class SildeImage extends Component {
         } else {
             return (
                 <View
-                    style={{ height: 200 }}
+                    style={{ height: Dimention.DEVICE_WIDTH*(450/800) }}
                 >
                     <ImageSlider images={imgs}
                         
