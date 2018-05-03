@@ -13,7 +13,8 @@ import {
     TextInput,
     KeyboardAvoidingView,
     ActivityIndicator,
-    Linking
+    Linking,
+    Platform
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import Communications from 'react-native-communications';
@@ -39,11 +40,8 @@ class Login extends Component {
     componentDidMount() {
     }
 
-    showPass() {
-        this.state.press === false ? this.setState({showPass: false, press: true}) : this.setState({
-            showPass: true,
-            press: false
-        });
+    showPass = ()=> {
+        this.setState({showPass: false});
     }
 
     Login() {
@@ -87,21 +85,20 @@ class Login extends Component {
 
     render() {
         return (
-            <KeyboardAwareScrollView
-                // style={{ backgroundColor: '#4c69a5' }}
-                // resetScrollToCoords={{ x: 0, y: 0 }}
-                contentContainerStyle={styles.container}
-                // scrollEnabled={false}
-            >
+            <KeyboardAvoidingView style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? "padding" : null}
+            keyboardVerticalOffset={64}>
+            <View style={{ flex: 1}}>
+               
                 <ImageBackground style={styles.picture}
                                  source={require('../images/wallpaper.png')}
                 >
-                    <View style={{flex: 1, justifyContent: 'space-between',}}>
-                        <View style={{flex: 1}}>
-                            <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
-                                <Image source={images.logo}/>
-                            </View>
-                            <View style={{flex: 5, alignItems: 'center', marginTop: 40}}>
+                    
+                        <View style={{flex: 1 ,justifyContent:'center',alignItems:'center'}}>
+                           
+                                <Image source={images.logo} />
+                           
+                            <View style={{flex: 1, alignItems: 'center'}}>
                                 <UserInput nameIcon="user-circle"
                                     // keyboardType={'numeric'}
                                            placeholder={'Nhập số điện thoại'}
@@ -123,7 +120,7 @@ class Login extends Component {
                                                this.setState({MatKhau})
                                            }}
                                 />
-                                <TouchableOpacity onPress={() => this.showPass}
+                                <TouchableOpacity onPress={() => this.showPass()}
                                                   style={{marginTop: 10}}>
                                     <Text style={{color: '#23b34c'}}>Hiển thị mật khẩu</Text>
                                 </TouchableOpacity>
@@ -164,15 +161,15 @@ class Login extends Component {
                                             kí</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{flexDirection: 'row', flex: 1, marginHorizontal: 20}}>
-                                    <View style={{justifyContent: 'flex-end', flexDirection: 'column'}}>
+                                <View style={{flexDirection: 'row', flex: 1, }}>
+                                    <View style={{justifyContent: 'flex-end',alignItems:'flex-start', flexDirection: 'column',flex:1}}>
                                         <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
                                             <Text style={styles.bottomText}>
                                                 Hotline: 0902.703.073
                                             </Text>
                                         </TouchableOpacity>
                                     </View>
-                                    <View style={{justifyContent: 'flex-end', flexDirection: 'column', marginLeft: 20}}>
+                                    <View style={{justifyContent: 'flex-end',alignItems:'flex-end',flex:1, flexDirection: 'column'}}>
                                         <TouchableOpacity onPress={() => {
                                             let url = "http://homesun.vn";
                                             console.log("url",url);
@@ -188,7 +185,7 @@ class Login extends Component {
                                 </View>
                             </View>
 
-                        </View>
+                        
 
                     </View>
                 </ImageBackground>
@@ -207,8 +204,11 @@ class Login extends Component {
                         <ActivityIndicator size="large" color="green"/>
                     </View> : null
                 }
+
+                </View>
+                </KeyboardAvoidingView>
                 
-            </KeyboardAwareScrollView>
+            
         );
     }
 }

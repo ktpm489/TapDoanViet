@@ -42,7 +42,7 @@ export default class TextInputChat extends Component {
         
         console.log("data",this.state.textSubmit)
         this.props.onReceiveTextInputClick(this.state.textSubmit);
-        this.refs.textInput.clear();
+        // this.refs.textInput.clear();
         this.setState({textSubmit:""});
        
     }

@@ -14,14 +14,14 @@ class DangKi extends Component {
         const { params = {} } = navigation.state
 
         return {
-            title:'Đăng kí',
-            headerStyle: {backgroundColor: '#23b34c'},
-            headerTitleStyle: {color: 'white'},
+            title: 'Đăng kí',
+            headerStyle: { backgroundColor: '#23b34c' },
+            headerTitleStyle: { color: 'white' },
             headerTintColor: 'white',
 
         }
     }
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             SoDienThoai: '',
@@ -30,54 +30,71 @@ class DangKi extends Component {
         }
     }
     checkPass = () => {
-        console.log("checkpass")
-        if (this.state.MatKhau != this.state.MatKhauConfirm) {
-            Alert.alert("Thông báo", "Mật khẩu không trùng khớp");
-        }
-        else {
-            this.props.navigation.navigate('NhapThongTin',
-                {
-                    SDT: this.state.SoDienThoai,
-                    MK: this.state.MatKhau,
-                    MKConfirm: this.state.MatKhauConfirm
-                })
 
+        if (this.state.SoDienThoai.trim().length === 0) {
+            Alert.alert("Thông báo", "Số điện thoại không được để rỗng");
+            return;
         }
+        if (this.state.SoDienThoai.trim().length <= 9 || this.state.SoDienThoai.trim().length >= 12) {
+            Alert.alert("Thông báo", "Số điện thoại phải từ 10 đến 11 số");
+            return;
+        }
+        if (this.state.MatKhau !== this.state.MatKhauConfirm) {
+            Alert.alert("Thông báo", "Mật khẩu không trùng khớp");
+            return;
+        }
+        if (this.state.MatKhau.trim().length === 0 || this.state.MatKhauConfirm.trim().length === 0) {
+            Alert.alert("Thông báo", "Mật khẩu không không được để rỗng");
+            return;
+        }
+        if (this.state.MatKhau.trim().length < 6 || this.state.MatKhauConfirm.trim().length < 6) {
+            Alert.alert("Thông báo", "Mật khẩu phải từ 6 ký tự");
+            return;
+        }
+
+        this.props.navigation.navigate('NhapThongTin',
+            {
+                SDT: this.state.SoDienThoai,
+                MK: this.state.MatKhau,
+                MKConfirm: this.state.MatKhauConfirm
+            })
+
+
     }
-    render (){
+    render() {
         return (
             <View>
-                <View style = {{marginTop: 10, height:DEVICE_HEIGHT/4, marginHorizontal:10, backgroundColor:"white", borderColor: '#9E9E9E', borderWidth:1}}>
-                    <View style = {{flex:1,justifyContent:'center'}}>
+                <View style={{ marginTop: 10, height: DEVICE_HEIGHT / 4, marginHorizontal: 10, backgroundColor: "white", borderColor: '#9E9E9E', borderWidth: 1 }}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <TextInput
-                            style = {{marginLeft: 10}}
-                            placeholder = 'Số điện thoại'
+                            style={{ marginLeft: 10 }}
+                            placeholder='Số điện thoại'
                             keyboardType={'numeric'}
                             underlineColorAndroid="transparent"
-                            onChangeText = {(SoDienThoai) => this.setState({SoDienThoai})}/>
+                            onChangeText={(SoDienThoai) => this.setState({ SoDienThoai })} />
                     </View>
-                    <View style = {{height:1, backgroundColor: '#9E9E9E'}}/>
-                    <View style = {{flex:1, justifyContent:'center'}}>
+                    <View style={{ height: 1, backgroundColor: '#9E9E9E' }} />
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <TextInput
-                            style = {{marginLeft: 10}}
-                            placeholder = 'Mật khẩu'
+                            style={{ marginLeft: 10 }}
+                            placeholder='Mật khẩu'
                             secureTextEntry={true}
                             underlineColorAndroid="transparent"
-                            onChangeText = {(MatKhau) => this.setState({MatKhau})}/>
+                            onChangeText={(MatKhau) => this.setState({ MatKhau })} />
                     </View>
-                    <View style = {{height:1, backgroundColor: '#9E9E9E'}}/>
-                    <View style = {{flex:1, justifyContent:'center'}}>
+                    <View style={{ height: 1, backgroundColor: '#9E9E9E' }} />
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <TextInput
-                            style = {{marginLeft: 10}}
+                            style={{ marginLeft: 10 }}
                             secureTextEntry={true}
-                            placeholder = 'Xác nhận mật khẩu'
+                            placeholder='Xác nhận mật khẩu'
                             underlineColorAndroid="transparent"
-                            onChangeText = {(MatKhauConfirm) => this.setState({MatKhauConfirm})}/>
+                            onChangeText={(MatKhauConfirm) => this.setState({ MatKhauConfirm })} />
                     </View>
                 </View>
-                <TouchableOpacity onPress = {this.checkPass}>
-                    <View style = {styles.viewGui}>
-                        <Text style = {{fontSize: 17, color: 'white', fontWeight:'bold'}}>
+                <TouchableOpacity onPress={this.checkPass}>
+                    <View style={styles.viewGui}>
+                        <Text style={{ fontSize: 17, color: 'white', fontWeight: 'bold' }}>
                             TIẾP TỤC
                         </Text>
 
@@ -99,10 +116,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal: 10,
         borderColor: "#23b34c",
-        backgroundColor:'#23b34c',
-        height: DEVICE_HEIGHT/12,
-        justifyContent:'center',
-        alignItems:'center'
+        backgroundColor: '#23b34c',
+        height: DEVICE_HEIGHT / 12,
+        justifyContent: 'center',
+        alignItems: 'center'
 
 
     },

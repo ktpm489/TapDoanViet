@@ -19,6 +19,7 @@ import {callApiUploadImg} from "../actions/TaoBaiVietActions";
 import {callApiUpdateInfo} from "../actions/UpdateInfoActions";
 import logout from "../components/TokenExpired";
 import {BASE_URL, UPDATE_INFO} from "../Constants";
+import moment from 'moment';
 
 
 class ThongTinCaNhan extends Component {
@@ -138,19 +139,12 @@ class ThongTinCaNhan extends Component {
 
     }
     ok = () => {
-
-        // name = this.state.Name;
-        // console.log('name', name)
-        // let ArrName = name.split(" ")
-        // let FirstName = "";
-        // for (let i = 0; i <= ArrName.length - 2; i++) {
-        //     FirstName = FirstName + " " + ArrName[i];
-        // }
-        //
-        //
-        // LastName = ArrName[ArrName.length - 1]
-        // console.log('FirstName', FirstName)
-        // console.log('LastName', LastName)
+        var validate =  moment(this.state.NgaySinh.trim(), 'DD/MM/YYYY',true).isValid();
+        if(!validate){
+            Alert.alert("Thông báo", "Ngày tháng phải đúng định dạng DD/MM/YYYY");
+            return;
+        }
+       
 
 
         this.setState({
@@ -158,14 +152,14 @@ class ThongTinCaNhan extends Component {
             check: true,
             isLoading: true,
         })
-        // let space ="";
-        // for (let j= 0; j<=name.length; j++){
-        //     space = name[j]
-        // }
-        // if (space !== " "){
-        //     Alert.alert("Thông báo", "Yêu cầu nhập đầy đủ họ tên");
-        // }
-        // else {
+       
+        // console.log("data send",JSON.stringify({
+        //     email: this.state.Email,
+        //     lastName: this.state.LastName,
+        //     firstName: this.state.FisrtName,
+        //     birthDay: this.state.NgaySinh,
+        //     apartmentAddress: this.state.DiaChi
+        // }));
         const {callApiProfile} = this.props
             AsyncStorage.getItem('token').then((value) => {
                 fetch(BASE_URL + UPDATE_INFO, {
@@ -185,11 +179,14 @@ class ThongTinCaNhan extends Component {
                 }).then((response) => {
                     return response.json();
                 }).then(dataRes => {
+                    this.setState({isLoading: false})
                     if (dataRes.errorCode === 0) {
-                        this.setState({isLoading: false})
+                        Alert.alert("Thông báo","Cập nhật thành công");
                         callApiProfile().then(dataRes => {
                             console.log('dataResProfile', dataRes)
                         })
+                    }else{
+                        Alert.alert("Thông báo",dataRes.message);
                     }
                 }).catch(e => {
                     console.log('exception', e)
@@ -344,7 +341,7 @@ class ThongTinCaNhan extends Component {
                                 selectTextOnFocus={false}
                                 style={styles.textinput}/>
                         </View>
-                        <View style={styles.viewItem}>
+                        {/* <View style={styles.viewItem}>
                             <Text style={{fontSize: 15, color: 'black'}}>Email: </Text>
                             <TextInput
                                 value={this.state.Email}
@@ -353,7 +350,7 @@ class ThongTinCaNhan extends Component {
                                 editable={this.state.editable}
                                 selectTextOnFocus={false}
                                 style={styles.textinput}/>
-                        </View>
+                        </View> */}
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('ChangePass')}>
                             <Text
                                 style={{marginTop: 10, marginLeft: 10, color: 'blue', textDecorationLine: 'underline'}}>Đổi

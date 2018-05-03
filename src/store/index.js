@@ -6,6 +6,6 @@ import logger from 'redux-logger';
 
 const store = createStore(
     appStore,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk)
 );
 export default store;

@@ -15,6 +15,7 @@ import Dimensions from 'Dimensions';
 import MenuLeft from "../containers/MenuLeft";
 import ThongTinCaNhan from "../containers/ThongTinCaNhan";
 import TienIch from "../containers/TienIch";
+import TienIchCateGory from "../containers/TienIchCateGory";
 import BaoCaoKhanCap from "../containers/BaoCaoKhanCap";
 import GopYPhanHoi from "../containers/GopYPhanHoi";
 import BaoChay from "../containers/BaoChay";
@@ -218,6 +219,9 @@ const Stack = StackNavigator ({
     TienIchDetail:{
         screen: TienIchDetail,
         
+    },
+    TienIchCateGory:{
+        screen:TienIchCateGory
     },
     BaoCaoKhanCap: {
         screen: BaoCaoKhanCap,

@@ -138,7 +138,7 @@ class MenuLeft extends Component {
                                   source = {images.tienich}
                                   onPress = {()=>{
                                     this.props.navigation.navigate('DrawerClose')
-                                      this.props.navigation.navigate('TienIch')
+                                      this.props.navigation.navigate('TienIchCateGory')
                                     
                                     }}
                     />

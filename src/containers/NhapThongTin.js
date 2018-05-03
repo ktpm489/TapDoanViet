@@ -8,6 +8,7 @@ import {
     Picker,
     ScrollView,
     Alert, AsyncStorage,
+    ActivityIndicator
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from '../components/ButtonRadio/SimpleRadioButton';
@@ -17,6 +18,7 @@ import {callApiDangKy} from "../actions/DangKyActions";
 import { NavigationActions } from 'react-navigation';
 import {BASE_URL, LIKE, LISTTOA} from "../Constants";
 import logout from '../components/TokenExpired'
+import moment from 'moment';
 class NhapThongTin extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
@@ -42,6 +44,7 @@ class NhapThongTin extends Component {
             types1: [{label: 'Nam', value: 1}, {label: 'Nữ', value: 2}, {label: 'Khác', value: 3}],
             value1: 1,
             value1Index: 0,
+            isLoading: false
 
         }
     }
@@ -76,14 +79,37 @@ class NhapThongTin extends Component {
 
     }
     componentDidMount(){
-        this.getToa()
+       // this.getToa()
     }
     DangKyTaiKhoan=  ()=> {
         const { params } = this.props.navigation.state
-        console.log('params', params)
+    //    validate
+        if(this.state.Ho.trim().length === 0 || this.state.Ten.trim().length === 0 ){
+            Alert.alert("Thông báo", "Họ tên không được để trống");
+            return;
+        }
+        if(this.state.NgaySinh.trim().length === 0 ){
+            Alert.alert("Thông báo", "Ngày sinh không được để trống");
+            return;
+        }
+
+        var validate =  moment(this.state.NgaySinh.trim(), 'DD/MM/YYYY',true).isValid();
+        if(!validate){
+            Alert.alert("Thông báo", "Ngày tháng phải đúng định dạng DD/MM/YYYY");
+            return;
+        }
+      
+        if(this.state.Toa.trim().length === 0 ){
+            Alert.alert("Thông báo", "Địa chỉ không được để trống");
+            return;
+        }
+
+
+        this.setState({isLoading: true})
         const { callApiDangKy } = this.props
-        callApiDangKy(this.state.Ten, this.state.Ho, "", params.SDT, params.MK, params.MKConfirm, this.state.value1, this.state.Toa, this.state.NgaySinh).then(dataRes => {
+        callApiDangKy(this.state.Ho,this.state.Ten,  "", params.SDT, params.MK, params.MKConfirm, this.state.value1, this.state.Toa, this.state.NgaySinh).then(dataRes => {
             console.log('data', dataRes)
+            this.setState({isLoading: false})
             // let errors
             let errors = dataRes.errorCode !== 0 ? dataRes.errors : null
             let data = errors ? JSON.parse(errors) : null
@@ -134,6 +160,9 @@ class NhapThongTin extends Component {
 
 
 
+        }).catch(e=>{
+            this.setState({isLoading: false})
+            console.log("exception: ",e);
         })
 
     }
@@ -146,12 +175,14 @@ class NhapThongTin extends Component {
                     style = {{marginLeft: 10}}
                     placeholder = 'Nhập họ'
                     underlineColorAndroid="transparent"
+                    returnKeyType = {"next"}
                     onChangeText = {(Ho) => this.setState({Ho})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Tên*</Text>
                 <TextInput
                     style = {{marginLeft: 10}}
                     placeholder = 'Nhập tên'
+                    returnKeyType = {"next"}
                     underlineColorAndroid="transparent"
                     onChangeText = {(Ten) => this.setState({Ten})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
@@ -159,6 +190,7 @@ class NhapThongTin extends Component {
                 <TextInput
                     style = {{marginLeft: 10}}
                     placeholder = 'DD/MM/YYYY'
+                    returnKeyType = {"next"}
                     underlineColorAndroid="transparent"
                     onChangeText = {(NgaySinh) => this.setState({NgaySinh})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
@@ -167,6 +199,7 @@ class NhapThongTin extends Component {
                     style = {{marginLeft: 10}}
                     placeholder = 'P101, Tòa nhà Victoria, Quận Hà Đông'
                     underlineColorAndroid="transparent"
+                    returnKeyType = {"done"}
                     onChangeText = {(Toa) => this.setState({Toa})}/>
                 <View style = {{height:1, backgroundColor: '#9E9E9E', marginHorizontal: 12}}/>
                 <Text style  ={{marginLeft: 12, color: 'black', fontSize: 15 }}>Giới Tính*</Text>
@@ -195,6 +228,22 @@ class NhapThongTin extends Component {
 
                     </View>
                 </TouchableOpacity>
+
+                {this.state.isLoading ?
+                    <View style={{
+                        top: -10,
+                        bottom: -10,
+                        left: -10,
+                        right: -10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        zIndex: 1,
+                        backgroundColor: 'rgba(52, 52, 52, 0.3)'
+                    }}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View> : null
+                }
 
             </ScrollView>
         )

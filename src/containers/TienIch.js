@@ -14,9 +14,10 @@ import logout from '../components/TokenExpired'
 class TienIch extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state
+    
 
         return {
-            title:'Tiện ích',
+            title:params.nameCategory,
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
             headerTintColor: 'white',
@@ -26,44 +27,12 @@ class TienIch extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            listTienIch:[],
-            isLoading:false
-        }
+        // this.props.navigation.setParams({ title: this.props.navigation.state.params.nameCategory})
     }
 
 
     componentWillMount(){
-        AsyncStorage.getItem('token').then((value)=> {
-            this.setState({isLoading:true})
-            fetch(BASE_URL + GET_UTILITY, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': value,
-                },
-
-            }).then((response) => {
-                return response.json();
-            }).then(data => {
-                console.log('data response utility', data);
-                if(data && data.errorCode == 0){
-                    this.setState({listTienIch:data.data,isLoading:false})
-                    console.log('statte',this.state.listTienIch)
-                }else if(data.errorCode && data.errorCode === "401"){
-                    logout(AsyncStorage,this.props)
-                    return;
-                }
-                
-                else{
-                    this.setState({isLoading:false})
-                }
-                
-            }).catch(e => {
-                this.setState({isLoading:false})
-                console.log('exception', e)
-            })
-        });
+       
     }
 
     itemTienIch = ({item})=>
@@ -88,23 +57,22 @@ class TienIch extends Component {
 
 
     render (){
+
+        
+        var dataItem = this.props.navigation.state.params.dataItem;
+        console.log("data pass",dataItem);
         return (
             
             
            <View style = {{flex:1}}>
                 <FlatList 
-                    data={this.state.listTienIch}
+                    data={dataItem}
                     renderItem={
                         this.itemTienIch
                     }
                     keyExtractor={(item, index) => index.toString()}
                     style={{flex:1}}
                 />
-                {this.state.isLoading?
-                    <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
-                        <ActivityIndicator size="large" color="green"/>
-                    </View>:null
-                }
 
             </View>
             

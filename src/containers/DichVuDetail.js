@@ -80,7 +80,7 @@ export default class DichVuDetail extends Component {
                 </Modal>
 
                 <View style ={{flex:1}}>
-                    <Image style={{flex: 1, height: Dimention.DEVICE_WIDTH*(450/800), width: "100%", alignSelf: 'stretch',}}
+                    <Image style={{height: Dimention.DEVICE_WIDTH*(450/800), width: "100%", alignSelf: 'stretch',}}
                            resizeMode="cover"
                            source={{uri: item.imageUrl}}/>
 

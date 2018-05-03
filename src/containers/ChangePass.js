@@ -6,7 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     AsyncStorage,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import {BASE_URL, CHANGE_PASS} from "../Constants";
@@ -29,10 +30,31 @@ class ChangePass extends Component {
             oldPass: '',
             newPass: '',
             confirmPass: '',
+            isLoading:false
         }
     }
     updatePass () {
+        if(this.state.oldPass.trim().length === 0){
+            Alert.alert("Thông báo","Bạn phải nhập mật khẩu cũ");
+            return;
+        }
+
+        if(this.state.newPass.trim().length === 0 || this.state.confirmPass.trim().length === 0){
+            Alert.alert("Thông báo","Mật khẩu mới không được để trống");
+            return;
+        }
+
+        if(this.state.newPass.trim() !== this.state.confirmPass.trim()){
+            Alert.alert("Thông báo","Mật khẩu mới không trùng nhau");
+            return;
+        }
+        if(this.state.newPass.trim().length < 6 || this.state.confirmPass.trim().length < 6){
+            Alert.alert("Thông báo","Mật khẩu mới phải lớn hơn 6");
+            return;
+        }
+
         AsyncStorage.getItem('token').then((value) => {
+            this.setState({isLoading:true})
             fetch( BASE_URL + CHANGE_PASS,  {
                 method: 'POST',
                 headers: {
@@ -48,6 +70,8 @@ class ChangePass extends Component {
             })
                 .then((response) => response.json())
                 .then((dataRes)=> {
+                    this.setState({isLoading:false})
+                    console.log("dataRes",dataRes)
                     if(dataRes.errorCode===true) {
                         Alert.alert(
                             'Thông báo',
@@ -70,6 +94,7 @@ class ChangePass extends Component {
                     }
 
                 }).catch((erro)=> {
+                    this.setState({isLoading:false})
                 console.log('erro',erro);
             })
         })
@@ -107,6 +132,11 @@ class ChangePass extends Component {
 
                     </View>
                 </TouchableOpacity>
+                {this.state.isLoading?
+                    <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+                        <ActivityIndicator size="large" color="green"/>
+                    </View>:null
+                }
 
             </View>
         );
