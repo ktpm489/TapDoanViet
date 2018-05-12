@@ -94,9 +94,10 @@ export default class DichVuDetail extends Component {
                             textAlign: 'left',
                             fontWeight: 'bold',
                             fontSize: 20,
-                            color: 'black'
+                            color: 'black',
+                            flex: 1,
                         }}> {item.serviceName}</Text>
-                        <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                             <TouchableOpacity
                             onPress={()=>this.refs.modal.open()}
                             style={{borderRadius: 5,

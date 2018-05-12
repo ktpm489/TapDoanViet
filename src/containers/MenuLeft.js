@@ -85,32 +85,41 @@ class MenuLeft extends Component {
             Share.share(
             {
                 
-                title: "chia sẻ",
-                message: "Tập đoàn việt",
-                url:'https://facebook.com'
+                title: "Chia sẻ",
+                message: "http://homesun.vn",
             
             }).then(result => console.log("share result",result)).catch(errorMsg => console.log("share error",errorMsg));
     }
 
-    render (){
+    renderHeader = ()=>{
         const {InfoUser } = this.props
+        var hasInfo = true;
         if (InfoUser.length <= 0){
-            return null
+            hasInfo = false;
         }
+            return (
+                    <View style = {{alignItems:'center', justifyContent:'center', minHeight:130, flex:1}}>
+                    <Image style={styles.image_circle}
+                        source={!hasInfo || 
+                            ! InfoUser.userInfo.avatar ? require("../images/noavatar.png") : {
+                                uri:InfoUser.userInfo.avatarUrl
+                            }}
+                        resizeMode="cover"
+                    >
+                    </Image>
+                    <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#212121', marginTop:5}}>{hasInfo?InfoUser.userInfo.firstName:''} {hasInfo?InfoUser.userInfo.lastName:''}</Text>
+                </View>
+            )
+        
+
+    }
+
+    render (){
+       
         return(
             <ScrollView style ={{backgroundColor:'#fc9b03'}}>
             <View style = {{flexDirection:'column', backgroundColor:'white', flex:1}}>
-                <View style = {{alignItems:'center', justifyContent:'center', minHeight:130, flex:1}}>
-                    <Image style={styles.image_circle}
-                           source={
-                               ! InfoUser.userInfo.avatar ? require("../images/noavatar.png") : {
-                                   uri:InfoUser.userInfo.avatarUrl
-                               }}
-                           resizeMode="cover"
-                    >
-                    </Image>
-                    <Text style = {{fontSize: 25, fontWeight: 'bold', color: '#212121', marginTop:5}}>{InfoUser.userInfo.firstName} {InfoUser.userInfo.lastName}</Text>
-                </View>
+               {this.renderHeader()}
                 <View style = {{backgroundColor:'#fc9b03', flex:5, marginTop: 10}}>
                     <ItemLeftMenu title ="Thông tin cá nhân"
                                   source = {images.info}

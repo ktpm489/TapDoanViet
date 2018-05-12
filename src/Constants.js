@@ -1,5 +1,5 @@
 
-//export const BASE_URL = 'http://backend.thinhnv.net';
+// export const BASE_URL = 'http://backend.thinhnv.net';
 export const BASE_URL = 'http://homesun.vn';
 export const PATH_LOGIN = '/api/auth/access-token';
 export const PATH_FIREBASE_TOKEN = '/api/user/firebase-device-token';

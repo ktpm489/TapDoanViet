@@ -1,5 +1,6 @@
 
 import { NavigationActions } from 'react-navigation'
+import {Alert} from 'react-native'
 
 export default logout = (AsyncStorage,props)=>{
         AsyncStorage.removeItem('token')
@@ -12,5 +13,5 @@ export default logout = (AsyncStorage,props)=>{
             ]
         });
         props.navigation.dispatch(resetAction)
-        alert("Tài khoản bị khóa hoặc token hết hạn");
+        Alert.alert("Thông báo","Tài khoản bị khóa hoặc token hết hạn");
 }

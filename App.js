@@ -53,6 +53,8 @@ export default class App extends Component<{}> {
 
 
     pushDeviceToken = (token_APP, device_token) => {
+
+        console.log("1234",Platform.OS ==="Android"?DeviceInfo.getBrand(): "Iphone");
         
         fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
             method: 'POST',
@@ -63,7 +65,7 @@ export default class App extends Component<{}> {
                 token: device_token,
                 os: Platform.OS,
                 version: Platform.Version,
-                deviceName:  Platform.os === "android"?DeviceInfo.getBrand(): "Iphone"
+                deviceName:  Platform.OS ==="Android"?DeviceInfo.getBrand(): "Iphone"
             })
         }).then(data => data.json()).then(data => {
             if(data.errorCode && data.errorCode === "401"){

@@ -130,7 +130,7 @@ export default class ItemServiceHistory extends Component {
                     logout(AsyncStorage,this.props)
                     return;
                 }else{
-                    alert(data.message)
+                    Alert.alert("",data.message)
                 }
             }).catch(e => {
                 console.log("exception", e);

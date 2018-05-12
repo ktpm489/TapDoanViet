@@ -40,6 +40,7 @@ class TienIch extends Component {
         (
             
             <TouchableOpacity  style={{margin:10}} 
+                    activeOpacity = {1}
                     onPress={()=>this.props.navigation.navigate("TienIchDetail",{item:item})}
             >
                 <Image style={{flex: 1, height: 180, width: "100%", alignSelf: 'stretch',}}

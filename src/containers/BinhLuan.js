@@ -8,7 +8,8 @@ import {
     Image, AsyncStorage,
     KeyboardAvoidingView,
     Platform,
-    BackHandler
+    BackHandler,
+    Alert
 } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -54,7 +55,7 @@ class BinhLuan extends Component {
 
 
             } else {
-                alert("socket not connect");
+                Alert.alert("Thông báo","Không thể kết nối socket");
             }
 
         });

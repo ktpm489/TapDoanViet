@@ -1,6 +1,7 @@
 
 import {
-    AsyncStorage
+    AsyncStorage,
+    Alert
 } from 'react-native'
 
 import {BASE_URL, GET_ADMIN,} from "../Constants";
@@ -28,7 +29,7 @@ export const getAdmin = ()=>{
                     payload: data
                 })
             }else if(data.errorCode && data.errorCode === "401"){
-                alert('Tài khoản bị khóa hoặc token hết hạn, Vui lòng đăng nhập lại');
+                Alert.alert('Thông báo','Tài khoản bị khóa hoặc token hết hạn, Vui lòng đăng nhập lại');
             }
 
         }).catch(e => {
