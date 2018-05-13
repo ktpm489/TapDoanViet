@@ -6,7 +6,8 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    findNodeHandle
+    findNodeHandle,
+    Platform
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -45,7 +46,8 @@ export default class TextInputChat extends Component {
         // console.log("data",this.state.textSubmit)
         this.props.onReceiveTextInputClick(this.state.textSubmit);
         // this.refs.textInput.clear();
-        TextInputReset.resetKeyboardInput(findNodeHandle(this.textInput))
+        if(Platform.OS === 'android')
+            TextInputReset.resetKeyboardInput(findNodeHandle(this.textInput))
         this.setState({textSubmit:""});
        
     }
@@ -83,6 +85,7 @@ export default class TextInputChat extends Component {
                     }}
                     placeholder={"Nhập vào đây..."}
                     underlineColorAndroid="transparent"
+                    autoCapitalize={'none'}
                     value={this.state.textSubmit}
                     returnKeyType={"done"}
                     onChangeText={
