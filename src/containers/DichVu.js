@@ -155,8 +155,8 @@ class DichVu extends Component {
 
     }
     pushDeviceToken = (token_APP, device_token) => {
-
-        console.log("1234",Platform.OS ==="Android"?DeviceInfo.getBrand(): "Iphone");
+        
+        console.log("1234",Platform.OS ==="android"?DeviceInfo.getBrand(): "Iphone");
         
         fetch(URL.BASE_URL + URL.PATH_FIREBASE_TOKEN, {
             method: 'POST',
@@ -167,7 +167,7 @@ class DichVu extends Component {
                 token: device_token,
                 os: Platform.OS,
                 version: Platform.Version,
-                deviceName:  Platform.OS ==="Android"?DeviceInfo.getBrand(): "Iphone"
+                deviceName:  Platform.OS ==="android"?DeviceInfo.getBrand(): "Iphone"
             })
         }).then(data => data.json()).then(data => {
             if(data.errorCode && data.errorCode === "401"){
