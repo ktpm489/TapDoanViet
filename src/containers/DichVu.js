@@ -158,7 +158,7 @@ class DichVu extends Component {
 
         console.log("1234",Platform.OS ==="Android"?DeviceInfo.getBrand(): "Iphone");
         
-        fetch(Consts.BASE_URL + Consts.PATH_FIREBASE_TOKEN, {
+        fetch(URL.BASE_URL + URL.PATH_FIREBASE_TOKEN, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token_APP,
