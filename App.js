@@ -13,7 +13,6 @@ import {
     Platform
 } from 'react-native';
 import {Provider} from 'react-redux'
-import DeviceInfo from 'react-native-device-info';
 import store from './src/store'
 import RootStack from './src/routers/Navigation'
 

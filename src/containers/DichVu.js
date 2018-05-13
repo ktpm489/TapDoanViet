@@ -32,6 +32,7 @@ import FCM, {
     WillPresentNotificationResult,
     NotificationType
 } from 'react-native-fcm';
+import DeviceInfo from 'react-native-device-info';
 
 
 class DichVu extends Component {
