@@ -10,6 +10,7 @@ import {
     StyleSheet,
     NetInfo,
     WebView,
+    Platform
 
 } from 'react-native';
 // import Video from 'react-native-video'
