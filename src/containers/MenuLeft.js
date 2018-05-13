@@ -18,14 +18,42 @@ import images from "../components/images";
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {LogoutReducers} from '../reducers'
-import {BASE_URL, DELETE_TOKEN_FIREBASE,GET_ADMIN,LOGOUT} from "../Constants";
+import {BASE_URL, DELETE_TOKEN_FIREBASE,GET_ADMIN,LOGOUT,GET_SHARE} from "../Constants";
 class MenuLeft extends Component {
     constructor(props){
         super(props)
         this.state = {
             visibleModal: null
         };
+        this.shareContent = "You Need - We have \nhttp://homesun.vn";
+        this.getContentShare();
+        
     }
+
+    getContentShare = ()=>{
+        AsyncStorage.getItem('token').then((value)=> {
+            console.log("fetch share");
+            fetch(BASE_URL + GET_SHARE, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': value,
+                },
+            
+    
+            }).then((response) => {
+                return response.json();
+            }).then(data => {
+                
+                if(data && data.errorCode == 0){
+                   this.shareContent = data.data;
+                }
+            }).catch(e => {
+                console.log('exception get share',e);
+            })
+        });
+    }
+    
     DeteleTokenFirebase = () => {
         console.log("deletetoken")
         AsyncStorage.getItem("token").then(value => {
@@ -86,7 +114,7 @@ class MenuLeft extends Component {
             {
                 
                 title: "Chia sẻ",
-                message: "http://homesun.vn",
+                message: this.shareContent,
             
             }).then(result => console.log("share result",result)).catch(errorMsg => console.log("share error",errorMsg));
     }

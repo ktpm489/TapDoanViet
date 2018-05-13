@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
 
     },
     textinput: {
-        color: "#757575",
+        color: '#000000',
         padding: 0,
     },
     viewItem: {
