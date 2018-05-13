@@ -86,7 +86,7 @@ export default class DichVuDetail extends Component {
 
                     <View style={{
                         flexDirection: 'row',
-                        padding: 10,
+                        padding:10,
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
@@ -96,7 +96,7 @@ export default class DichVuDetail extends Component {
                             fontSize: 20,
                             color: 'black',
                             flex: 1,
-                        }}> {item.serviceName}</Text>
+                        }}>{item.serviceName}</Text>
                         <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                             <TouchableOpacity
                             onPress={()=>this.refs.modal.open()}

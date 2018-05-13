@@ -5,12 +5,14 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    findNodeHandle
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
 import * as Const from '../Constants'
 import Icon from 'react-native-vector-icons/Ionicons'
+import TextInputReset from 'react-native-text-input-reset';
 
 export default class TextInputChat extends Component {
 
@@ -40,16 +42,17 @@ export default class TextInputChat extends Component {
 
     onClickSend = ()=>{
         
-        console.log("data",this.state.textSubmit)
+        // console.log("data",this.state.textSubmit)
         this.props.onReceiveTextInputClick(this.state.textSubmit);
         // this.refs.textInput.clear();
+        TextInputReset.resetKeyboardInput(findNodeHandle(this.textInput))
         this.setState({textSubmit:""});
        
     }
 
     render() {
 
-        console.log("render---",this.state.textSubmit)
+        // console.log("render---",this.state.textSubmit)
         return (
             <View style={{
                 height:42,

@@ -63,7 +63,8 @@ export default class TinNhanItem extends Component {
     render() {
         const {navigation} = this.props;
         const {item,index} = this.props.dataItem;
-        //  console.log("item",item);
+        console.log("item",item);
+       
        
         const{fromDachSach,fromTinNhan,fromSearch} = this.props;
         
@@ -102,13 +103,13 @@ export default class TinNhanItem extends Component {
                     <View style={{top:10,left:Dimention.DEVICE_WIDTH / 6-10, width:20,height:20,borderRadius:10,backgroundColor:'red',position:'absolute',zIndex:1,justifyContent:'center',alignItems:'center'}}>
                                <Text style = {{textAlign:'center',color:'white',fontSize:10}}>{item.messUnread>20?"20+":item.messUnread}</Text>
                     </View>:null}
-                    <View style={{flex: 4, flexDirection: 'column', marginLeft: 10, marginTop: 10, marginBottom: 10}}>
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                            <Text style={{flex: 2,fontWeight:'600'}} numberOfLines={1}
+                    <View style={{flex: 4, flexDirection: 'column', marginLeft: 10, marginTop: 10, marginBottom: 10, justifyContent:'center'}}>
+                        <View style={{ flexDirection: 'row'}}>
+                            <Text style={{fontWeight:'600'}} numberOfLines={1}
                                   ellipsizeMode={'tail'}>{item.firstName + " " + item.lastName}</Text>
-                            <Text style={{flex: 1}}>{item.lastTime}</Text>
+                            <Text style={{}}>{item.lastTime}</Text>
                         </View>
-                        <Text style={{flex: 1}} numberOfLines={1} ellipsizeMode={'tail'}>{item.email}</Text>
+                        <Text style={{}} numberOfLines={1} ellipsizeMode={'tail'}>{item.email === "false"?'':item.email}</Text>
                     </View>
                 </View>
 

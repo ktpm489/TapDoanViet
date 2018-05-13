@@ -76,6 +76,40 @@ class SubDichVu extends Component {
     
 
 
+    // render (){
+        
+    //     return (
+            
+    //       <View style={{flex:1,backgroundColor:'#ffffff'}}>
+    //         < FlatList
+    //                 showsHorizontalScrollIndicator={false}
+    //                 showVerticalScrollIndicator={false}
+    //                 data={this.state.listSubDichVu}
+    //                 renderItem={(item) => {
+    //                     return (
+    //                         <DichVuItem
+    //                             dataItem={item}
+    //                             navigation={this.props.navigation}
+    //                             fromSubDichVu = {true}
+    //                         />
+    //                     )
+    //                 }}
+    //                 numColumns={3}
+    //                 keyExtractor={(item, index) => index.toString()}
+    //                 style={{marginBottom: 100, marginLeft: 10, marginRight: 10, marginTop: 10}}
+    //    />
+    //    {this.state.isLoading?
+    //     <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
+    //         <ActivityIndicator size="large" color="green"/>
+    //     </View>:null
+    // }
+
+    //    </View>
+              
+            
+    //     )
+
+    // }
     render (){
         
         return (
@@ -85,18 +119,12 @@ class SubDichVu extends Component {
                     showsHorizontalScrollIndicator={false}
                     showVerticalScrollIndicator={false}
                     data={this.state.listSubDichVu}
-                    renderItem={(item) => {
-                        return (
-                            <DichVuItem
-                                dataItem={item}
-                                navigation={this.props.navigation}
-                                fromSubDichVu = {true}
-                            />
-                        )
-                    }}
-                    numColumns={3}
+                    renderItem={
+                        this.itemSubDichVu
+                    }
+                    numColumns={1}
                     keyExtractor={(item, index) => index.toString()}
-                    style={{marginBottom: 100, marginLeft: 10, marginRight: 10, marginTop: 10}}
+                    
        />
        {this.state.isLoading?
         <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>
@@ -110,5 +138,26 @@ class SubDichVu extends Component {
         )
 
     }
+
+    itemSubDichVu = ({item})=>
+
+        (
+            
+            <TouchableOpacity  style={{margin:10}} 
+                    activeOpacity = {1}
+                    onPress={()=>this.props.navigation.navigate('DichVuDetail', {dataItem: item})}
+            >
+                <Image style={{flex: 1, height: 200, width: "100%", alignSelf: 'stretch',}}
+                           resizeMode="cover"
+                           source={{uri:item.iconUrl}}/>
+
+                <View style={{flex:1,height:50, backgroundColor:"rgba(0,0,0,0.5)",zIndex:1,marginTop:-50,justifyContent:'center',alignItems:'center'}}>
+                    <Text style={{color:'white',fontWeight:'bold',fontSize:20,marginLeft:5}}>{item.serviceName.toUpperCase()}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+
+
+
 }
 export default SubDichVu;

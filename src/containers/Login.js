@@ -41,7 +41,7 @@ class Login extends Component {
     }
 
     showPass = ()=> {
-        this.setState({showPass: false});
+        this.setState({showPass: !this.state.showPass});
     }
 
     Login() {
@@ -96,14 +96,13 @@ class Login extends Component {
                     
                         <View style={{flex: 1 ,justifyContent:'center',alignItems:'center'}}>
                            
-                                <Image source={images.logo} />
+                                <Image source={require('../images/logo2.png')} />
                            
                             <View style={{flex: 1, alignItems: 'center'}}>
                                 <UserInput nameIcon="user-circle"
                                     // keyboardType={'numeric'}
                                            placeholder={'Nhập số điện thoại'}
                                            keyboardType={'numeric'}
-                                           autoCapitalize={'none'}
                                            returnKeyType={'done'}
                                            autoCorrect={false}
                                            style={{marginTop: 20}}
@@ -113,7 +112,6 @@ class Login extends Component {
                                            secureTextEntry={this.state.showPass}
                                            placeholder='Nhập mật khẩu'
                                            returnKeyType={'done'}
-                                           autoCapitalize={'none'}
                                            autoCorrect={false}
                                            style={{marginTop: 20}}
                                            onChangeText={(MatKhau) => {
@@ -124,15 +122,17 @@ class Login extends Component {
                                                   style={{marginTop: 10}}>
                                     <Text style={{color: '#23b34c'}}>Hiển thị mật khẩu</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.Login()}>
+                                <TouchableOpacity onPress={() => this.Login()}
+                                    style={{marginHorizontal: 20,
+                                    marginTop: 30,
+                                    minHeight: 40}}
+                                >
                                     <View style={{
                                         backgroundColor: '#23b34c',
                                         borderWidth: 1,
                                         borderColor: '#23b34c',
                                         width: DEVICE_WIDTH - 40,
-                                        marginHorizontal: 20,
-                                        marginTop: 30,
-                                        minHeight: 40,
+                                        flex:1,
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
@@ -140,17 +140,21 @@ class Login extends Component {
                                     </View>
                                 </TouchableOpacity>
                                 <View style={{marginTop: 15, flexDirection: 'row', marginHorizontal: 20}}>
-                                    <TouchableOpacity style={{flex: 1}}
+                                <View  style={{flex: 1,}}>
+                                    <TouchableOpacity style={{}}
                                                       onPress={() => this.props.navigation.navigate('QuenMatKhau')}>
                                         <Text
                                             style={{
                                                 color: '#23b34c',
                                                 textDecorationLine: 'underline',
                                                 textAlign: 'left',
+
                                             }}>Quên
                                             mật khẩu?</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{flex: 1}}
+                                    </View>
+                                    <View style={{flex: 1,}}>
+                                    <TouchableOpacity style={{}}
                                                       onPress={() => this.props.navigation.navigate('DangKi')}>
                                         <Text
                                             style={{
@@ -158,18 +162,19 @@ class Login extends Component {
                                                 textDecorationLine: 'underline',
                                                 textAlign: 'right'
                                             }}>Đăng
-                                            kí</Text>
+                                            ký</Text>
                                     </TouchableOpacity>
+                                    </View>
                                 </View>
                                 <View style={{flexDirection: 'row', flex: 1, }}>
-                                    <View style={{justifyContent: 'flex-end',alignItems:'flex-start', flexDirection: 'column',flex:1}}>
+                                    <View style={{justifyContent: 'flex-end',alignItems:'flex-start', flexDirection: 'column',flex:1,marginLeft:2}}>
                                         <TouchableOpacity onPress={() => Communications.phonecall('0902703073', true)}>
                                             <Text style={styles.bottomText}>
                                                 Hotline: 0902.703.073
                                             </Text>
                                         </TouchableOpacity>
                                     </View>
-                                    <View style={{justifyContent: 'flex-end',alignItems:'flex-end',flex:1, flexDirection: 'column'}}>
+                                    <View style={{justifyContent: 'flex-end',alignItems:'flex-end',flex:1, flexDirection: 'column',marginRight:2}}>
                                         <TouchableOpacity onPress={() => {
                                             let url = "http://homesun.vn";
                                             console.log("url",url);

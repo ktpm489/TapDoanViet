@@ -46,7 +46,7 @@ class FirstScreen extends Component {
             
             <View style = {{ flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
                 <Image
-                    source={require('../../src/images/logo.png')}
+                    source={require('../../src/images/logo2.png')}
                 />
             
             </View>

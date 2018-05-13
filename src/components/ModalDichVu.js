@@ -207,6 +207,7 @@ class ModalDichVu extends Component {
                                 underlineColorAndroid='transparent'
                                 placeholder={"Họ và tên"}
                                 defaultValue={this.name}
+                                editable={false}
                                 returnKeyType={"next"}
                                 onChangeText={(text)=>this.name = text}
                             />
@@ -228,7 +229,7 @@ class ModalDichVu extends Component {
                                 style={{ width: 25, height: 25, margin: 10, }}
 
                             />
-                            <TextInput style={{ backgroundColor: 'white',borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
+                            <TextInput style={{ backgroundColor: 'white',color: "#000000",borderRadius:5, flex: 1, paddingLeft: 10,alignSelf:'stretch' }}
                                 underlineColorAndroid='transparent'
                                 placeholder={"Số điện thoại"}
                                 keyboardType='numeric'

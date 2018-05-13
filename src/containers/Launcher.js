@@ -119,7 +119,7 @@ export default class Launcher extends Component{
         return (
             <View style = {{ flex:1, backgroundColor:'white', justifyContent:'center', alignItems:'center'}}>
                 <Image
-                    source={require('../../src/images/logo.png')}
+                    source={require('../../src/images/logo2.png')}
                 />
                 {this.state.status !== null && this.state.status===false?
                         <View>
