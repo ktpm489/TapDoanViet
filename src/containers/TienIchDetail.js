@@ -6,10 +6,12 @@ import {
     FlatList,
     WebView,
     Image, TouchableOpacity,
-    ScrollView
+    ScrollView,
+    Platform
 } from 'react-native'
 import { BASE_URL, GET_SERVICE } from "../Constants";
 import * as Dimention from '../configs/Dimention'
+
 
 export default class TienIchDetail extends Component {
 
@@ -45,12 +47,16 @@ export default class TienIchDetail extends Component {
                            source={{ uri: item.imageUrl }}
                     />
                 
-                <Text style={{color:'black',fontWeight:'bold',fontSize:20,marginLeft:5}}>{item.utilityName}</Text>
+                <Text style={{color:'black',fontWeight:'bold',fontSize:20,marginLeft:5,paddingTop:5,paddingBottom:5}}>{item.utilityName}</Text>
                 <View style = {{flex:1}}>
                     <WebView
+                        automaticallyAdjustContentInsets={false}
                         source={{ html: item.content,baseUrl:'' }}
+                        // source={{uri: 'https://github.com/facebook/react-native'}}
                         style = {{flex:1, width: "100%"}}
-                        // scrollEnabled={false}
+                        javaScriptEnabledAndroid={true}
+                        mixedContentMode='always'
+                        scalesPageToFit={(Platform.OS === 'ios') ? false : true}
                     />
                 </View>
             </View>

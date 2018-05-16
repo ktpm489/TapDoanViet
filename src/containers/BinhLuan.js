@@ -99,8 +99,8 @@ class BinhLuan extends Component {
 
             <KeyboardAvoidingView style={{ flex: 1 }}
                 behavior={Platform.OS === 'ios' ? "padding" : null}
-                keyboardVerticalOffset={64}>
-                <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                keyboardVerticalOffset={64}
+                >
                     <FlatList
                         data={this.state.dataCmt}
                         renderItem={(item) => {
@@ -128,13 +128,11 @@ class BinhLuan extends Component {
                         style={{marginTop:5}}
                         onReceiveTextInputClick={this.onReceiveTextInputClick}
                     />
-
-
-                </View>
             </KeyboardAvoidingView>
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         SocketRef: state.SocketRef

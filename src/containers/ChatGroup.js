@@ -9,7 +9,7 @@ import {
     Image,
     KeyboardAvoidingView,
     Keyboard, AsyncStorage,
-    Alert
+    Alert,Platform
 } from 'react-native';
 
 
@@ -201,7 +201,11 @@ class ChatGroup extends Component {
             userName = this.props.SocketRef.userSocket.userName;
         return (
 
-            <View style={{ flex: 1 }}>
+            <KeyboardAvoidingView style={{ flex: 1 }}
+
+                behavior={Platform.OS === 'ios' ? "padding" : null}
+                keyboardVerticalOffset={64}
+            >
                 <FlatList
                     style={{ backgroundColor: "#E0E0E0", flex: 1 }}
                     data={this.state.dataChat}
@@ -236,7 +240,7 @@ class ChatGroup extends Component {
                     style={{marginTop:5}}
                     onReceiveTextInputClick={this.onReceiveTextInputClick}
                 />
-            </View>
+            </KeyboardAvoidingView>
 
         );
     }

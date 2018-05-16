@@ -209,7 +209,6 @@ class Chat extends Component {
                 behavior={Platform.OS === 'ios' ? "padding" : null}
                 keyboardVerticalOffset={64}
             >
-                {/* <View style={{flex: 1}}> */}
 
                 <FlatList
                     style={{ backgroundColor: "#E0E0E0", flex: 1 }}

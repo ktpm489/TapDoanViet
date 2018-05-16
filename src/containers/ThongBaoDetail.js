@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     ActivityIndicator,
-    WebView
+    WebView,
+    Platform
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -133,9 +134,11 @@ callApiDetailNoti = ()=>{
 
             <View style={{flex:1}}>
             <WebView
-           source={{ html: item.content,baseUrl:'' }}
-        //    source={{ uri: "https://dayngheso1.vn/" }}
-           style = {{flex: 1,}}
+                    source={{ html: item.content,baseUrl:'' }}
+                    javaScriptEnabledAndroid={true}
+                    mixedContentMode='always'
+                    scalesPageToFit={(Platform.OS === 'ios') ? false : true}
+                    style = {{flex: 1,}}
            />
            {this.state.isLoading?
                    <View style={{top:-10,bottom:-10,left:-10,right:-10, justifyContent: 'center', alignItems: 'center',position:'absolute',zIndex:1,backgroundColor: 'rgba(52, 52, 52, 0.3)'}}>

@@ -9,7 +9,6 @@ import {
     Image,
     StyleSheet,
     NetInfo,
-    WebView,
     Platform
 
 } from 'react-native';

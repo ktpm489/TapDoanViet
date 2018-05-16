@@ -7,19 +7,22 @@ import {
     Image,
     Alert,
     TouchableOpacity, AsyncStorage,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView
 } from 'react-native'
 import Dimensions from 'Dimensions';
 import PickerImage from "../components/PickerImage";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import {callApiUploadImg} from "../actions/TaoBaiVietActions";
-import {BASE_URL, CREATE_GROUP, FEEDBACK} from "../Constants";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { callApiUploadImg } from "../actions/TaoBaiVietActions";
+import { BASE_URL, CREATE_GROUP, FEEDBACK } from "../Constants";
 import logout from '../components/TokenExpired'
 class GopYPhanHoi extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            isCheck:true,
+            isCheck: true,
             dataImage: null,
             avatarSource: null,
             MoTa: '',
@@ -32,23 +35,23 @@ class GopYPhanHoi extends Component {
         const { params = {} } = navigation.state
 
         return {
-            title:'Báo cáo sai phạm',
-            headerStyle: {backgroundColor: '#23b34c'},
-            headerTitleStyle: {color: 'white'},
+            title: 'Báo cáo sai phạm',
+            headerStyle: { backgroundColor: '#23b34c' },
+            headerTitleStyle: { color: 'white' },
             headerTintColor: 'white',
 
         }
     }
 
-    show(){
+    show() {
         PickerImage((source, data) => {
-            this.setState({avatarSource: source, dataImage: data,isCheck: false}, () => {
-                    this.upload();
-                }
+            this.setState({ avatarSource: source, dataImage: data, isCheck: false }, () => {
+                this.upload();
+            }
             )
         });
     }
-    upload (){
+    upload() {
         // console.log('base64', this.state.dataImage)
         // dataImg = this.state.dataImage;
 
@@ -61,7 +64,7 @@ class GopYPhanHoi extends Component {
             // console.log('datapost1', dataPost.message)
         })
     }
-    BaoCaoSaiPham =  ()=> {
+    BaoCaoSaiPham = () => {
         this.textInput.clear();
         if (this.state.MoTa == "") {
             Alert.alert("Thông báo", "Nhập nội dung báo cáo sai phạm");
@@ -76,7 +79,7 @@ class GopYPhanHoi extends Component {
                         "x-access-token": value
                     },
                     body: JSON.stringify({
-                        content: this.state.MoTa ,
+                        content: this.state.MoTa,
                         image: this.state.fileName
 
 
@@ -85,21 +88,21 @@ class GopYPhanHoi extends Component {
                     return response.json()
                 }).then(data => {
                     console.log('data', data)
-                    if(data.errorCode===0) {
-                        if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected){
+                    if (data.errorCode === 0) {
+                        if (this.props.SocketRef.socket && this.props.SocketRef.socket.connected) {
                             this.props.SocketRef.socket.emit("new_report", data);
                         }
                         Alert.alert(
                             'Thông báo',
                             data.message,
                             [
-                                {text: 'OK', onPress: () => this.props.navigation.goBack()},
+                                { text: 'OK', onPress: () => this.props.navigation.goBack() },
                             ],
                             { cancelable: false }
                         )
                     }
-                    else if(data.errorCode && data.errorCode === "401"){
-                        logout(AsyncStorage,this.props)
+                    else if (data.errorCode && data.errorCode === "401") {
+                        logout(AsyncStorage, this.props)
                         return;
                     }
                     else {
@@ -107,7 +110,7 @@ class GopYPhanHoi extends Component {
                             'Thông báo',
                             data.message,
                             [
-                                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                                { text: 'OK', onPress: () => console.log('OK Pressed') },
                             ],
                             { cancelable: false }
                         )
@@ -120,64 +123,69 @@ class GopYPhanHoi extends Component {
         }
 
     }
-    render (){
-        let img = this.state.avatarSource == null? null:
+    render() {
+        let img = this.state.avatarSource == null ? null :
             <Image
                 source={this.state.avatarSource}
+                resizeMode="cover"
                 style={styles.viewImage}
             />
         return (
-            <View>
-                {
-                    this.state.isCheck ?
-                    <View style={styles.viewImage}>
-                        <TouchableOpacity onPress={this.show.bind(this)}>
-                            <Image
-                                source={require('../images/camera.png')}
-                                style={styles.imagePost}
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? "padding" : null}
+                keyboardVerticalOffset={64}
+            >
+                <ScrollView style={{ flex: 1 }}>
+                    {
+                        this.state.isCheck ?
+                            <View style={styles.viewImage}>
+                                <TouchableOpacity onPress={this.show.bind(this)}>
+                                    <Image
+                                        source={require('../images/camera.png')}
+                                        style={styles.imagePost}
 
-                            />
-                        </TouchableOpacity>
-                        <Text style={{color: 'black', fontWeight: 'bold'}}>Bạn cần đăng 1 hình</Text>
-                    </View> : img
-                }
-                <View style = {styles.viewWrap}>
-                    <TextInput
-                        style = {{
-                            marginLeft: 10,
-                        }}
-                        placeholder = 'Nhập nôi dung báo cáo sai phạm'
-                        underlineColorAndroid="transparent"
-                        onChangeText = {(MoTa) => this.setState({MoTa})}
-                        ref={input => {
-                            this.textInput = input
-                        }}/>
-                </View>
-                <TouchableOpacity onPress = {this.BaoCaoSaiPham}>
-                    <View style = {styles.viewGui}>
-                        <Text style = {{fontSize: 17}}>
-                            Báo cáo sai phạm
+                                    />
+                                </TouchableOpacity>
+                                <Text style={{ color: 'black', fontWeight: 'bold' }}>Bạn cần đăng 1 hình</Text>
+                            </View> : img
+                    }
+                    {/* <View style={styles.viewWrap}> */}
+                        <TextInput
+                            style={styles.viewWrap}
+                            placeholder='Nhập nôi dung báo cáo sai phạm'
+                            underlineColorAndroid="transparent"
+                            returnKeyType={'done'}
+                            onChangeText={(MoTa) => this.setState({ MoTa })}
+                            ref={input => {
+                                this.textInput = input
+                            }} />
+                    {/* </View> */}
+                    <TouchableOpacity onPress={this.BaoCaoSaiPham}>
+                        <View style={styles.viewGui}>
+                            <Text style={{ fontSize: 17 }}>
+                                Báo cáo sai phạm
                         </Text>
 
 
-                    </View>
-                </TouchableOpacity>
-
-            </View>
+                        </View>
+                    </TouchableOpacity>
+                </ScrollView>
+            </KeyboardAvoidingView>
         )
 
     }
 }
 const mapStateToProps = (state) => {
     return {
-         imageGet: state.TaoBaiVietReducers,
-         SocketRef: state.SocketRef
+        imageGet: state.TaoBaiVietReducers,
+        SocketRef: state.SocketRef
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        callApiUploadImg : bindActionCreators(callApiUploadImg, dispatch),
+        callApiUploadImg: bindActionCreators(callApiUploadImg, dispatch),
     };
 }
 
@@ -190,12 +198,14 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     viewWrap: {
         marginHorizontal: 10,
+        marginLeft: 10,
+        paddingLeft:10,
         marginTop: 10,
         borderWidth: 1,
-        height: DEVICE_HEIGHT/12,
+        height: 50,
         borderColor: '#cccccc',
-        borderRadius:40,
-        justifyContent:'center' ,
+        borderRadius: 40,
+        justifyContent: 'center',
     },
     viewGui: {
         marginTop: 20,
@@ -203,22 +213,22 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginHorizontal: 10,
         borderColor: "#23b34c",
-        backgroundColor:'#23b34c',
-        height: DEVICE_HEIGHT/12,
-        justifyContent:'center',
-        alignItems:'center'
+        backgroundColor: '#23b34c',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
 
 
     },
     viewImage: {
         marginTop: 10,
         marginHorizontal: 10,
-        height: DEVICE_HEIGHT/5,
-        backgroundColor:'#AED581',
-        justifyContent:'center',
-        alignItems:'center',
+        height: 250,
+        backgroundColor: '#AED581',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 5,
-        borderColor:'#23b34c'
+        borderColor: '#23b34c'
     },
     imagePost: {
         width: 60,

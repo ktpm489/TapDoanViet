@@ -7,7 +7,9 @@ import {
     ImageBackground,
     TouchableOpacity,
     TextInput, ScrollView, AsyncStorage,
-    ActivityIndicator, Alert
+    ActivityIndicator, Alert,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native'
 import images from "../components/images";
 import Dimensions from 'Dimensions';
@@ -244,6 +246,12 @@ class ThongTinCaNhan extends Component {
                 style={styles.image_circle}
             />
         return (
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? "padding" : null}
+            keyboardVerticalOffset={64}
+            >
+               
             <ScrollView style={{flex: 1, backgroundColor: '#ffffff'}}>
                 <View style={{flex: 1}}>
                     <ImageBackground style={{flex: 3, alignItems: 'center', width: null, height: DEVICE_HEIGHT / 3}}
@@ -393,6 +401,7 @@ class ThongTinCaNhan extends Component {
                     </View>:null
                 }
             </ScrollView>
+            </KeyboardAvoidingView>
         )
 
     }

@@ -16,7 +16,7 @@ export default class ShowImage extends Component {
         const { params = {} } = navigation.state
 
         return {
-            title:'Ảnh hóa đơn',
+            title:'Xem ảnh',
             headerStyle: {backgroundColor: '#23b34c'},
             headerTitleStyle: {color: 'white'},
             headerTintColor: 'white',

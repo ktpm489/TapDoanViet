@@ -7,7 +7,8 @@ import {
     ScrollView,
     TouchableOpacity,
     WebView,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 
 import * as Dimention from '../configs/Dimention'
@@ -121,6 +122,9 @@ export default class DichVuDetail extends Component {
                     <WebView
                         source={{ html: item.content,baseUrl:'' }}
                         style = {{flex:1}}
+                        javaScriptEnabledAndroid={true}
+                        mixedContentMode='always'
+                        scalesPageToFit={(Platform.OS === 'ios') ? false : true}
                     />
                     
                        
